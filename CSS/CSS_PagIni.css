@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16/02/2014, 03:25:31 PM
+    Author     : CYNTHIA
+*/
+
+
+body {background-color: khaki;}
+h1 {
+    font-size:150%;
+    font-family:verdana,arial,'sans serif';
+    color:saddlebrown;text-align:center;}
+h2 {
+    font-size:100%;
+    font-family:verdana,arial,'sans serif';
+    color:saddlebrown;text-align:center;}
+    
+h3 {
+    font-size:80%;
+    font-family:verdana,arial,'sans serif';
+    color:saddlebrown;text-align:center;
+    }
+h4 {
+    font-size:100%;
+    font-family:verdana,arial,'sans serif';
+    color:saddlebrown;
+    }    
+p {font-family:"Times New Roman";font-size:18px;color:black;}
+
