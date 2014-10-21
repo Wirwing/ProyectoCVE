@@ -16,6 +16,9 @@ $app = new \Slim\Slim(array(
     'templates.path' => 'templates',
 ));
 
+//Set Mime Type Middleware
+$app->add(new \Slim\Middleware\ContentTypes());
+
 // Create monolog logger and store logger in container as singleton 
 // (Singleton resources retrieve the same log resource definition each time)
 $app->container->singleton('log', function () {
