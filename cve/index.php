@@ -1,6 +1,16 @@
 <?php
 require 'vendor/autoload.php';
 
+ActiveRecord\Config::initialize(function($cfg)
+{
+   $cfg->set_model_directory('models');
+   $cfg->set_connections(
+     array(
+       'development' => 'mysql://root:@localhost/db_cve'
+     )
+   );
+});
+
 // Prepare app
 $app = new \Slim\Slim(array(
     'templates.path' => 'templates',
@@ -27,10 +37,29 @@ $app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 
 // Define routes
 $app->get('/', function () use ($app) {
+    
     // Sample log message
     $app->log->info("Slim-Skeleton '/' route");
     // Render index view
     $app->render('index.html');
+
+});
+
+// Define routes
+$app->get('/users', function () use ($app) {
+
+    $users = User::all(array('readonly' => true, 'limit' => 50));
+
+    $response = $app->response();
+    $response->header('Content-Type', 'application/json');
+    $response->status(200);
+
+    $json = json_encode(array_map(function($res){
+      return $res->to_array();
+    }, $users));
+
+    $app->response()->write($json);
+
 });
 
 // Run app
