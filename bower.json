@@ -1,0 +1,15 @@
+{
+  "name": "cve",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Wirwing/ProyectoCVE",
+  "authors": [
+    "Wirwing <irving.cf@gmail.com>",
+    "mauricio9308",
+    "josejaime14"
+  ],
+  "description": "Collaborative Virtual Environment",
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT"
+}
