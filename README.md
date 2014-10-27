@@ -89,7 +89,7 @@ Para realizar la migración, ejecutar el comando siguiente:
 
     flyway migrate
     
-* Notificar al resto del equipo cuando se haya agregado un archivo de migración, usando los canales de comunicación definidos (Facebook)*
+*Notificar al resto del equipo cuando se haya agregado un archivo de migración, usando los canales de comunicación definidos (Facebook)*
 
 ## How to Contribute
 
