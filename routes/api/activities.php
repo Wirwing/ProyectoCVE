@@ -19,9 +19,8 @@ $app->get('/api/activities', function () use ($app) {
 $app->post('/api/activities', function () use ($app) {
 
 	$body = $app->request()->getBody();
-    $attributes = json_decode($body, true);
 
-	$activity = new Activity($attributes);
+	$activity = new Activity($body);
 	$activity->save();
 
 	$app->response()->write($activity->to_json());
