@@ -2,6 +2,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+
 -- --------------------------------------------------------
 
 --
@@ -17,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `actividad_colaborativa` (
   `duracion_minima` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `descripcion` varchar(200) NOT NULL,
-  `adjuntos` bit(1) NOT NULL,
+  `adjuntos` tinyint(1) NOT NULL,
   `indicadores_personalizados` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
@@ -174,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `apellido_materno` varchar(30) NOT NULL,
   `usuario` varchar(8) NOT NULL,
   `password` varchar(8) NOT NULL,
-  `sexo` bit(1) DEFAULT NULL,
+  `sexo` tinyint(1) DEFAULT NULL,
   `ciudad` varchar(30) DEFAULT NULL,
   `estado` varchar(30) DEFAULT NULL,
   `email` varchar(80) DEFAULT NULL,

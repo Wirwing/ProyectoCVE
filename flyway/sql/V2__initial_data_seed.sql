@@ -4,7 +4,7 @@ USE `db_cve_fmat_uady` ;
 -- Volcado de datos para la tabla `actividad_colaborativa`
 --
 INSERT INTO `actividad_colaborativa` (`id`, `id_tutor`, `fecha`, `tipo`, `estrategia_instruccional`, `duracion_minima`, `nombre`, `descripcion`, `adjuntos`, `indicadores_personalizados`) VALUES
-(1, 10, '2014-10-09', 'CONSTRUCTIVISTA', 'ROMPECABEZAS', 50, 'Resolver el problema adjunto con estructura WHILE', '', b'0', 1);
+(1, 10, '2014-10-09', 'CONSTRUCTIVISTA', 'ROMPECABEZAS', 50, 'Resolver el problema adjunto con estructura WHILE', '', 0, 1);
 
 --
 -- Volcado de datos para la tabla `actividad_modelo`
