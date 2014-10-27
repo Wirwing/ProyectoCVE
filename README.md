@@ -1,38 +1,43 @@
-# Slim Framework Skeleton Application
+# Proyecto CVE
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework application. This application uses the latest Slim and Slim-Views repositories. It also uses Sensio Labs' [Twig](http://twig.sensiolabs.org) template library.
+Proyecto Aplicativo AJAX. Tecnologías usadas:
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+- AngularJS.
+- Slim Framework.
 
-## Install Composer
+## Instalación de herramientas
 
-If you have not installed Composer, do that now. I prefer to install Composer globally in `/usr/local/bin`, but you may also install Composer locally in your current working directory. For this tutorial, I assume you have installed Composer locally.
+Instalar un servidor *AMP.
+
+Instalar servidor MySQL.
+
+Instalar composer
 
 <http://getcomposer.org/doc/00-intro.md#installation>
 
-## Install the Application
+Instalar Bower
 
-After you install Composer, run this command from the directory in which you want to install your new Slim Framework application.
+<http://bower.io>
 
-    php composer.phar create-project slim/slim-skeleton [my-app-name]
+Agregar composer.phar y bower al PATH del sistema (para poder ejecutarlos desde consola).
 
-Replace <code>[my-app-name]</code> with the desired directory name for your new application. You'll want to:
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` and `templates/cache` are web writeable.
+## Instalación de la aplicación
 
-That's it! Now go build something cool.
+Clonar el proyecto dentro de una carpeta que pueda ser accesible desde el Apache (httpdocs, www). Después de haber instalado las herramientas de desarrollo necesarias, ejecutar el comando
+
+    composer install
+
+Para instalar todas las dependencias PHP necesarias (Slim framework, ORM, etc).
+
+Ejecutar
+
+    bower install
+
+Para instalar todas las dependencias JS (angular, bootstrap, jquery, etc).
 
 ## How to Contribute
 
 ### Pull Requests
 
-1. Fork the Slim Skeleton repository
-2. Create a new branch for each feature or improvement
-3. Send a pull request from each feature branch to the **develop** branch
-
-It is very important to separate new features or improvements into separate feature branches, and to send a
-pull request for each branch. This allows us to review and pull in new features or improvements individually.
-
 ### Style Guide
 
-All pull requests must adhere to the [PSR-2 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md).
