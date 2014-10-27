@@ -9,4 +9,13 @@ $app->get('/activities', function () use ($app) {
 
 });
 
+$app->get('/activities/new', function () use ($app) {
+    
+    // Sample log message
+    $app->log->info("Slim-Skeleton '/activities/new' route");
+    // Render index view
+    $app->render('activities/new.html');
+
+});
+
 ?>

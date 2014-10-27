@@ -35,28 +35,32 @@
     
     <h2>Actividades</h2>
 
-    <table st-table="activities" class="table table-striped">
-      <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Id Tutor</th>
-        <th>Fecha</th>
-        <th>Tipo</th>
-        <th>Estrategia Instruccional</th>
-        <th>Duración Mínima</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="activity in activities">
-      <td>{{activity.nombre}}</td>
-        <td>{{activity.id_tutor}}</td>
-        <td>{{activity.fecha}}</td>
-        <td>{{activity.tipo}}</td>
-        <td>{{activity.estrategia_instruccional}}</td>
-        <td>{{activity.duracion_minima}}</td>
-      </tr>
-      </tbody>
-    </table>
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="name" class="control-label col-xs-2">Email</label>
+            <div class="col-xs-10">
+                <input class="form-control" id="name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name" class="control-label col-xs-2">Password</label>
+            <div class="col-xs-10">
+                <input type="password" class="form-control" id="">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <div class="checkbox">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </div>
+    </form>
 
   </div>
 
@@ -64,9 +68,7 @@
     <script src="public/lib/angular/angular.js"></script>
     <script src="public/js/app.js"></script>
     <script src="public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
-    <script src="public/lib/angular-resource/angular-resource.js"></script>
     <script src="public/js/controllers/activities.js"></script>
-    <script src="public/js/factories/activities.js"></script>
 
 </body>
 </html>
