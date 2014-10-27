@@ -38,6 +38,15 @@ $app->view->parserOptions = array(
 );
 $app->view->parserExtensions = array(new \Slim\Views\TwigExtension());
 
+$twig_instance = $app->view->getInstance();
+$lexer = new Twig_Lexer($twig_instance, array(
+    'tag_comment'   => array('[#', '#]'),
+    'tag_block'     => array('[%', '%]'),
+    'tag_variable'  => array('[[', ']]'),
+    'interpolation' => array('#[', ']'),
+));
+$twig_instance->setLexer($lexer);
+
 // Define routes
 $app->get('/', function () use ($app) {
     
