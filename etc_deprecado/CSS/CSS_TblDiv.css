@@ -1,0 +1,68 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16/02/2014, 03:25:31 PM
+    Author     : CYNTHIA
+*/
+
+
+.uno a {
+		text-align:center;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		background-color: #FFD500;
+		text-decoration: none;
+		color: blue;
+	}
+	.uno a:hover {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 12px;
+		background-color: #FFD500;
+		text-decoration: none;
+		color: #FF0000;/*color de fuente */
+	}
+
+#container{
+	width:1100px;
+}
+table,th,td
+{
+border:1px solid black;
+text-align:center;
+padding:10px;
+background-color:#C0C0C0;
+color:white;
+}
+tr.d0 td {
+	background-color: #CC9999; color: black;
+}
+tr.d1 td {
+	background-color: #9999CC; color: black;
+}
+
+
+#header{	
+	background-color:#C0C0C0;
+	}
+
+#menu{
+	background-color:#FFD500;
+	height:400px;
+	width:200px;
+	float:left;	
+	}
+
+#content{
+	background-color:#EEEEEE;
+	height:400px;
+	width:900px;
+	float:left;
+	}
+
+#footer{
+	background-color:#FFA500;
+	clear:both;
+	text-align:center;}
