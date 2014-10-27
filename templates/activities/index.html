@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Entorno Virtual Colaborativo - Actividades</title>
-  <link href="public/lib/bootstrap-css/css/bootstrap.css" rel="stylesheet">
-  <link href="public/css/app.css" rel="stylesheet">
+  <link href="/cve/public/lib/bootstrap-css/css/bootstrap.css" rel="stylesheet">
+  <link href="/cve/public/css/app.css" rel="stylesheet">
 </head>
 <body>
  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -33,6 +33,8 @@
   </nav>
   <div class="content" ng-controller="ActivitiesController as activitiesCtrl">
     
+    <a href="activities/new">Nueva Actividad</a>
+
     <h2>Actividades</h2>
 
     <table st-table="activities" class="table table-striped">
@@ -60,13 +62,13 @@
 
   </div>
 
-    <script src="public/lib/jquery/dist/jquery.js"></script>
-    <script src="public/lib/angular/angular.js"></script>
-    <script src="public/js/app.js"></script>
-    <script src="public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
-    <script src="public/lib/angular-resource/angular-resource.js"></script>
-    <script src="public/js/controllers/activities.js"></script>
-    <script src="public/js/factories/activities.js"></script>
+    <script src="/cve/public/lib/jquery/dist/jquery.js"></script>
+    <script src="/cve/public/lib/angular/angular.js"></script>
+    <script src="/cve/public/js/app.js"></script>
+    <script src="/cve/public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
+    <script src="/cve/public/lib/angular-resource/angular-resource.js"></script>
+    <script src="/cve/public/js/controllers/activities.js"></script>
+    <script src="/cve/public/js/factories/activities.js"></script>
 
 </body>
 </html>
