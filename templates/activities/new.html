@@ -31,33 +31,48 @@
    </div>
    <!-- /.container -->
   </nav>
-  <div class="content" ng-controller="ActivitiesController as activitiesCtrl">
-    
-    <h2>Actividades</h2>
+  <div class="content">
 
-    <form class="form-horizontal">
+    <form class="form-horizontal" ng-controller="AddActivityController as activityCtrl"
+      ng-submit="activityCtrl.add(activity)">
+
+        <div class="span4 offset2">
+          <h2>Nueva Actividad</h2>
+        </div>
+
         <div class="form-group">
-            <label for="name" class="control-label col-xs-2">Email</label>
-            <div class="col-xs-10">
-                <input class="form-control" id="name">
+            <label class="control-label col-md-2">Nombre</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" ng-model="activity.nombre" required />
             </div>
         </div>
         <div class="form-group">
-            <label for="name" class="control-label col-xs-2">Password</label>
-            <div class="col-xs-10">
-                <input type="password" class="form-control" id="">
+            <label class="control-label col-md-2">Descripción</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" ng-model="activity.descripcion" required />
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-offset-2 col-xs-10">
-                <div class="checkbox">
-                    <label><input type="checkbox"> Remember me</label>
-                </div>
+            <label class="control-label col-md-2">Tipo</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" ng-model="activity.tipo" required />
             </div>
         </div>
         <div class="form-group">
-            <div class="col-xs-offset-2 col-xs-10">
-                <button type="submit" class="btn btn-primary">Login</button>
+            <label class="control-label col-md-2">Estrategia Instruccional</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" ng-model="activity.estrategia_instruccional" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Duración Minima</label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" ng-model="activity.duracion_minima" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary">Crear</button>
             </div>
         </div>
     </form>

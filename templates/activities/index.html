@@ -24,22 +24,23 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
-         
+
        </ul>
      </div>
      <!-- /.navbar-collapse -->
    </div>
    <!-- /.container -->
-  </nav>
-  <div class="content" ng-controller="ActivitiesController as activitiesCtrl">
-    
-    <a href="activities/new">Nueva Actividad</a>
+ </nav>
+ <div class="content" ng-controller="ActivitiesController as activitiesCtrl">
 
-    <h2>Actividades</h2>
+  <a href="activities/new">Nueva Actividad</a>
 
-    <table st-table="activities" class="table table-striped">
-      <thead>
+  <h2>Actividades</h2>
+
+  <table st-table="activities" class="table table-striped">
+    <thead>
       <tr>
+        <th>Id</th>
         <th>Nombre</th>
         <th>Id Tutor</th>
         <th>Fecha</th>
@@ -47,28 +48,29 @@
         <th>Estrategia Instruccional</th>
         <th>Duración Mínima</th>
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       <tr ng-repeat="activity in activities">
-      <td>{{activity.nombre}}</td>
+        <td>{{activity.id}}</td>
+        <td>{{activity.nombre}}</td>
         <td>{{activity.id_tutor}}</td>
         <td>{{activity.fecha}}</td>
         <td>{{activity.tipo}}</td>
         <td>{{activity.estrategia_instruccional}}</td>
         <td>{{activity.duracion_minima}}</td>
       </tr>
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 
-  </div>
+</div>
 
-    <script src="/cve/public/lib/jquery/dist/jquery.js"></script>
-    <script src="/cve/public/lib/angular/angular.js"></script>
-    <script src="/cve/public/js/app.js"></script>
-    <script src="/cve/public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
-    <script src="/cve/public/lib/angular-resource/angular-resource.js"></script>
-    <script src="/cve/public/js/controllers/activities.js"></script>
-    <script src="/cve/public/js/factories/activities.js"></script>
+<script src="/cve/public/lib/jquery/dist/jquery.js"></script>
+<script src="/cve/public/lib/angular/angular.js"></script>
+<script src="/cve/public/js/app.js"></script>
+<script src="/cve/public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
+<script src="/cve/public/lib/angular-resource/angular-resource.js"></script>
+<script src="/cve/public/js/controllers/activities.js"></script>
+<script src="/cve/public/js/factories/activities.js"></script>
 
 </body>
 </html>

@@ -10,4 +10,23 @@
 
 	}]);
 
+	app.controller('AddActivityController',['$scope', 'Activities', '$window', function($scope, Activities,  $window){
+		
+
+		this.add = function(activity){
+
+			//TODO: Replace values with session ones.
+			activity.id_tutor = 1;
+			activity.fecha = new Date();
+			activity.adjuntos = 0;
+			
+			Activities.create({}, activity, function () {
+                $window.location.href = '/cve/activities';
+            });
+			
+
+		}
+		
+	}]);
+
 })();
