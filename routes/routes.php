@@ -1,3 +1,4 @@
 <?php
-    include "users.php";
+	include "activities.php";
+    include "api/users.php";
 ?>

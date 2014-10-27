@@ -1,6 +1,6 @@
 <?php 
 
-$app->get('/users', function () use ($app) {
+$app->get('/api/users', function () use ($app) {
 
 	$users = User::all(array('readonly' => true, 'limit' => 50));
 
@@ -16,7 +16,7 @@ $app->get('/users', function () use ($app) {
 
 });
 
-$app->post('/users', function () use ($app) {
+$app->post('/api/users', function () use ($app) {
 
 	$body = $app->request()->getBody();
     $attributes = json_decode($body, true);
@@ -28,7 +28,7 @@ $app->post('/users', function () use ($app) {
 
 });
 
-$app->get('/users/:id', function ($id) use ($app) {
+$app->get('/api/users/:id', function ($id) use ($app) {
 
 	$user = User::find($id);
 
@@ -40,7 +40,7 @@ $app->get('/users/:id', function ($id) use ($app) {
 
 });
 
-$app->put('/users/:id', function ($id) use ($app) {
+$app->put('/api/users/:id', function ($id) use ($app) {
 
 	$body = $app->request()->getBody();
     $attributes = json_decode($body, true);
@@ -56,7 +56,7 @@ $app->put('/users/:id', function ($id) use ($app) {
 
 });
 
-$app->delete('/users/:id', function ($id) use ($app) {
+$app->delete('/api/users/:id', function ($id) use ($app) {
 	
 	$user = User::find($id);
 	$user->delete();
