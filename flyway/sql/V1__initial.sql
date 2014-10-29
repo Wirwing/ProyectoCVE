@@ -2,185 +2,207 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `actividad_colaborativa`
---
-
-CREATE TABLE IF NOT EXISTS `actividad_colaborativa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tutor` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `tipo` varchar(50) NOT NULL,
-  `estrategia_instruccional` varchar(50) NOT NULL,
-  `duracion_minima` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `descripcion` varchar(200) NOT NULL,
-  `adjuntos` tinyint(1) NOT NULL,
-  `indicadores_personalizados` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `archivos_adjuntos`
---
-
-CREATE TABLE IF NOT EXISTS `archivos_adjuntos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tutor` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `url` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `chat_extendido`
---
-
-CREATE TABLE IF NOT EXISTS `chat_extendido` (
-  `id` int(11) NOT NULL,
-  `acuerdo` int(11) NOT NULL,
-  `no_acuerdo` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `chat_log`
---
-
-CREATE TABLE IF NOT EXISTS `chat_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_chat_sesion` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_actividad` int(11) NOT NULL,
-  `id_indicador` int(11) NOT NULL,
-  `fecha` datetime NOT NULL,
-  `log` varchar(500) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `grupos_colaborativos`
---
-
-CREATE TABLE IF NOT EXISTS `grupos_colaborativos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_tutor` int(11) NOT NULL,
-  `fecha` date NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `num_integrantes` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `actividad_colaborativa_archivos`
---
-
-CREATE TABLE IF NOT EXISTS `actividad_colaborativa_archivos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_actividad` int(11) NOT NULL,
-  `id_archivo_adjunto` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `actividad_modelo`
---
-
-CREATE TABLE IF NOT EXISTS `actividad_modelo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_actividad` int(11) NOT NULL,
-  `id_modelo` int(11) NOT NULL,
-  `estado` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Tabla intermedia para relacional actividad colaborativa con el modelo de estados' AUTO_INCREMENT=3 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `grupos_colaborativos_usuarios`
---
-CREATE TABLE IF NOT EXISTS `grupos_colaborativos_usuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_grupo` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `id_actividad` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `modelo_estados_configuracion`
---
-
-CREATE TABLE IF NOT EXISTS `modelo_estados_configuracion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_modelo` int(11) NOT NULL,
-  `nombre_indicador` char(20) NOT NULL,
-  `frecuencia_individual` tinyint(4) NOT NULL,
-  `frecuencia_grupo` tinyint(4) NOT NULL,
-  `tolerancia` tinyint(4) NOT NULL,
-  `frecuencia_individual2` tinyint(4) DEFAULT NULL,
-  `frecuencia_grupo2` tinyint(4) DEFAULT NULL,
-  `tolerancia2` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='Tabla para configurar el modelo de estados CLL' AUTO_INCREMENT=8 ;
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`modelo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`modelo` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(45) NOT NULL,
+  `is_default` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COMMENT = 'Tabla intermedia para relacional actividad colaborativa con el modelo de estados';
 
 
--- --------------------------------------------------------
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`actividad_colaborativa`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`actividad_colaborativa` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_modelo` INT(11) NOT NULL,
+  `id_tutor` INT(11) NOT NULL,
+  `nombre` VARCHAR(50) NOT NULL,
+  `descripcion` VARCHAR(200) NOT NULL,
+  `fecha` DATE NOT NULL,
+  `tipo` VARCHAR(50) NOT NULL,
+  `estrategia_instruccional` VARCHAR(50) NOT NULL,
+  `duracion_minima` INT(11) NOT NULL,
+  PRIMARY KEY (`id`, `id_modelo`),
+  INDEX `fk_actividad_colaborativa_modelo_idx` (`id_modelo` ASC),
+  CONSTRAINT `fk_actividad_colaborativa_modelo`
+    FOREIGN KEY (`id_modelo`)
+    REFERENCES `db_cve_fmat_uady`.`modelo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
---
--- Estructura de tabla para la tabla `moodle_rcd`
---
 
-CREATE TABLE IF NOT EXISTS `moodle_rcd` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_user` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `rol` tinyint(4) NOT NULL,
-  `id_course` int(11) NOT NULL,
-  `course_name` varchar(100) NOT NULL,
-  `email_sesion` varchar(100) NOT NULL,
-  `fecha_inicio` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_final` datetime DEFAULT NULL,
-  `close_sesion` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=100 ;
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`actividad_colaborativa_archivos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`actividad_colaborativa_archivos` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_actividad` INT(11) NOT NULL,
+  `id_archivo_adjunto` INT(11) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
 
---
--- Estructura de tabla para la tabla `usuarios`
---
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`archivos_adjuntos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`archivos_adjuntos` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_actividad` INT(11) NOT NULL,
+  `nombre` VARCHAR(100) NOT NULL,
+  `url` VARCHAR(100) NOT NULL,
+  `fecha` DATE NOT NULL,
+  PRIMARY KEY (`id`, `id_actividad`),
+  INDEX `fk_archivos_adjuntos_actividad_colaborativa1_idx` (`id_actividad` ASC),
+  CONSTRAINT `fk_archivos_adjuntos_actividad_colaborativa1`
+    FOREIGN KEY (`id_actividad`)
+    REFERENCES `db_cve_fmat_uady`.`actividad_colaborativa` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
 
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(30) NOT NULL,
-  `apellido_paterno` varchar(30) NOT NULL,
-  `apellido_materno` varchar(30) NOT NULL,
-  `usuario` varchar(8) NOT NULL,
-  `password` varchar(8) NOT NULL,
-  `sexo` tinyint(1) DEFAULT NULL,
-  `ciudad` varchar(30) DEFAULT NULL,
-  `estado` varchar(30) DEFAULT NULL,
-  `email` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Usuarios registrados en el Juego CLL' AUTO_INCREMENT=1 ;
+
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`chat_extendido`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`chat_extendido` (
+  `id` INT(11) NOT NULL,
+  `acuerdo` INT(11) NOT NULL,
+  `no_acuerdo` INT(11) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`chat_log`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`chat_log` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_chat_sesion` INT(11) NOT NULL,
+  `id_usuario` INT(11) NOT NULL,
+  `id_actividad` INT(11) NOT NULL,
+  `id_indicador` INT(11) NOT NULL,
+  `fecha` DATETIME NOT NULL,
+  `log` VARCHAR(500) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`grupos_colaborativos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`grupos_colaborativos` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_tutor` INT(11) NOT NULL,
+  `fecha` DATE NOT NULL,
+  `nombre` VARCHAR(50) NOT NULL,
+  `num_integrantes` INT(11) NOT NULL DEFAULT 3,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`usuarios` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(30) NOT NULL,
+  `apellido_paterno` VARCHAR(30) NOT NULL,
+  `apellido_materno` VARCHAR(30) NOT NULL,
+  `usuario` VARCHAR(8) NOT NULL,
+  `password` VARCHAR(8) NOT NULL,
+  `sexo` TINYINT(1) NULL DEFAULT NULL,
+  `ciudad` VARCHAR(30) NULL DEFAULT NULL,
+  `estado` VARCHAR(30) NULL DEFAULT NULL,
+  `email` VARCHAR(80) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = 'Usuarios registrados en el Juego CLL';
+
+
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`grupos_colaborativos_usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`grupos_colaborativos_usuarios` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_grupo` INT(11) NOT NULL,
+  `id_usuario` INT(11) NOT NULL,
+  `id_actividad` INT(11) NOT NULL,
+  PRIMARY KEY (`id`, `id_grupo`, `id_usuario`, `id_actividad`),
+  INDEX `fk_grupos_colaborativos_usuarios_grupos_colaborativos1_idx` (`id_grupo` ASC),
+  INDEX `fk_grupos_colaborativos_usuarios_usuarios1_idx` (`id_usuario` ASC),
+  INDEX `fk_grupos_colaborativos_usuarios_actividad_colaborativa1_idx` (`id_actividad` ASC),
+  CONSTRAINT `fk_grupos_colaborativos_usuarios_grupos_colaborativos1`
+    FOREIGN KEY (`id_grupo`)
+    REFERENCES `db_cve_fmat_uady`.`grupos_colaborativos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_grupos_colaborativos_usuarios_usuarios1`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `db_cve_fmat_uady`.`usuarios` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_grupos_colaborativos_usuarios_actividad_colaborativa1`
+    FOREIGN KEY (`id_actividad`)
+    REFERENCES `db_cve_fmat_uady`.`actividad_colaborativa` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`indicadores`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`indicadores` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_modelo` INT(11) NOT NULL,
+  `nombre` CHAR(20) NOT NULL,
+  `frecuencia_individual` TINYINT(4) NOT NULL,
+  `frecuencia_grupo` TINYINT(4) NOT NULL,
+  `tolerancia` TINYINT(4) NOT NULL,
+  PRIMARY KEY (`id`, `id_modelo`),
+  INDEX `fk_indicadores_modelo1_idx` (`id_modelo` ASC),
+  CONSTRAINT `fk_indicadores_modelo1`
+    FOREIGN KEY (`id_modelo`)
+    REFERENCES `db_cve_fmat_uady`.`modelo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COMMENT = 'Tabla para configurar el modelo de estados CLL';
+
+
+-- -----------------------------------------------------
+-- Table `db_cve_fmat_uady`.`moodle_rcd`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`moodle_rcd` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_user` INT(11) NOT NULL,
+  `username` VARCHAR(100) NOT NULL,
+  `rol` TINYINT(4) NOT NULL,
+  `id_course` INT(11) NOT NULL,
+  `course_name` VARCHAR(100) NOT NULL,
+  `email_sesion` VARCHAR(100) NOT NULL,
+  `fecha_inicio` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_final` DATETIME NULL DEFAULT NULL,
+  `close_sesion` TINYINT(1) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
