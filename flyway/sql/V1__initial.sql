@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`actividades_colaborativas` (
   `tipo` VARCHAR(50) NOT NULL,
   `estrategia_instruccional` VARCHAR(50) NOT NULL,
   `duracion_minima` INT(11) NOT NULL,
-  PRIMARY KEY (`id`, `id_modelo`),
+  PRIMARY KEY (`id`),
   INDEX `fk_actividad_colaborativa_modelo_idx` (`id_modelo` ASC),
   CONSTRAINT `fk_actividad_colaborativa_modelo`
     FOREIGN KEY (`id_modelo`)
@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`grupos_colaborativos_usuarios` (
   `id_grupo` INT(11) NOT NULL,
   `id_usuario` INT(11) NOT NULL,
   `id_actividad` INT(11) NOT NULL,
-  PRIMARY KEY (`id`, `id_grupo`, `id_usuario`, `id_actividad`),
+  PRIMARY KEY (`id`),
   INDEX `fk_grupos_colaborativos_usuarios_grupos_colaborativos1_idx` (`id_grupo` ASC),
   INDEX `fk_grupos_colaborativos_usuarios_usuarios1_idx` (`id_usuario` ASC),
   INDEX `fk_grupos_colaborativos_usuarios_actividad_colaborativa1_idx` (`id_actividad` ASC),
