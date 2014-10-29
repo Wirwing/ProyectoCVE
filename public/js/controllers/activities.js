@@ -12,6 +12,7 @@
 
 	app.controller('AddActivityController',['$scope', 'Activities', '$window', function($scope, Activities,  $window){
 		
+		$scope.useDefaultModel = true;
 
 		this.add = function(activity){
 
