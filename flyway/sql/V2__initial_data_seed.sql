@@ -3,7 +3,7 @@ USE `db_cve_fmat_uady` ;
 --
 -- Volcado de datos para la tabla `modelo`
 --
-INSERT INTO `modelo` (`id`, `nombre`, `is_default`) VALUES
+INSERT INTO `modelos` (`id`, `nombre`, `is_default`) VALUES
 (1, "Default", 1);
 
 --
@@ -25,7 +25,7 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellido_paterno`,
 --
 -- Volcado de datos para la tabla `actividad_colaborativa`
 --
-INSERT INTO `actividad_colaborativa` (`id`, `id_modelo`, `id_tutor`, `nombre`, 
+INSERT INTO `actividades_colaborativas` (`id`, `id_modelo`, `id_tutor`, `nombre`, 
 	`descripcion`, `fecha`, `tipo`, `estrategia_instruccional`,
 	 `duracion_minima`) VALUES
 	(1, 1, 1, 'Resolver el problema adjunto con estructura WHILE', '', '2014-10-09', 'CONSTRUCTIVISTA', 'ROMPECABEZAS', 50);
