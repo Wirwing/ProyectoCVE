@@ -3,9 +3,9 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Table `db_cve_fmat_uady`.`modelo`
+-- Table `db_cve_fmat_uady`.`modelos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`modelo` (
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`modelos` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(45) NOT NULL,
   `is_default` TINYINT(1) NOT NULL,
@@ -16,9 +16,9 @@ COMMENT = 'Tabla intermedia para relacional actividad colaborativa con el modelo
 
 
 -- -----------------------------------------------------
--- Table `db_cve_fmat_uady`.`actividad_colaborativa`
+-- Table `db_cve_fmat_uady`.`actividades_colaborativas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`actividad_colaborativa` (
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`actividades_colaborativas` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `id_modelo` INT(11) NOT NULL,
   `id_tutor` INT(11) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`actividad_colaborativa` (
   INDEX `fk_actividad_colaborativa_modelo_idx` (`id_modelo` ASC),
   CONSTRAINT `fk_actividad_colaborativa_modelo`
     FOREIGN KEY (`id_modelo`)
-    REFERENCES `db_cve_fmat_uady`.`modelo` (`id`)
+    REFERENCES `db_cve_fmat_uady`.`modelos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`archivos_adjuntos` (
   INDEX `fk_archivos_adjuntos_actividad_colaborativa1_idx` (`id_actividad` ASC),
   CONSTRAINT `fk_archivos_adjuntos_actividad_colaborativa1`
     FOREIGN KEY (`id_actividad`)
-    REFERENCES `db_cve_fmat_uady`.`actividad_colaborativa` (`id`)
+    REFERENCES `db_cve_fmat_uady`.`actividades_colaborativas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -84,9 +84,9 @@ DEFAULT CHARACTER SET = latin1;
 
 
 -- -----------------------------------------------------
--- Table `db_cve_fmat_uady`.`chat_log`
+-- Table `db_cve_fmat_uady`.`chat_logs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`chat_log` (
+CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`chat_logs` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `id_chat_sesion` INT(11) NOT NULL,
   `id_usuario` INT(11) NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`grupos_colaborativos_usuarios` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_grupos_colaborativos_usuarios_actividad_colaborativa1`
     FOREIGN KEY (`id_actividad`)
-    REFERENCES `db_cve_fmat_uady`.`actividad_colaborativa` (`id`)
+    REFERENCES `db_cve_fmat_uady`.`actividades_colaborativas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`indicadores` (
   INDEX `fk_indicadores_modelo1_idx` (`id_modelo` ASC),
   CONSTRAINT `fk_indicadores_modelo1`
     FOREIGN KEY (`id_modelo`)
-    REFERENCES `db_cve_fmat_uady`.`modelo` (`id`)
+    REFERENCES `db_cve_fmat_uady`.`modelos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
