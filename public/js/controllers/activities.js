@@ -23,6 +23,7 @@
 					//Set model as default
 					$scope.model = defaultModel;
 
+					//Create shallow copy to mantain original object
 					$scope.backupDefaultModel = angular.copy(defaultModel);
 
 					$scope.useDefaultModel = true;
@@ -33,6 +34,7 @@
 			if ($scope.useDefaultModel){
 				$scope.model = angular.copy($scope.backupDefaultModel);
 			}else{
+				//Remove id and mark as not default.
 				$scope.model.id = undefined;
 				$scope.model.is_default = 0;
 			}
@@ -47,12 +49,9 @@
 			
 			activity.model = $scope.model;
 
-			/*
-
 			Activities.create({}, activity, function () {
                 $window.location.href = '/cve/activities';
             });
-			*/
 
 		}
 		
