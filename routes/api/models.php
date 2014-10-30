@@ -16,6 +16,39 @@ $app->get('/api/models', function () use ($app) {
 
 });
 
+$app->post('/api/models', function () use ($app) {
+
+	$body = $app->request()->getBody();
+    $attributes = json_decode($body, true);
+
+    $new_indicators = $attributes["indicators"];
+    unset($attributes["indicators"]);
+
+    $model = new Model($attributes);
+    $model->new_indicators = $new_indicators;
+    $model->save();
+
+    $json = $model->to_json(array('include' => array('indicators')));
+
+    $response = $app->response();
+    $response->header('Content-Type', 'application/json');
+    $response->status(201);
+    $response->write($json);
+
+});
+
+$app->get('/api/models/:id', function ($id) use ($app) {
+
+	$model = Model::find($id);
+
+	$response = $app->response();
+	$response->header('Content-Type', 'application/json');
+	$response->status(200);
+
+	$response->write($model->to_json());
+
+});
+
 $app->get('/api/models/default', function () use ($app) {
 
 	$model = Model::first();
