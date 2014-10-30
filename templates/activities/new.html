@@ -81,7 +81,7 @@
 
   <div class="form-group">
     <label class="col-sm-2 control-label" for="chbox_default_model">¿Modelo por defecto?</label>
-    <input id="chbox_default_model" type="checkbox" ng-model="useDefaultModel" />
+    <input id="chbox_default_model" type="checkbox" ng-model="useDefaultModel" ng-click="setDefaultModel()"/>
   </div>
 
   <fieldset ng-disabled="useDefaultModel">
@@ -90,7 +90,7 @@
      <div class="form-group">
       <label class="col-sm-1 control-label" for="textinput">Nombre</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].name" ng-disabled="true"/>
+        <input type="text" class="form-control" ng-model="model.indicators[0].nombre" ng-disabled="true"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
       <div class="col-sm-2">
@@ -110,19 +110,19 @@
      <div class="form-group">
       <label class="col-sm-1 control-label" for="textinput">Nombre</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].name" ng-disabled="true"/>
+        <input type="text" class="form-control" ng-model="model.indicators[1].nombre" ng-disabled="true"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_individual"/>
+        <input type="text" class="form-control" ng-model="model.indicators[1].frecuencia_individual"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_grupo"/>
+        <input type="text" class="form-control" ng-model="model.indicators[1].frecuencia_grupo"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].tolerancia"/>
+        <input type="text" class="form-control" ng-model="model.indicators[1].tolerancia"/>
       </div>
     </div>
 
@@ -130,19 +130,19 @@
      <div class="form-group">
       <label class="col-sm-1 control-label" for="textinput">Nombre</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].name" ng-disabled="true"/>
+        <input type="text" class="form-control" ng-model="model.indicators[2].nombre" ng-disabled="true"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_individual"/>
+        <input type="text" class="form-control" ng-model="model.indicators[2].frecuencia_individual"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_grupo"/>
+        <input type="text" class="form-control" ng-model="model.indicators[2].frecuencia_grupo"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].tolerancia"/>
+        <input type="text" class="form-control" ng-model="model.indicators[2].tolerancia"/>
       </div>
     </div>
 
@@ -150,19 +150,19 @@
      <div class="form-group">
       <label class="col-sm-1 control-label" for="textinput">Nombre</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].name" ng-disabled="true"/>
+        <input type="text" class="form-control" ng-model="model.indicators[3].nombre" ng-disabled="true"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_individual"/>
+        <input type="text" class="form-control" ng-model="model.indicators[3].frecuencia_individual"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_grupo"/>
+        <input type="text" class="form-control" ng-model="model.indicators[3].frecuencia_grupo"/>
       </div>
       <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
       <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].tolerancia"/>
+        <input type="text" class="form-control" ng-model="model.indicators[3].tolerancia"/>
       </div>
     </div>
 
@@ -179,6 +179,8 @@
     </div>
   </div>
 
+  <pre>form_payload = {{activity | json}}</pre>
+
 </form>
 
 </div>
@@ -190,6 +192,7 @@
 <script src="/cve/public/lib/angular-resource/angular-resource.js"></script>
 <script src="/cve/public/js/controllers/activities.js"></script>
 <script src="/cve/public/js/factories/activities.js"></script>
+<script src="/cve/public/js/factories/models.js"></script>
 
 </body>
 </html>

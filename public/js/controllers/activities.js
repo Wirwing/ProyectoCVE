@@ -1,6 +1,6 @@
 (function(){
 
-	var app = angular.module('activitiesController', ['activitiesFactory']);  
+	var app = angular.module('activitiesController', ['activitiesFactory', 'modelsFactory']);
 
 	app.controller('ActivitiesController',['$scope', 'Activities', function($scope, Activities){
 		
@@ -10,9 +10,33 @@
 
 	}]);
 
-	app.controller('AddActivityController',['$scope', 'Activities', '$window', function($scope, Activities,  $window){
-		
-		$scope.useDefaultModel = true;
+	app.controller('AddActivityController',['$scope', 'Activities', 'Models', '$window', function($scope, Activities, Models, $window){		
+
+		var defaultModel = {};
+		$scope.useDefaultModel = false;
+
+		Models.defaultModel({}, function (defaultModel) {
+
+					//Save default model
+					defaultModel = defaultModel;
+
+					//Set model as default
+					$scope.model = defaultModel;
+
+					$scope.backupDefaultModel = angular.copy(defaultModel);
+
+					$scope.useDefaultModel = true;
+
+		});
+
+		$scope.setDefaultModel = function(){
+			if ($scope.useDefaultModel){
+				$scope.model = angular.copy($scope.backupDefaultModel);
+			}else{
+				$scope.model.id = undefined;
+				$scope.model.is_default = 0;
+			}
+		};
 
 		this.add = function(activity){
 
@@ -21,10 +45,14 @@
 			activity.id_modelo = 1;
 			activity.fecha = new Date();
 			
+			activity.model = $scope.model;
+
+			/*
+
 			Activities.create({}, activity, function () {
                 $window.location.href = '/cve/activities';
             });
-			
+			*/
 
 		}
 		
