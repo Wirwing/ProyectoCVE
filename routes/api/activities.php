@@ -18,12 +18,18 @@ $app->get('/api/activities', function () use ($app) {
 
 $app->post('/api/activities', function () use ($app) {
 
-	$body = $app->request()->getBody();
+	$attributes = $app->request()->getBody();
+    //$attributes = json_decode($body, true);
 
-	$activity = new Activity($body);
-	$activity->save();
+    $activity = new Activity($attributes);
+    $activity->save();
 
-	$app->response()->write($activity->to_json());
+    $response = $app->response();
+    $response->header('Content-Type', 'application/json');
+    $response->status(201);
+
+    $json = $activity->to_json();
+    $response->write($json);
 
 });
 
@@ -35,7 +41,12 @@ $app->get('/api/activities/:id', function ($id) use ($app) {
 	$response->header('Content-Type', 'application/json');
 	$response->status(200);
 
-	$response->write($activity->to_json());
+	# you can nest includes .. here model also has an indicators association
+	$json = $activity->to_json(array(
+	  'include' => array('model' => array('include' => 'indicators'))
+	));
+
+	$response->write($json);
 
 });
 

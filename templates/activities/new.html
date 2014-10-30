@@ -24,68 +24,183 @@
      <!-- Collect the nav links, forms, and other content for toggling -->
      <div class="collapse navbar-collapse navbar-ex1-collapse">
        <ul class="nav navbar-nav">
-         
+
        </ul>
      </div>
      <!-- /.navbar-collapse -->
    </div>
    <!-- /.container -->
-  </nav>
-  <div class="content">
+ </nav>
+ <div class="content">
 
-    <form class="form-horizontal" ng-controller="AddActivityController as activityCtrl"
-      ng-submit="activityCtrl.add(activity)">
+  <form class="form-horizontal form-basic" ng-controller="AddActivityController as activityCtrl"
+  ng-submit="activityCtrl.add(activity)">
 
-        <div class="span4 offset2">
-          <h2>Nueva Actividad</h2>
-        </div>
+  <!-- Section Name -->
+  <legend>Actividad</legend>
 
-        <div class="form-group">
-            <label class="control-label col-md-2">Nombre</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" ng-model="activity.nombre" required />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Descripción</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" ng-model="activity.descripcion" required />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Tipo</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" ng-model="activity.tipo" required />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Estrategia Instruccional</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" ng-model="activity.estrategia_instruccional" required />
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Duración Minima</label>
-            <div class="col-md-10">
-                <input type="text" class="form-control" ng-model="activity.duracion_minima" required />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-primary">Crear</button>
-            </div>
-        </div>
-    </form>
+  <fieldset>
 
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="textinput">Nombre</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="activity.nombre" required />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="textinput">Descripción</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="activity.descripcion" required />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="textinput">Estrategia instruccional</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" ng-model="activity.estrategia_instruccional" required />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="textinput">Tipo</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" ng-model="activity.tipo" required />
+      </div>
+
+      <label class="col-sm-2 control-label" for="textinput">Duración mínima</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" ng-model="activity.duracion_minima" required />
+      </div>
+    </div>
+
+  </fieldset>
+
+  <!-- Section Name -->
+  <legend>Modelo - Indicadores</legend>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="chbox_default_model">¿Modelo por defecto?</label>
+    <input id="chbox_default_model" type="checkbox" ng-model="useDefaultModel" ng-click="setDefaultModel()"/>
   </div>
 
-    <script src="/cve/public/lib/jquery/dist/jquery.js"></script>
-    <script src="/cve/public/lib/angular/angular.js"></script>
-    <script src="/cve/public/js/app.js"></script>
-    <script src="/cve/public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
-    <script src="/cve/public/lib/angular-resource/angular-resource.js"></script>
-    <script src="/cve/public/js/controllers/activities.js"></script>
-    <script src="/cve/public/js/factories/activities.js"></script>
+  <fieldset ng-disabled="useDefaultModel">
+
+      <div class="form-group" ng-hide="useDefaultModel">
+        <label class="col-sm-2 control-label" for="textinput">Nombre del modelo</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="model.nombre" required />
+        </div>
+      </div>
+
+     <!-- Indicator subform -->
+     <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[0].nombre" ng-disabled="true"/>
+      </div>
+
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_individual"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_grupo"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[0].tolerancia"/>
+      </div>
+    </div>
+
+     <!-- Indicator subform -->
+     <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[1].nombre" ng-disabled="true"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[1].frecuencia_individual"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[1].frecuencia_grupo"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[1].tolerancia"/>
+      </div>
+    </div>
+
+     <!-- Indicator subform -->
+     <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[2].nombre" ng-disabled="true"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[2].frecuencia_individual"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[2].frecuencia_grupo"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[2].tolerancia"/>
+      </div>
+    </div>
+
+     <!-- Indicator subform -->
+     <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[3].nombre" ng-disabled="true"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[3].frecuencia_individual"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[3].frecuencia_grupo"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="model.indicators[3].tolerancia"/>
+      </div>
+    </div>
+
+  </fieldset>
+
+  <legend></legend>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="pull-right">
+        <button type="button" class="btn btn-default">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </div>
+    </div>
+  </div>
+
+  <pre>form_payload = {{activity | json}}</pre>
+
+</form>
+
+</div>
+
+<script src="/cve/public/lib/jquery/dist/jquery.js"></script>
+<script src="/cve/public/lib/angular/angular.js"></script>
+<script src="/cve/public/js/app.js"></script>
+<script src="/cve/public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
+<script src="/cve/public/lib/angular-resource/angular-resource.js"></script>
+<script src="/cve/public/js/controllers/activities.js"></script>
+<script src="/cve/public/js/factories/activities.js"></script>
+<script src="/cve/public/js/factories/models.js"></script>
 
 </body>
 </html>
