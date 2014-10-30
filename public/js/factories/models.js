@@ -5,7 +5,8 @@
     app.factory('Models', ['$resource',function($resource){
         return $resource("/cve/api/models", {}, {
             all: { method: 'GET', isArray: true },
-            defaultModel: { url:'/cve/api/models/default', method: 'GET' }
+            create: { method: 'POST' },
+            defaultModel: { url:'/cve/api/models/1', method: 'GET' }
         });
     }]);
 

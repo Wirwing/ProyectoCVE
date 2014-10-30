@@ -86,12 +86,20 @@
 
   <fieldset ng-disabled="useDefaultModel">
 
+      <div class="form-group" ng-hide="useDefaultModel">
+        <label class="col-sm-2 control-label" for="textinput">Nombre del modelo</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="model.nombre" required />
+        </div>
+      </div>
+
      <!-- Indicator subform -->
      <div class="form-group">
-      <label class="col-sm-1 control-label" for="textinput">Nombre</label>
+      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
       <div class="col-sm-2">
         <input type="text" class="form-control" ng-model="model.indicators[0].nombre" ng-disabled="true"/>
       </div>
+
       <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
       <div class="col-sm-2">
         <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_individual"/>
@@ -108,7 +116,7 @@
 
      <!-- Indicator subform -->
      <div class="form-group">
-      <label class="col-sm-1 control-label" for="textinput">Nombre</label>
+      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
       <div class="col-sm-2">
         <input type="text" class="form-control" ng-model="model.indicators[1].nombre" ng-disabled="true"/>
       </div>
@@ -128,7 +136,7 @@
 
      <!-- Indicator subform -->
      <div class="form-group">
-      <label class="col-sm-1 control-label" for="textinput">Nombre</label>
+      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
       <div class="col-sm-2">
         <input type="text" class="form-control" ng-model="model.indicators[2].nombre" ng-disabled="true"/>
       </div>
@@ -148,7 +156,7 @@
 
      <!-- Indicator subform -->
      <div class="form-group">
-      <label class="col-sm-1 control-label" for="textinput">Nombre</label>
+      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
       <div class="col-sm-2">
         <input type="text" class="form-control" ng-model="model.indicators[3].nombre" ng-disabled="true"/>
       </div>

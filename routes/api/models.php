@@ -18,8 +18,7 @@ $app->get('/api/models', function () use ($app) {
 
 $app->post('/api/models', function () use ($app) {
 
-	$body = $app->request()->getBody();
-    $attributes = json_decode($body, true);
+	$attributes = $app->request()->getBody();
 
     $new_indicators = $attributes["indicators"];
     unset($attributes["indicators"]);
@@ -45,7 +44,8 @@ $app->get('/api/models/:id', function ($id) use ($app) {
 	$response->header('Content-Type', 'application/json');
 	$response->status(200);
 
-	$response->write($model->to_json());
+	$json = $model->to_json(array('include' => array('indicators')));
+	$response->write($json);
 
 });
 
@@ -58,7 +58,6 @@ $app->get('/api/models/default', function () use ($app) {
 	$response->status(200);
 
 	$json = $model->to_json(array('include' => array('indicators')));
-
 	$response->write($json);
 
 });
