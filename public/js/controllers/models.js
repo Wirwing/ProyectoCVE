@@ -18,7 +18,7 @@
 				$scope.models.splice($index, 1);
 			});
 
-        }
+		}
 
 	}]);
 
@@ -27,10 +27,10 @@
 		$scope.model = {};
 
 		$scope.model.indicators = [
-			{nombre: "Argumento", frecuencia_individual: 0, frecuencia_grupo: 0, tolerancia: 0},
-			{nombre: "Idea", frecuencia_individual: 0, frecuencia_grupo: 0, tolerancia: 0},
-			{nombre: "Duda", frecuencia_individual: 0, frecuencia_grupo: 0, tolerancia: 0},
-			{nombre: "Pregunta", frecuencia_individual: 0, frecuencia_grupo: 0, tolerancia: 0}
+		{nombre: "Argumento", frecuencia_individual: 0, frecuencia_grupo: 0, tolerancia: 0},
+		{nombre: "Idea", frecuencia_individual: 0, frecuencia_grupo: 0, tolerancia: 0},
+		{nombre: "Duda", frecuencia_individual: 0, frecuencia_grupo: 0, tolerancia: 0},
+		{nombre: "Pregunta", frecuencia_individual: 0, frecuencia_grupo: 0, tolerancia: 0}
 		];
 
 		Models.all({}, function(availables){
@@ -46,5 +46,25 @@
 		}
 
 	}]);
+
+
+	app.controller('EditModelController',['Models', '$scope', '$attrs', '$window',
+		function(Models, $scope, $attrs, $window){
+
+			$scope.model = Models.get({id: $attrs.id});
+
+			$scope.update = function(model){
+
+				//Remove model children, otherwise phpactiverecord goes kaput
+				model.attachments = undefined;
+				model.model = undefined;
+
+				Models.update({id: model.id}, model, function () {
+					$window.location.href = '/cve/interaction-models/' + model.id;
+				});
+			}
+
+		}]);
+
 
 })();

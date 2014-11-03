@@ -6,7 +6,7 @@
         return $resource("/cve/api/interaction-models", {}, {
             all: { method: 'GET', isArray: true },
             create: { method: 'POST' },
-            defaultModel: { url:'/cve/api/interaction-models/1', method: 'GET' }
+            get: { url: "/cve/api/interaction-models/:id", method: 'GET', isArray: false }
         });
     }]);
 
