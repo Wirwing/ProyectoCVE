@@ -50,4 +50,31 @@ $app->get('/api/activities/:id', function ($id) use ($app) {
 
 });
 
+$app->put('/api/activities/:id', function ($id) use ($app) {
+
+	$activity = Activity::find($id);
+
+	$attributes = $app->request()->getBody();
+	//$attributes = json_decode($body, true);
+
+	unset($attributes["attachments"]);
+	unset($attributes["model"]);
+
+	$activity->update_attributes($attributes);
+
+	$activity->save();
+
+	$response = $app->response();
+	$response->header('Content-Type', 'application/json');
+	$response->status(200);
+
+	# you can nest includes .. here model also has an indicators association
+	$json = $activity->to_json(array(
+	  'include' => array( 'attachments', 'model' => array('include' => 'indicators'))
+	));
+
+	$response->write($json);
+
+});
+
 ?>

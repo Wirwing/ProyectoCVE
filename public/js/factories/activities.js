@@ -7,6 +7,7 @@
             create: { method: 'POST' },
             all: { method: 'GET', isArray: true },
             get: { url: "/cve/api/activities/:id", method: 'GET', isArray: false },
+            update: { url: "/cve/api/activities/:id", method: 'PUT', isArray: false },
             deleteAttachment: { url: "/cve/api/activities/:id_activity/files/:id_file", method: 'DELETE', isArray: false }
         });
     }]);

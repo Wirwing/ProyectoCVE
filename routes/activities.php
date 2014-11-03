@@ -25,4 +25,11 @@ $app->get('/activities/:id', function ($id) use ($app) {
 
 });
 
+$app->get('/activities/:id/edit', function ($id) use ($app) {
+
+	$data = array('id_activity' => $id);
+	$app->render('activities/edit.html', $data);
+
+});
+
 ?>

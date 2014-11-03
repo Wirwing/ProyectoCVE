@@ -47,6 +47,7 @@
         <th>Tipo</th>
         <th>Estrategia Instruccional</th>
         <th>Duración Mínima</th>
+        <th>Opciones</th>
       </tr>
     </thead>
     <tbody>
@@ -58,6 +59,13 @@
         <td>{{activity.tipo}}</td>
         <td>{{activity.estrategia_instruccional}}</td>
         <td>{{activity.duracion_minima}}</td>
+        <td><button type="button" class="btn btn-info btn-xs" ng-click="view(activity)">
+              <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+            </button>
+            <button type="button" class="btn btn-danger btn-xs" ng-click="view(activity)">
+              <span class="glyphicon glyphicon-trash"></span> Eliminar
+            </button>
+        </td>
       </tr>
     </tbody>
   </table>
