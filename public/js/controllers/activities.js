@@ -20,9 +20,16 @@
         });
 
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
-			var file = {name:  fileItem.file.name};
-			$scope.activity.attachments.push(file);
+			$scope.activity.attachments.push(response);
         };
+
+        $scope.downloadAttachment = function(attachment){
+			$window.location.href = $attrs.id + '/files/' + attachment.id;
+        }
+
+        $scope.removeAttachment = function(attachment){
+			console.log(attachment);
+        }
 
 	}]);
 

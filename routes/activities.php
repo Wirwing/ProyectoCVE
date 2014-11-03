@@ -30,14 +30,12 @@ $app->post('/activities/:id/files', function ($id_activity) use ($app) {
 	$app->log->info("File upload route");
 
 	try {
-		$result = AttachedFile::attach_new($id_activity);
+		$json = AttachedFile::attach_new($id_activity)->to_json();
 		$status_code = 201;
 	} catch (\ActiveRecord\RecordNotFound $e) {
-		$result = "Activity doesn't exist";
+		$json = json_encode(array("result" => $result));
 		$status_code = 404;
 	}
-
-	$json = json_encode(array("result" => $result));
 
 	$response = $app->response();
 	$response->header('Content-Type', 'application/json');
@@ -47,11 +45,16 @@ $app->post('/activities/:id/files', function ($id_activity) use ($app) {
 });
 
 
-$app->get('/activities/:id/files/:id_file', function ($id) use ($app) {
+$app->get('/activities/:id_actividad/files/:id_file', function ($id_actividad, $id_file) use ($app) {
 
 	$app->log->info("File download route");
 
-	$file = 'C:\cve\public\uploads\activities\1\files\Articulo.docx';
+	$attachments = AttachedFile::all(array('id_actividad' => $id_actividad, 'id' => $id_file));
+	$attachment = $attachments[0];
+
+	$file = "C:\cve\public\uploads\activities\\" . $attachment->id_actividad . "\\files\\" . $attachment->nombre;
+
+	//var_dump($file);
 
 	$res = $app->response();
 	$res['Content-Description'] = 'File Transfer';

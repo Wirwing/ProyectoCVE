@@ -160,10 +160,12 @@
 					<h3>Adjuntos</h3>
 					<div class="list-group">
 						<div ng-repeat="attachedFile in activity.attachments">
-							<a href="#" class="list-group-item list-group-item-success">
-								<span class="badge alert-success pull-right">isSuccess</span>
+						<!-- <span href="#" ng-click="downloadAttachment(attachedFile)" class="list-group-item list-group-item-success">
 								{{attachedFile.nombre}}
-							</a>
+							</span> -->
+							
+							<button type="button" class="pull-right btn btn-danger btn-s" ng-click="removeAttachment(attachedFile)">Eliminar
+							</button>
 						</div>
 					</div>
 				</div>
