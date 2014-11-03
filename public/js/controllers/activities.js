@@ -21,10 +21,8 @@
 
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
 			var file = {name:  fileItem.file.name};
-			$scope.attachedFiles.push(file);
+			$scope.activity.attachments.push(file);
         };
-
-        $scope.attachedFiles = [];
 
 	}]);
 

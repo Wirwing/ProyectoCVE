@@ -157,12 +157,12 @@
 
 				<!-- Upload Finished -->
 				<div class="js-upload-finished">
-					<h3>Processed files</h3>
+					<h3>Adjuntos</h3>
 					<div class="list-group">
-						<div ng-repeat="attachedFile in attachedFiles">
+						<div ng-repeat="attachedFile in activity.attachments">
 							<a href="#" class="list-group-item list-group-item-success">
 								<span class="badge alert-success pull-right">isSuccess</span>
-								{{attachedFile.name}}
+								{{attachedFile.nombre}}
 							</a>
 						</div>
 					</div>
