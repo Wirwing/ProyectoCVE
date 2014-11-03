@@ -5,16 +5,19 @@
     app.factory('Activities', ['$resource',function($resource){
         return $resource("/cve/api/activities", {}, {
             create: { method: 'POST' },
-            all: { method: 'GET', isArray: true }
+            all: { method: 'GET', isArray: true },
+            get: { url: "/cve/api/activities/:id", method: 'GET', isArray: false },
+            deleteAttachment: { url: "/cve/api/activities/:id_activity/files/:id_file", method: 'DELETE', isArray: false }
         });
     }]);
 
-
+/*
     app.factory('Activity', ['$resource', function ($resource) {
-        return $resource("/cve/api/activities/:id", {}, {
+        return $resource(, {}, {
             get: { method: "GET", isArray: false },
             update: { method: 'PUT' }
         });
     }]);
+*/
 
 })();

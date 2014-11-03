@@ -6,6 +6,7 @@
 
 	#API Namespace
 	include "api/activities.php";
+	include "api/attached_files.php";
 	include "api/models.php";
 
 ?>

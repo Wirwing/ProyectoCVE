@@ -1,6 +1,6 @@
 (function(){
 
-	var app = angular.module('activitiesController', ['activitiesFactory', 'modelsFactory']);
+	var app = angular.module('activitiesController', ['activitiesFactory', 'modelsFactory', 'angularFileUpload']);
 
 	app.controller('ActivitiesController',['$scope', 'Activities', function($scope, Activities){
 		
@@ -10,7 +10,36 @@
 
 	}]);
 
-	app.controller('AddActivityController',['$scope', 'Activities', 'Models', '$window', function($scope, Activities, Models, $window){		
+	app.controller('ActivityController',['$scope', 'Activities', 'FileUploader', '$attrs', '$window', 
+		function($scope, Activities, FileUploader, $attrs, $window){
+
+		$scope.activity = Activities.get({id: $attrs.id}, function(){
+			
+		});
+
+		var uploader = $scope.uploader = new FileUploader({
+            url: "/cve/api/activities/" + $attrs.id + '/files'
+        });
+
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+			$scope.activity.attachments.push(response);
+        };
+
+        $scope.downloadAttachment = function(attachment){
+			$window.location.href = "/cve/api/activities/" + $attrs.id + '/files/' + attachment.id;
+        }
+
+        $scope.removeAttachment = function($index, attachment){
+
+        	Activities.deleteAttachment({id_activity: $attrs.id, id_file: attachment.id }, function (message) {
+				$scope.activity.attachments.splice($index, 1);
+			});
+
+        }
+
+	}]);
+
+	app.controller('AddActivityController',['$scope', 'Activities', 'Models', '$window', function($scope, Activities, Models, $window){
 
 		var defaultModel = {};
 		$scope.useDefaultModel = false;
