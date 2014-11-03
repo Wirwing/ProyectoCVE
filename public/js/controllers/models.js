@@ -47,21 +47,35 @@
 
 	}]);
 
+	app.controller('ModelController',['$scope', 'Models', '$attrs', '$window', 
+		function($scope, Models, $attrs, $window){
+
+		$scope.model = Models.get({id: $attrs.id});
+
+        $scope.edit = function(){
+        	$window.location.href = "/cve/interaction-models/" + $attrs.id + '/edit';
+        }
+
+        $scope.delete = function(){
+        	Activities.remove({id: $scope.model.id}, function(){
+				$window.location.href = '/cve/interaction-models';
+			});
+        }
+
+	}]);
+
 
 	app.controller('EditModelController',['Models', '$scope', '$attrs', '$window',
 		function(Models, $scope, $attrs, $window){
 
 			$scope.model = Models.get({id: $attrs.id});
 
-			$scope.update = function(model){
+			$scope.update = function(){
 
-				//Remove model children, otherwise phpactiverecord goes kaput
-				model.attachments = undefined;
-				model.model = undefined;
-
-				Models.update({id: model.id}, model, function () {
-					$window.location.href = '/cve/interaction-models/' + model.id;
+				Models.update({id: $scope.model.id}, $scope.model, function () {
+					$window.location.href = '/cve/interaction-models/' + $scope.model.id;
 				});
+
 			}
 
 		}]);

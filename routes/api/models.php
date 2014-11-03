@@ -43,7 +43,11 @@ $app->put('/api/interaction-models/:id', function ($id) use ($app) {
 	$attributes = $app->request()->getBody();
 	//$attributes = json_decode($body, true);
 
-	unset($attributes["indicators"]);
+	$new_indicators = $attributes["indicators"];
+    unset($attributes["indicators"]);
+
+    $model = Model::find($id);
+    $model->new_indicators = $new_indicators;
 
 	$model->update_attributes($attributes);
 	$model->save();
