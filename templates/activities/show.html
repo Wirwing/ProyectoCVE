@@ -159,30 +159,29 @@
 				<div class="js-upload-finished">
 					<h3>Processed files</h3>
 					<div class="list-group">
-						<a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a>
-						<a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-02.jpg</a>
-						<a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a>
-						<a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-02.jpg</a>
-						<a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-01.jpg</a>
-						<a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">Success</span>image-02.jpg</a>
+						<div ng-repeat="attachedFile in attachedFiles">
+							<a href="#" class="list-group-item list-group-item-success">
+								<span class="badge alert-success pull-right">isSuccess</span>
+								{{attachedFile.name}}
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 
 	</div>
 
-</div>
-
-<script src="/cve/public/lib/jquery/dist/jquery.js"></script>
-<script src="/cve/public/lib/angular/angular.js"></script>
-<script src="/cve/public/js/app.js"></script>
-<script src="/cve/public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
-<script src="/cve/public/lib/angular-resource/angular-resource.js"></script>
-<script src="/cve/public/lib/angular-file-upload/angular-file-upload.js"></script>
-<script src="/cve/public/js/controllers/activities.js"></script>
-<script src="/cve/public/js/factories/activities.js"></script>
-<script src="/cve/public/js/factories/models.js"></script>
+	<script src="/cve/public/lib/jquery/dist/jquery.js"></script>
+	<script src="/cve/public/lib/angular/angular.js"></script>
+	<script src="/cve/public/js/app.js"></script>
+	<script src="/cve/public/lib/angular-smart-table/dist/smart-table.debug.js"></script>
+	<script src="/cve/public/lib/angular-resource/angular-resource.js"></script>
+	<script src="/cve/public/lib/angular-file-upload/angular-file-upload.js"></script>
+	<script src="/cve/public/js/controllers/activities.js"></script>
+	<script src="/cve/public/js/factories/activities.js"></script>
+	<script src="/cve/public/js/factories/models.js"></script>
 
 </body>
 </html>

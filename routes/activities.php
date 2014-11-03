@@ -25,43 +25,27 @@ $app->get('/activities/:id', function ($id) use ($app) {
 
 });
 
-$app->post('/activities/:id/files', function ($id) use ($app) {
+$app->post('/activities/:id/files', function ($id_activity) use ($app) {
 
 	$app->log->info("File upload route");
 
-	if (!isset($_FILES['upload'])) {
-		echo "No files uploaded!!";
-		return;
+	try {
+		$result = AttachedFile::attach_new($id_activity);
+		$status_code = 201;
+	} catch (\ActiveRecord\RecordNotFound $e) {
+		$result = "Activity doesn't exist";
+		$status_code = 404;
 	}
 
-	$imgs = array();
+	$json = json_encode(array("result" => $result));
 
-	$file = $_FILES['upload'];
-	$filename = $file['tmp_name'];
-
-	$upload_path = '/cve/public/uploads/activities/'. $id . '/files';
-	$destination =  $upload_path . '/' . $file["name"];
-
-	if ($file['error'] === 0) {
-
-		if (!file_exists($upload_path)) {
-			mkdir($upload_path, 0777, true);
-		}
-
-		if (move_uploaded_file($filename, $destination)) {
-			echo "Success.\n";
-		}else{
-			echo "Error move";
-		}
-	}else{
-		echo "Error code";
-	}
-
-
-	echo 'Here is some more debugging info:';
-	print_r($_FILES);
+	$response = $app->response();
+	$response->header('Content-Type', 'application/json');
+	$response->status($status_code);
+	$response->write($json);
 
 });
+
 
 $app->get('/activities/:id/files/:id_file', function ($id) use ($app) {
 
@@ -69,16 +53,16 @@ $app->get('/activities/:id/files/:id_file', function ($id) use ($app) {
 
 	$file = 'C:\cve\public\uploads\activities\1\files\Articulo.docx';
 
-    $res = $app->response();
-    $res['Content-Description'] = 'File Transfer';
-    $res['Content-Type'] = 'application/octet-stream';
-    $res['Content-Disposition'] ='attachment; filename=' . basename($file);
-    $res['Content-Transfer-Encoding'] = 'binary';
-    $res['Expires'] = '0';
-    $res['Cache-Control'] = 'must-revalidate';
-    $res['Pragma'] = 'public';
-    $res['Content-Length'] = filesize($file);
-    readfile($file);
+	$res = $app->response();
+	$res['Content-Description'] = 'File Transfer';
+	$res['Content-Type'] = 'application/octet-stream';
+	$res['Content-Disposition'] ='attachment; filename=' . basename($file);
+	$res['Content-Transfer-Encoding'] = 'binary';
+	$res['Expires'] = '0';
+	$res['Cache-Control'] = 'must-revalidate';
+	$res['Pragma'] = 'public';
+	$res['Content-Length'] = filesize($file);
+	readfile($file);
 
 });
 

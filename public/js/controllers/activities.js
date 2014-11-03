@@ -16,8 +16,15 @@
 		$scope.activity = Activities.get({id: $attrs.id});
 
 		var uploader = $scope.uploader = new FileUploader({
-            url: 'upload.php'
+            url: $attrs.id + '/files'
         });
+
+        uploader.onSuccessItem = function(fileItem, response, status, headers) {
+			var file = {name:  fileItem.file.name};
+			$scope.attachedFiles.push(file);
+        };
+
+        $scope.attachedFiles = [];
 
 	}]);
 
