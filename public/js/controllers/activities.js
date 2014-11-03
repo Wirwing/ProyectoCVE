@@ -10,7 +10,13 @@
 
 	}]);
 
-	app.controller('AddActivityController',['$scope', 'Activities', 'Models', '$window', function($scope, Activities, Models, $window){		
+	app.controller('ActivityController',['$scope', 'Activities', '$attrs', '$window', function($scope, Activities, $attrs, $window){
+
+		$scope.activity = Activities.get({id: $attrs.id});
+
+	}]);
+
+	app.controller('AddActivityController',['$scope', 'Activities', 'Models', '$window', function($scope, Activities, Models, $window){
 
 		var defaultModel = {};
 		$scope.useDefaultModel = false;
