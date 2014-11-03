@@ -40,7 +40,7 @@
 
 			<div class="panel panel-info">
 				<div class="panel-heading">
-					<h3 class="panel-title"> <strong>Actividad:</strong> Sheena Kristin A.Eschor</h3>
+					<h3 class="panel-title"> <strong>Actividad:</strong> {{activity.nombre}}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="row">
@@ -49,37 +49,21 @@
 							<table class="table table-user-information">
 								<tbody>
 									<tr>
-										<td>Department:</td>
-										<td>Programming</td>
+										<td>Fecha:</td>
+										<td>{{activity.fecha}}</td>
 									</tr>
 									<tr>
-										<td>Hire date:</td>
-										<td>06/23/2013</td>
+										<td>Tipo:</td>
+										<td>{{activity.tipo}}</td>
 									</tr>
 									<tr>
-										<td>Date of Birth</td>
-										<td>01/24/1988</td>
+										<td>Estrategia instruccional</td>
+										<td>{{activity.estrategia_instruccional}}</td>
 									</tr>
-
 									<tr>
-										<tr>
-											<td>Gender</td>
-											<td>Male</td>
-										</tr>
-										<tr>
-											<td>Home Address</td>
-											<td>Metro Manila,Philippines</td>
-										</tr>
-										<tr>
-											<td>Email</td>
-											<td><a href="mailto:info@support.com">info@support.com</a></td>
-										</tr>
-										<td>Phone Number</td>
-										<td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-										</td>
-
+										<td>Duración mínima</td>
+										<td>{{activity.duracion_minima}}</td>
 									</tr>
-
 								</tbody>
 							</table>
 						</div>
@@ -158,16 +142,24 @@
 				<!-- Upload Finished -->
 				<div class="js-upload-finished">
 					<h3>Adjuntos</h3>
-					<div class="list-group">
-						<div ng-repeat="attachedFile in activity.attachments">
-						<!-- <span href="#" ng-click="downloadAttachment(attachedFile)" class="list-group-item list-group-item-success">
-								{{attachedFile.nombre}}
-							</span> -->
-							
-							<button type="button" class="pull-right btn btn-danger btn-s" ng-click="removeAttachment(attachedFile)">Eliminar
-							</button>
-						</div>
-					</div>
+
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="attachedFile in activity.attachments">
+								<td>{{attachedFile.nombre}}</td>
+								<td>
+									<button type="button" class="pull-right btn btn-danger btn-s" ng-click="removeAttachment($index, attachedFile)">Eliminar
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 

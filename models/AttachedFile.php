@@ -47,6 +47,30 @@ class AttachedFile extends ActiveRecord\Model{
 		
 	}
 
+	public static function find_by_id_and_activity($id, $id_activity){
+
+		$attachments = AttachedFile::all(array('id_actividad' => $id_activity, 'id' => $id));
+
+		if(sizeof($attachments) == 0) 
+			throw new \ActiveRecord\RecordNotFound("Couldn't find attachment");
+
+		return $attachments[0];
+
+	}
+
+	public static function delete_attachment($id, $id_activity){
+
+		$attachment = AttachedFile::find_by_id_and_activity($id, $id_activity);
+		$file = $attachment->get_attachment();
+
+		return unlink($file) && $attachment->delete();
+
+	}
+
+	public function get_attachment(){
+		return "C:\cve\public\uploads\activities\\" . $this->id_actividad . "\\files\\" . $this->nombre;
+	}
+
 	private static function create_new($filename, $id_activity){
 		$attributes = array('nombre' => $filename, 'url' => '', 'fecha' =>  new \DateTime(), 'id_actividad' => $id_activity);
 		return AttachedFile::create($attributes);

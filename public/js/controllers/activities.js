@@ -13,10 +13,12 @@
 	app.controller('ActivityController',['$scope', 'Activities', 'FileUploader', '$attrs', '$window', 
 		function($scope, Activities, FileUploader, $attrs, $window){
 
-		$scope.activity = Activities.get({id: $attrs.id});
+		$scope.activity = Activities.get({id: $attrs.id}, function(){
+			
+		});
 
 		var uploader = $scope.uploader = new FileUploader({
-            url: $attrs.id + '/files'
+            url: "/cve/api/activities/" + $attrs.id + '/files'
         });
 
         uploader.onSuccessItem = function(fileItem, response, status, headers) {
@@ -24,11 +26,15 @@
         };
 
         $scope.downloadAttachment = function(attachment){
-			$window.location.href = $attrs.id + '/files/' + attachment.id;
+			$window.location.href = "/cve/api/activities/" + $attrs.id + '/files/' + attachment.id;
         }
 
-        $scope.removeAttachment = function(attachment){
-			console.log(attachment);
+        $scope.removeAttachment = function($index, attachment){
+
+        	Activities.deleteAttachment({id_activity: $attrs.id, id_file: attachment.id }, function (message) {
+				$scope.activity.attachments.splice($index, 1);
+			});
+
         }
 
 	}]);
