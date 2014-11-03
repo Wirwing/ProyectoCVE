@@ -1,6 +1,6 @@
 (function(){
 
-	var app = angular.module('activitiesController', ['activitiesFactory', 'modelsFactory']);
+	var app = angular.module('activitiesController', ['activitiesFactory', 'modelsFactory', 'angularFileUpload']);
 
 	app.controller('ActivitiesController',['$scope', 'Activities', function($scope, Activities){
 		
@@ -10,9 +10,14 @@
 
 	}]);
 
-	app.controller('ActivityController',['$scope', 'Activities', '$attrs', '$window', function($scope, Activities, $attrs, $window){
+	app.controller('ActivityController',['$scope', 'Activities', 'FileUploader', '$attrs', '$window', 
+		function($scope, Activities, FileUploader, $attrs, $window){
 
 		$scope.activity = Activities.get({id: $attrs.id});
+
+		var uploader = $scope.uploader = new FileUploader({
+            url: 'upload.php'
+        });
 
 	}]);
 
