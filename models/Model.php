@@ -13,6 +13,21 @@ class Model extends ActiveRecord\Model{
 
 	static $after_create = array('make_indicators');
 
+	static $before_update = array('update_indicators');
+
+	public function update_indicators(){
+
+		if($this->new_indicators){
+			foreach ($this->new_indicators as $indicator_attributes) {
+
+				$indicator = Indicator::find($indicator_attributes["id"]);
+				$indicator->update_attributes($indicator_attributes);
+				
+			}
+		}
+
+	}
+
 	public function make_indicators() {
 		if($this->new_indicators){
 			foreach ($this->new_indicators as $indicator) {

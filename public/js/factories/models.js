@@ -3,10 +3,11 @@
     var app = angular.module('modelsFactory', ['ngResource']);
 
     app.factory('Models', ['$resource',function($resource){
-        return $resource("/cve/api/models", {}, {
+        return $resource("/cve/api/interaction-models", {}, {
             all: { method: 'GET', isArray: true },
             create: { method: 'POST' },
-            defaultModel: { url:'/cve/api/models/1', method: 'GET' }
+            get: { url: "/cve/api/interaction-models/:id", method: 'GET', isArray: false },
+            update: { url: "/cve/api/interaction-models/:id", method: 'PUT', isArray: false }
         });
     }]);
 

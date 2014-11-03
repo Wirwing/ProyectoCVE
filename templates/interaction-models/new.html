@@ -1,0 +1,124 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Actividades[% endblock %]
+
+[% block content %]
+
+<form class="form-horizontal form-basic" ng-controller="AddModelController as modelCtrl"
+ng-submit="modelCtrl.add(model)">
+
+<!-- Section Name -->
+<legend>Modelo de Interacción</legend>
+
+<fieldset>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Nombre</label>
+    <div class="col-sm-11">
+      <input type="text" class="form-control" ng-model="model.nombre" required />
+    </div>
+  </div>
+
+</fieldset>
+
+<!-- Section Name -->
+<legend>Indicadores</legend>
+
+<!-- Indicator subform -->
+<div class="form-group">
+
+  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[0].nombre" ng-disabled="true"/>
+  </div>
+
+  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_individual" required />
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_grupo" required />
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[0].tolerancia" required />
+  </div>
+</div>
+
+<!-- Indicator subform -->
+<div class="form-group">
+  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[1].nombre" ng-disabled="true"/>
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[1].frecuencia_individual" required />
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[1].frecuencia_grupo" required />
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[1].tolerancia" required />
+  </div>
+</div>
+
+<!-- Indicator subform -->
+<div class="form-group">
+  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[2].nombre" ng-disabled="true"/>
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[2].frecuencia_individual" required />
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[2].frecuencia_grupo" required />
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[2].tolerancia" required />
+  </div>
+</div>
+
+<!-- Indicator subform -->
+<div class="form-group">
+  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[3].nombre" ng-disabled="true"/>
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[3].frecuencia_individual" required />
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[3].frecuencia_grupo" required />
+  </div>
+  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="model.indicators[3].tolerancia" required />
+  </div>
+</div>
+
+</fieldset>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="pull-right">
+      <button type="button" class="btn btn-default">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Crear</button>
+    </div>
+  </div>
+</div>
+
+<pre>form_payload = {{model | json}}</pre>
+
+</form>
+
+[% endblock %]

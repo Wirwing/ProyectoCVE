@@ -1,0 +1,40 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Actividades[% endblock %]
+
+[% block content %]
+
+ <div ng-controller="ModelsController as modelsCtrl">
+
+  <h2 class="pull-left">Modelos</h2>
+
+  <a href="interaction-models/new" type="button" class="btn btn-info pull-right">
+    Nuevo modelo
+  </a>
+
+  <table st-table="models" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="model in models">
+        <td>{{model.id}}</td>
+        <td>{{model.nombre}}</td>
+        <td><button type="button" class="btn btn-info btn-xs" ng-click="view(model)">
+          <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+        </button>
+        <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, model)">
+          <span class="glyphicon glyphicon-trash"></span> Eliminar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+[% endblock %]
