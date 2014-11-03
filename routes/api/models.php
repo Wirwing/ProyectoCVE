@@ -9,7 +9,7 @@ $app->get('/api/models', function () use ($app) {
 	$response->status(200);
 
 	$json = json_encode(array_map(function($res){
-		return $res->to_array();
+		return $res->to_array(array('include' => array('indicators')));
 	}, $models));
 
 	$response->write($json);

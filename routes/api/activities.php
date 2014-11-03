@@ -50,4 +50,52 @@ $app->get('/api/activities/:id', function ($id) use ($app) {
 
 });
 
+$app->put('/api/activities/:id', function ($id) use ($app) {
+
+	$activity = Activity::find($id);
+
+	$attributes = $app->request()->getBody();
+	//$attributes = json_decode($body, true);
+
+	unset($attributes["attachments"]);
+	unset($attributes["model"]);
+
+	$activity->update_attributes($attributes);
+
+	$activity->save();
+
+	$response = $app->response();
+	$response->header('Content-Type', 'application/json');
+	$response->status(200);
+
+	# you can nest includes .. here model also has an indicators association
+	$json = $activity->to_json(array(
+	  'include' => array( 'attachments', 'model' => array('include' => 'indicators'))
+	));
+
+	$response->write($json);
+
+});
+
+$app->delete('/api/activities/:id', function ($id) use ($app) {
+
+	try {
+		$activity = Activity::find($id);
+		$delete = $activity->delete();
+		$message = ($delete == true)? 'Activity deleted' : "Couldn't delete activity";
+		$status_code = 204;
+	} catch (\ActiveRecord\RecordNotFound $e) {
+		$message = "Activity not found";
+		$status_code = 404;
+	}
+
+	$json = json_encode(array("result" => $message));
+
+	$response = $app->response();
+	$response->header('Content-Type', 'application/json');
+	$response->status($status_code);
+	$response->write($json);
+
+});
+
 ?>

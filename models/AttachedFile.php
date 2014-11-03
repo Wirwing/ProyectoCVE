@@ -9,6 +9,8 @@ class AttachedFile extends ActiveRecord\Model{
     	array('activity', 'foreign_key' => 'id_actividad', 'class_name' => 'Activity')
 	);
 
+	static $before_destroy = array('destroy_file');
+
     public static function attach_new($id_actividad) {
 
 		$activity = Activity::find($id_actividad);
@@ -58,13 +60,9 @@ class AttachedFile extends ActiveRecord\Model{
 
 	}
 
-	public static function delete_attachment($id, $id_activity){
-
-		$attachment = AttachedFile::find_by_id_and_activity($id, $id_activity);
-		$file = $attachment->get_attachment();
-
-		return unlink($file) && $attachment->delete();
-
+	public function destroy_file(){
+		$file = $this->get_attachment();
+		unlink($file);
 	}
 
 	public function get_attachment(){
