@@ -1,6 +1,6 @@
 <?php 
 
-$app->get('/api/models', function () use ($app) {
+$app->get('/api/interaction-models', function () use ($app) {
 
 	$models = Model::all(array('readonly' => true, 'limit' => 50));
 
@@ -16,7 +16,7 @@ $app->get('/api/models', function () use ($app) {
 
 });
 
-$app->post('/api/models', function () use ($app) {
+$app->post('/api/interaction-models', function () use ($app) {
 
 	$attributes = $app->request()->getBody();
 
@@ -36,22 +36,33 @@ $app->post('/api/models', function () use ($app) {
 
 });
 
-$app->get('/api/models/:id', function ($id) use ($app) {
+$app->put('/api/interaction-models/:id', function ($id) use ($app) {
 
 	$model = Model::find($id);
+
+	$attributes = $app->request()->getBody();
+	//$attributes = json_decode($body, true);
+
+	unset($attributes["indicators"]);
+
+	$model->update_attributes($attributes);
+	$model->save();
 
 	$response = $app->response();
 	$response->header('Content-Type', 'application/json');
 	$response->status(200);
 
+	# you can nest includes .. here model also has an indicators association
 	$json = $model->to_json(array('include' => array('indicators')));
+
 	$response->write($json);
 
 });
 
-$app->get('/api/models/default', function () use ($app) {
 
-	$model = Model::first();
+$app->get('/api/interaction-models/:id', function ($id) use ($app) {
+
+	$model = Model::find($id);
 
 	$response = $app->response();
 	$response->header('Content-Type', 'application/json');

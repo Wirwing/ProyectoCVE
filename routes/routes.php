@@ -2,9 +2,10 @@
 	
 	#HTML Namespace
 	include "activities.php";
-    include "api/users.php";
+	include "models.php";
 
 	#API Namespace
+	include "api/users.php";
 	include "api/activities.php";
 	include "api/attached_files.php";
 	include "api/models.php";
