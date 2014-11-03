@@ -12,9 +12,13 @@
 			$window.location.href = '/cve/activities/' + activity.id;
 		}
 
-		$scope.delete = function(activity){
+		$scope.delete = function($index, activity){
 
-		}
+			Activities.remove({id: activity.id}, function(){
+				$scope.activities.splice($index, 1);
+			});
+
+        }
 
 	}]);
 
@@ -85,6 +89,12 @@
         	$window.location.href = "/cve/activities/" + $attrs.id + '/edit';
         }
 
+        $scope.delete = function(){
+        	Activities.remove({id: $scope.activity.id}, function(){
+				$window.location.href = '/cve/activities';
+			});
+        }
+
 	}]);
 
 	app.controller('AddActivityController',['$scope', 'Activities', 'Models', '$window', function($scope, Activities, Models, $window){
@@ -101,8 +111,8 @@
 			activity.fecha = new Date();
 			activity.id_modelo = $scope.selectedModel.id;
 
-			Activities.create({}, activity, function () {
-				$window.location.href = '/cve/activities';
+			Activities.create({}, activity, function (created) {
+				$window.location.href = '/cve/activities/' + created.id;
 			});
 
 		}

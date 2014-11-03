@@ -25,9 +25,12 @@ $app->delete('/api/activities/:id_activity/files/:id', function ($id_activity, $
 	$app->log->info("File delete route");
 
 	try {
-		$delete = AttachedFile::delete_attachment($id, $id_activity);
+
+		$attachment = AttachedFile::find_by_id_and_activity($id, $id_activity);
+		$delete = $attachment->delete();
 		$message = ($delete == true)? 'Attachment deleted' : "Couldn't delete attachment";
 		$status_code = 204;
+		
 	} catch (\ActiveRecord\RecordNotFound $e) {
 		$message = "Couldn't delete attachment";
 		$status_code = 404;

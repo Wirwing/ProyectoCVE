@@ -77,4 +77,25 @@ $app->put('/api/activities/:id', function ($id) use ($app) {
 
 });
 
+$app->delete('/api/activities/:id', function ($id) use ($app) {
+
+	try {
+		$activity = Activity::find($id);
+		$delete = $activity->delete();
+		$message = ($delete == true)? 'Activity deleted' : "Couldn't delete activity";
+		$status_code = 204;
+	} catch (\ActiveRecord\RecordNotFound $e) {
+		$message = "Activity not found";
+		$status_code = 404;
+	}
+
+	$json = json_encode(array("result" => $message));
+
+	$response = $app->response();
+	$response->header('Content-Type', 'application/json');
+	$response->status($status_code);
+	$response->write($json);
+
+});
+
 ?>

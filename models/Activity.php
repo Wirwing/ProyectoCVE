@@ -17,6 +17,18 @@ class Activity extends ActiveRecord\Model{
       array('indicators' => 'model')
     );
 
+	static $before_destroy = array('destroy_attachments');
+
+	public function destroy_attachments(){
+
+		foreach ($this->attachments as $attachment ) {
+			$attachment->delete();
+  		}
+
+	}
+
+    
+
 }
 
 ?>
