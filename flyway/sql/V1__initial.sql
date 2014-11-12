@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`moodle_rcd` (
   `id_course` INT(11) NOT NULL,
   `course_name` VARCHAR(100) NOT NULL,
   `email_sesion` VARCHAR(100) NOT NULL,
-  `fecha_inicio` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_inicio` DATETIME NOT NULL,
   `fecha_final` DATETIME NULL DEFAULT NULL,
   `close_sesion` TINYINT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
