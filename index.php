@@ -6,7 +6,7 @@ ActiveRecord\Config::initialize(function($cfg)
    $cfg->set_model_directory('models');
    $cfg->set_connections(
      array(
-       'development' => 'mysql://root:@localhost/db_cve_fmat_uady'
+       'development' => 'mysql://root:root@localhost/db_cve_fmat_uady'
      )
    );
 });
@@ -19,7 +19,7 @@ $app = new \Slim\Slim(array(
 //Set Mime Type Middleware
 $app->add(new \Slim\Middleware\ContentTypes());
 
-// Create monolog logger and store logger in container as singleton 
+// Create monolog logger and store logger in container as singleton
 // (Singleton resources retrieve the same log resource definition each time)
 $app->container->singleton('log', function () {
     $log = new \Monolog\Logger('slim-skeleton');
@@ -49,7 +49,7 @@ $twig_instance->setLexer($lexer);
 
 // Define routes
 $app->get('/', function () use ($app) {
-    
+
     // Sample log message
     $app->log->info("Slim-Skeleton '/' route");
     // Render index view

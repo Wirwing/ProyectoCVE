@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`grupos_colaborativos_usuarios` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `id_grupo` INT(11) NOT NULL,
   `id_usuario` INT(11) NOT NULL,
-  `id_actividad` INT(11) NOT NULL,
+  `id_actividad` INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_grupos_colaborativos_usuarios_grupos_colaborativos1_idx` (`id_grupo` ASC),
   INDEX `fk_grupos_colaborativos_usuarios_usuarios1_idx` (`id_usuario` ASC),

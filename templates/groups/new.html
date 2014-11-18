@@ -1,0 +1,64 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Grupos Colaborativos[% endblock %]
+
+[% block content %]
+
+<form class="form-horizontal form-basic" ng-controller="AddGroupController as groupCtrl"
+ng-submit="groupCtrl.add(group)">
+
+<!-- Section Name -->
+<legend>Grupo</legend>
+
+<fieldset>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Nombre</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" ng-model="group.nombre" required />
+    </div>
+  </div>
+
+</fieldset>
+
+<!-- Section Name -->
+<legend>Alumnos</legend>
+
+<table st-table="users" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Apellido Paterno</th>
+      <th>Apellido Materno</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users">
+      <td>{{user.id}}</td>
+      <td>{{user.nombre}}</td>
+      <td>{{user.apellido_paterno}}</td>
+      <td>{{user.apellido_materno}}</td>
+      <td><input type="checkbox"
+        ng-disabled="check == limit"
+        ng-change="onStudentChecked( user )" ng-model="user.selected"></td>
+  </tr>
+  </tbody>
+</table>
+
+<legend></legend>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="pull-right">
+      <button type="button" class="btn btn-default">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Crear</button>
+    </div>
+  </div>
+</div>
+
+<pre>form_payload = {{group | json}}</pre>
+
+</form>
+
+[% endblock %]

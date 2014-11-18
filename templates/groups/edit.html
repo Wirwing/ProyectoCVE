@@ -4,8 +4,9 @@
 
 [% block content %]
 
-<form class="form-horizontal form-basic" ng-controller="AddActivityController as activityCtrl"
-ng-submit="activityCtrl.add(activity)">
+
+<form class="form-horizontal form-basic" ng-controller="EditActivityController as editCtrl" 
+id="[[id_activity]]" ng-submit="update(activity)">
 
 <!-- Section Name -->
 <legend>Actividad</legend>
@@ -51,8 +52,8 @@ ng-submit="activityCtrl.add(activity)">
 <legend>Modelo - Indicadores</legend>
 
 <div class="form-group">
-  <label class="col-sm-2 control-label" for="chbox_default_model">Modelos</label>
-  <select ng-model="selectedModel" ng-options="model.nombre for model in models"></select><br>
+  <label class="col-sm-2 control-label" for="model-selection">Modelos</label>
+  <select id="model-selection" ng-model="selectedModel" ng-options="model.nombre for model in models"></select><br>
 </div>
 
 <fieldset ng-disabled="true">
@@ -146,7 +147,7 @@ ng-submit="activityCtrl.add(activity)">
   <div class="col-sm-offset-2 col-sm-10">
     <div class="pull-right">
       <button type="button" class="btn btn-default">Cancelar</button>
-      <button type="submit" class="btn btn-primary">Crear</button>
+      <button type="submit" class="btn btn-primary">Actualizar</button>
     </div>
   </div>
 </div>
@@ -156,3 +157,4 @@ ng-submit="activityCtrl.add(activity)">
 </form>
 
 [% endblock %]
+

@@ -1,0 +1,144 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Actividades[% endblock %]
+
+[% block content %]
+
+<div ng-controller="ActivityController" id="[[id_activity]]" nv-file-drop="" uploader="uploader">
+
+	<!-- Activity Details -->
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title"> <strong>Actividad:</strong> {{activity.nombre}}</h3>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+
+					<div class=" col-md-12 col-lg-12 ">
+						<table class="table table-user-information">
+							<tbody>
+								<tr>
+									<td>Fecha:</td>
+									<td>{{activity.fecha}}</td>
+								</tr>
+								<tr>
+									<td>Tipo:</td>
+									<td>{{activity.tipo}}</td>
+								</tr>
+								<tr>
+									<td>Estrategia instruccional</td>
+									<td>{{activity.estrategia_instruccional}}</td>
+								</tr>
+								<tr>
+									<td>Duración mínima</td>
+									<td>{{activity.duracion_minima}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="panel-footer">
+				<button ng-click="edit()" href="#" data-original-title="Editar actividad" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></button>
+				<button ng-click="delete()" type="button" class="btn btn-danger btn-sm pull-right">
+					<span class="glyphicon glyphicon-trash"></span>
+				</button>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" >
+
+		<div class="panel panel-default">
+			<div class="panel-heading"><strong>Archivos adjuntos</strong></div>
+			<div class="panel-body">
+
+				<!-- Drop Zone -->
+				<div class="upload-drop-zone" over-class="upload-drop-zone-drop"
+				nv-file-over="" uploader="uploader">
+				Solo arrastra y deposita los archivos aquí
+			</div>
+
+			<!-- Progress Bar -->
+			<div ng-show="uploader.queue.length">
+
+				<!-- Queue files table -->
+				<table class="table">
+					<thead>
+						<tr>
+							<th width="50%">Nombre</th>
+							<th ng-show="uploader.isHTML5">Tamaño</th>
+							<th ng-show="uploader.isHTML5">Progreso</th>
+							<th>Estado</th>
+							<th>Acción</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in uploader.queue">
+							<td><strong>{{ item.file.name }}</strong></td>
+							<td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+							<td ng-show="uploader.isHTML5">
+								<div class="progress" style="margin-bottom: 0;">
+									<div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+								</div>
+							</td>
+							<td class="text-center">
+								<span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+								<span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+								<span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+							</td>
+							<td nowrap>
+								<button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+									<span class="glyphicon glyphicon-trash"></span> Remover
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div ng-show="uploader.isUploading">
+					Queue progress:
+					<div class="progress" style="">
+						<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+					</div>
+				</div>
+				<button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+					<span class="glyphicon glyphicon-upload"></span> Subir archivos
+				</button>
+				<button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length">
+					<span class="glyphicon glyphicon-trash"></span> Eliminar todos
+				</button>
+			</div>
+
+			<!-- Upload Finished -->
+			<div class="js-upload-finished">
+				<h3>Adjuntos</h3>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Nombre</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="attachedFile in activity.attachments">
+							<td>{{attachedFile.nombre}}</td>
+							<td>
+								<button type="button" class="pull-right btn btn-danger btn-s" ng-click="removeAttachment($index, attachedFile)">Eliminar
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+[% endblock %]

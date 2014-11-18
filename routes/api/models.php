@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $app->get('/api/interaction-models', function () use ($app) {
 
@@ -18,7 +18,7 @@ $app->get('/api/interaction-models', function () use ($app) {
 
 $app->post('/api/interaction-models', function () use ($app) {
 
-	$attributes = $app->request()->getBody();
+		$attributes = $app->request()->getBody();
 
     $new_indicators = $attributes["indicators"];
     unset($attributes["indicators"]);

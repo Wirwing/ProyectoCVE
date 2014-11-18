@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $app->get('/api/users', function () use ($app) {
 
@@ -48,7 +48,7 @@ $app->put('/api/users/:id', function ($id) use ($app) {
 	$user = User::find($id);
 	$user->update_attributes($attributes);
 
-	
+
 	$response->header('Content-Type', 'application/json');
 	$response->status(200);
 
@@ -57,7 +57,7 @@ $app->put('/api/users/:id', function ($id) use ($app) {
 });
 
 $app->delete('/api/users/:id', function ($id) use ($app) {
-	
+
 	$user = User::find($id);
 	$user->delete();
 

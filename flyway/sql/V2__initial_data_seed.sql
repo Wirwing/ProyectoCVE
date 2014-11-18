@@ -18,14 +18,16 @@ INSERT INTO `indicadores` (`id`, `id_modelo`, `nombre`, `frecuencia_individual`,
 --
 -- Volcado de datos para la tabla `usuarios`
 --
-INSERT INTO `usuarios` (`id`, `nombre`, `apellido_paterno`, 
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido_paterno`,
 	`apellido_materno`, `usuario`, `password`) VALUES
-	(1, 'Irving', 'Caro', 'Fierros', 'wirwing', 'password');
+	(1, 'Irving', 'Caro', 'Fierros', 'wirwing', 'password'),
+	(2, 'Mauricio', 'Lara', 'Soberanis', 'mauricio', 'password'),
+	(3, 'Jaime', 'Negrete', 'Chinchilla', 'chinchil', 'password');
 
 --
 -- Volcado de datos para la tabla `actividad_colaborativa`
 --
-INSERT INTO `actividades_colaborativas` (`id`, `id_modelo`, `id_tutor`, `nombre`, 
+INSERT INTO `actividades_colaborativas` (`id`, `id_modelo`, `id_tutor`, `nombre`,
 	`descripcion`, `fecha`, `tipo`, `estrategia_instruccional`,
 	 `duracion_minima`) VALUES
 	(1, 1, 1, 'Resolver el problema adjunto con estructura WHILE', '', '2014-10-09', 'CONSTRUCTIVISTA', 'ROMPECABEZAS', 50);

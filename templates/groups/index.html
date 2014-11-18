@@ -1,0 +1,45 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Grupos[% endblock %]
+
+[% block content %]
+
+<div ng-controller="GroupsController as groupsCtrl">
+
+  <h2 class="pull-left">Grupo Colaborativo</h2>
+
+  <a href="groups/new" type="button" class="btn btn-info pull-right">
+    Nuevo Grupo Colaborativo
+  </a>
+
+  <table st-table="groups" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Id Tutor</th>
+        <th>Fecha</th>
+        <th>Num. Integrantes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="group in groups">
+        <td>{{group.id}}</td>
+        <td>{{group.nombre}}</td>
+        <td>{{group.id_tutor}}</td>
+        <td>{{group.fecha}}</td>
+        <td>{{activity.num_integrantes}}</td>
+        <td><button type="button" class="btn btn-info btn-xs" ng-click="view(group)">
+          <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+        </button>
+        <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, group)">
+          <span class="glyphicon glyphicon-trash"></span> Eliminar
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+[% endblock %]
