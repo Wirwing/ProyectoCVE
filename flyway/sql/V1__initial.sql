@@ -138,25 +138,25 @@ COMMENT = 'Usuarios registrados en el Juego CLL';
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_cve_fmat_uady`.`grupos_colaborativos_usuarios` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `id_grupo` INT(11) NOT NULL,
-  `id_usuario` INT(11) NOT NULL,
-  `id_actividad` INT(11) DEFAULT NULL,
+  `group_id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `activity_id` INT(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_grupos_colaborativos_usuarios_grupos_colaborativos1_idx` (`id_grupo` ASC),
-  INDEX `fk_grupos_colaborativos_usuarios_usuarios1_idx` (`id_usuario` ASC),
-  INDEX `fk_grupos_colaborativos_usuarios_actividad_colaborativa1_idx` (`id_actividad` ASC),
+  INDEX `fk_grupos_colaborativos_usuarios_grupos_colaborativos1_idx` (`group_id` ASC),
+  INDEX `fk_grupos_colaborativos_usuarios_usuarios1_idx` (`user_id` ASC),
+  INDEX `fk_grupos_colaborativos_usuarios_actividad_colaborativa1_idx` (`activity_id` ASC),
   CONSTRAINT `fk_grupos_colaborativos_usuarios_grupos_colaborativos1`
-    FOREIGN KEY (`id_grupo`)
+    FOREIGN KEY (`group_id`)
     REFERENCES `db_cve_fmat_uady`.`grupos_colaborativos` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_grupos_colaborativos_usuarios_usuarios1`
-    FOREIGN KEY (`id_usuario`)
+    FOREIGN KEY (`user_id`)
     REFERENCES `db_cve_fmat_uady`.`usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_grupos_colaborativos_usuarios_actividad_colaborativa1`
-    FOREIGN KEY (`id_actividad`)
+    FOREIGN KEY (`activity_id`)
     REFERENCES `db_cve_fmat_uady`.`actividades_colaborativas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

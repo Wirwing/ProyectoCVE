@@ -7,7 +7,7 @@
             all: { method: 'GET', isArray: true },
             create: { method: 'POST' },
             get: { url: "/cve/api/groups/:id", method: 'GET', isArray: false },
-            remove: {url: "/cve/api/groups/:id", method: 'DELETE', isArray: false}, 
+            remove: {url: "/cve/api/groups/:id", method: 'DELETE', isArray: false},
             update: { url: "/cve/api/groups/:id", method: 'PUT', isArray: false }
         });
     }]);

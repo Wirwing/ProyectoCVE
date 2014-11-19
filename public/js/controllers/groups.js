@@ -20,8 +20,8 @@
 
   }]);
 
-  app.controller('GroupController',['$scope','Groups', 'Users', '$window',
-  function($scope, Groups, Users, $window){
+  app.controller('GroupController',['$scope','Groups', 'Users','$attrs', '$window',
+  function($scope, Groups, Users, $attrs, $window){
 
     $scope.group = Groups.get({id: $attrs.id});
 
@@ -30,7 +30,7 @@
     }
 
     $scope.delete = function(){
-      Groups.remove({id: group.id}, function(){
+      Groups.remove({id: $scope.group.id}, function(){
         $window.location.href = "/cve/groups";
       });
     }

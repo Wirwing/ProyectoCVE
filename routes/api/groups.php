@@ -44,9 +44,13 @@ $app->get('/api/groups/:id', function ($id) use ($app) {
   $response->header('Content-Type', 'application/json');
   $response->status(200);
 
-  $json = $group->to_json();
-  $response->write($json);
+  $lastQuery = Group::connection()->last_query;
 
+  $json = $group->to_json(array(
+    'include' => 'users'
+  ));
+
+  $response->write($json);
 });
 
 $app->put('/api/groups/:id', function ($id) use ($app) {

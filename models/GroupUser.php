@@ -7,7 +7,8 @@ class GroupUser extends ActiveRecord\Model{
 
   static $belongs_to = array(
     array('user', 'class_name' => 'User'),
-    array('group', 'class_name' => 'Group')
+    array('group', 'class_name' => 'Group'),
+    array('activity', 'class_name' => 'Activity')
   );
 
 }
