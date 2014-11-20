@@ -3,6 +3,7 @@
 	#HTML Namespace
 	include "activities.php";
 	include "models.php";
+	include "chat.php";
 
 	#API Namespace
 	include "api/users.php";
