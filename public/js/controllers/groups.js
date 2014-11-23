@@ -1,6 +1,6 @@
 (function(){
 
-  var app = angular.module('groupsController', ['groupsFactory', 'usersFactory']);
+  var app = angular.module('groupsController', ['groupsFactory', 'usersFactory', 'activitiesFactory']);
 
   app.controller('GroupsController',['$scope', 'Groups', '$window', function($scope, Groups, $window){
 
@@ -23,6 +23,11 @@
   app.controller('GroupController',['$scope','Groups', 'Users','$attrs', '$window',
   function($scope, Groups, Users, $attrs, $window){
 
+    Groups.getActivity({id: $attrs.id}, function(activities){
+      $scope.activity = activities[0];
+    });
+
+
     $scope.group = Groups.get({id: $attrs.id});
 
     $scope.edit = function(){
@@ -37,10 +42,15 @@
 
   }]);
 
-  app.controller('AddGroupController',['$scope','Groups', 'Users', '$window',
-  function($scope, Groups, Users, $window){
+  app.controller('AddGroupController',['$scope','Groups', 'Users','Activities', '$window',
+  function($scope, Groups, Users, Activities, $window){
 
     $scope.group = {};
+
+    Activities.all({},function(activities){
+      $scope.activities = activities;
+      $scope.selectedActivity = activities[0];
+    });
 
     Users.available({}, function(availableUsers){
       $scope.users = availableUsers;
@@ -77,6 +87,10 @@
         }
       }
 
+      if($scope.selectedActivity){
+        group.activity_id = $scope.selectedActivity.id;
+      }
+
       Groups.create({}, group, function (created) {
         $window.location.href = '/cve/groups/' + created.id;
       });
@@ -84,8 +98,15 @@
 
   }]);
 
-  app.controller('EditGroupController',['$scope', 'Groups','Users', '$attrs', '$window',
-  function($scope, Groups, Users, $attrs, $window){
+  app.controller('EditGroupController',['$scope', 'Groups','Users', 'Activities', '$attrs', '$window',
+  function($scope, Groups, Users, Activities, $attrs, $window){
+
+    Activities.all({},function(activities){
+      $scope.activities = activities;
+      Groups.getActivity({id: $attrs.id}, function(selected){
+        $scope.selectedActivity = selected[0];
+      });
+    });
 
     $scope.check = 0;
     $scope.limit = 2;
@@ -93,19 +114,15 @@
     $scope.group = Groups.get({id: $attrs.id}, function(group){
       $scope.group = group;
 
-      Users.all({}, function( users ){
-        var prev_group_users = $scope.group.users;
-        $scope.users = users;
+      Users.available({}, function( availableUsers ){
+        $scope.users = availableUsers;
+        var group_users = $scope.group.users;
 
-        /* selects the users from the group */
-        for( var i = 0; i < $scope.users.length; i ++ ){
-          for( var k = 0; k < prev_group_users.length; k ++ ){
-            if( prev_group_users[k].id == $scope.users[i].id ){
-              $scope.users[i].selected = true;
-              $scope.check ++;
-              break;
-            }
-          }
+        for( var i = 0; i < group_users.length; i ++ ){
+            var group_user = group_users[i];
+            group_user.selected = true;
+            $scope.users.push( group_user );
+            $scope.check++;
         }
 
         delete $scope.group.users;
@@ -130,6 +147,10 @@
         if( user.selected ){
             group.selected_users.push( user.id );
         }
+      }
+
+      if($scope.selectedActivity){
+        group.activity_id = $scope.selectedActivity.id;
       }
 
       Groups.update({id: group.id}, group, function(response){

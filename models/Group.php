@@ -12,7 +12,7 @@ class Group extends ActiveRecord\Model{
     array('group_users', 'class_name' => 'GroupUser'),
     array('users', 'class_name' => 'User',  'through' => 'group_users'),
   );
-
+  
   static $after_create = array('set_users_and_activity');
 
   /* Sets the relation between users and an activity */
@@ -40,9 +40,9 @@ class Group extends ActiveRecord\Model{
     }
   }
 
-  static $after_update = array("update_users");
+  static $after_update = array("update_group");
 
-  public function update_users(){
+  public function update_group(){
     /* unlink users */
     foreach ($this->group_users as $group_user ) {
       $group_user->delete();

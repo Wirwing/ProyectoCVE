@@ -31,6 +31,10 @@
 									<td>N&uacute;mero de integrantes:</td>
 									<td>{{group.num_integrantes}}</td>
 								</tr>
+								<tr>
+									<td>Actividad asignada</td>
+									<td>{{activity.nombre || 'No tiene actividad asignada'}}</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -46,7 +50,10 @@
 		</div>
 	</div>
 
+	<h3 class="pull-left">Integrantes</h3>
+
 	<div class="col-xs-12 col-md-8 col-md-8 col-lg-8">
+
 		<div class="panel panel-info">
 			<table st-table="group.users" class="table table-striped">
 				<thead>
@@ -67,9 +74,6 @@
 				</tbody>
 			</table>
 		</div>
-
-
-		<pre>{{group | json}}</pre>
 
 	</div>
 

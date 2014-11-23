@@ -17,6 +17,10 @@ ng-submit="groupCtrl.add(group)">
     <div class="col-sm-10">
       <input type="text" class="form-control" ng-model="group.nombre" required />
     </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="model-selection">Actividad Colaborativa</label>
+      <select id="activity-selection" ng-model="selectedActivity" ng-options="activity.nombre for activity in activities"></select><br>
+    </div>
   </div>
 
 </fieldset>
