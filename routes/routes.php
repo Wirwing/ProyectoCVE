@@ -4,7 +4,8 @@
 	include "activities.php";
 	include "models.php";
 	include "groups.php";
-	include "chat.php"; 
+	include "chat.php";
+	include "chat.php";
 
 	#API Namespace
 	include "api/users.php";
