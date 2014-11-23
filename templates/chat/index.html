@@ -1,0 +1,66 @@
+[% extends 'layout.html' %]
+
+[% block content %]
+
+<div ng-controller="ActivityController" id="1">
+
+  <div id="header" class="row">
+    <div class="col-md-10">
+      <div class="row">
+        <p class="text-center">Bienvenido Usuario Moodle: <strong>Username</strong> Matricula: <strong>00000000</strong></p>
+      </div>
+      <div class="row">
+        <p class="text-center">Curso: <strong>Programacion I</strong> Actividad Colaborativa: <strong>{{activity.nombre}}</strong></p>
+      </div>
+      <div class="row">
+        <p class="text-center">Duración: <strong>{{activity.duracion_minima}}</strong></p>
+      </div>
+    </div>
+      <div class="col-md-2"><input type="button" class="btn btn-danger" value="Salir"></input>
+      </div>
+  </div>
+
+  <div id="panelIzq" class="col-md-6">
+    <div id="menuOp" class="row">
+      <a href="#" class="btn btn-default">Nuevo</a>
+      <a href="#" class="btn btn-default">Guardar</a>
+      <a href="#" class="btn btn-default">Eliminar</a>
+    </div>
+    <div id="editor">
+      Algoritmo BFP
+    </div>
+  </div>
+
+  <div id="panelDer" class="col-md-6" ng-controller="ChatController as chat">
+    <div id="detallesActividad">
+      <p class="text-center">Activities: Desarrollar Algoritmo BFP</p>
+      <p class="text-center"><a href="#">Download - Metodolog&iacute;aBFP.pdf</a></p>
+
+    </div>
+    <div id="mensajes" >
+      <div ng-repeat="message in chat.messages">
+        {{message.user}}: {{message.body}}
+        <button type="button" class="btn btn-info">Acuerdo</button>
+          <button type="button" class="btn btn-info">Desacuerdo</button>
+      </div>
+    </div>
+    <form class="form-horizontal" role="form" ng-submit="chat.addMessage(chat.messages)">
+        <div class="form-group" ng-show="chat.canSubmit">
+          <div class="col-sm-5">
+            <input type="text" ng-model="chat.message.body" class="form-control" id="msg" placeholder="Mensaje" required>
+          </div>
+          <div class="col-sm-5">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+
+          </div>
+        </div>
+        <input type="button" class="btn btn-default" value="IDEA" ng-click="chat.showSubmit()"></input>
+      <input type="button" class="btn btn-default" value="DUDA" ng-click="chat.showSubmit()"></input>
+      <input type="button" class="btn btn-default" value="ARGUMENTO" ng-click="chat.showSubmit()"></input>
+      <input type="button" class="btn btn-default" value="SOLUCION" ng-click="chat.showSubmit()"></input>
+    </form>
+  </div>
+
+</div>
+
+[% endblock %]

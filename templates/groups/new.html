@@ -40,7 +40,6 @@ ng-submit="groupCtrl.add(group)">
       <td>{{user.apellido_paterno}}</td>
       <td>{{user.apellido_materno}}</td>
       <td><input type="checkbox"
-        ng-disabled="check == limit"
         ng-change="onStudentChecked( user )" ng-model="user.selected"></td>
   </tr>
   </tbody>

@@ -25,6 +25,8 @@ $app->post('/api/groups', function () use ($app) {
 
     $group = new Group($attributes);
     $group->users_ids = $users_ids;
+    //Change to the real value later
+    $group->activity_id = 1;
     $group->save();
 
     $response = $app->response();
@@ -56,19 +58,26 @@ $app->get('/api/groups/:id', function ($id) use ($app) {
 $app->put('/api/groups/:id', function ($id) use ($app) {
 
   $group = Group::find($id);
-
   $attributes = $app->request()->getBody();
 
-  $group->update_attributes($attributes);
+  $users_ids = $attributes['selected_users'];
+  unset($attributes['selected_users']);
 
+  $group->users_ids = $users_ids;
+  $group->update_attributes($attributes);
+  //Change to the real value later
+  $group->activity_id = 1;
   $group->save();
 
   $response = $app->response();
   $response->header('Content-Type', 'application/json');
   $response->status(200);
 
-  $response->write($json);
+  $json = $group->to_json(
+    array('include' => 'users')
+  );
 
+  $response->write($json);
 });
 
 $app->delete('/api/groups/:id', function ($id) use ($app) {

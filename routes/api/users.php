@@ -16,6 +16,23 @@ $app->get('/api/users', function () use ($app) {
 
 });
 
+$app->get('/api/users/available', function() use ($app) {
+
+
+	$availableUsers = User::find_by_sql('SELECT * FROM usuarios WHERE usuarios.id NOT IN (SELECT user_id FROM grupos_colaborativos_usuarios)');
+
+	$json = json_encode(array_map(function($res){
+		return $res->to_array();
+	}, $availableUsers));
+
+	$response = $app->response();
+	$response->header('Content-Type', 'application/json');
+	$response->status(200);
+
+	$response->write($json);
+
+});
+
 $app->post('/api/users', function () use ($app) {
 
 	$body = $app->request()->getBody();

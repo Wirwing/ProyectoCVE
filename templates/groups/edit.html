@@ -1,145 +1,49 @@
 [% extends 'layout.html' %]
 
-[% block page_title %] Entorno Virtual Colaborativo - Actividades[% endblock %]
+[% block page_title %] Entorno Virtual Colaborativo - Grupos Colaborativos[% endblock %]
 
 [% block content %]
 
-
-<form class="form-horizontal form-basic" ng-controller="EditActivityController as editCtrl" 
-id="[[id_activity]]" ng-submit="update(activity)">
+<form class="form-horizontal form-basic" ng-controller="EditGroupController as groupCtrl"
+id="[[id_group]]" ng-submit="groupCtrl.save(group)">
 
 <!-- Section Name -->
-<legend>Actividad</legend>
+<legend>Grupo</legend>
 
 <fieldset>
 
   <div class="form-group">
     <label class="col-sm-2 control-label" for="textinput">Nombre</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="activity.nombre" required />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="textinput">Descripción</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="activity.descripcion" required />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="textinput">Estrategia instruccional</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="activity.estrategia_instruccional" required />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="textinput">Tipo</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" ng-model="activity.tipo" required />
-    </div>
-
-    <label class="col-sm-2 control-label" for="textinput">Duración mínima</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" ng-model="activity.duracion_minima" required />
+      <input type="text" class="form-control" ng-model="group.nombre" required />
     </div>
   </div>
 
 </fieldset>
 
 <!-- Section Name -->
-<legend>Modelo - Indicadores</legend>
+<legend>Alumnos</legend>
 
-<div class="form-group">
-  <label class="col-sm-2 control-label" for="model-selection">Modelos</label>
-  <select id="model-selection" ng-model="selectedModel" ng-options="model.nombre for model in models"></select><br>
-</div>
-
-<fieldset ng-disabled="true">
-
- <!-- Indicator subform -->
- <div class="form-group">
-  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[0].nombre" ng-disabled="true"/>
-  </div>
-
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[0].frecuencia_individual"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[0].frecuencia_grupo"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[0].tolerancia"/>
-  </div>
-</div>
-
-<!-- Indicator subform -->
-<div class="form-group">
-  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[1].nombre" ng-disabled="true"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[1].frecuencia_individual"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[1].frecuencia_grupo"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[1].tolerancia"/>
-  </div>
-</div>
-
-<!-- Indicator subform -->
-<div class="form-group">
-  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[2].nombre" ng-disabled="true"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[2].frecuencia_individual"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[2].frecuencia_grupo"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[2].tolerancia"/>
-  </div>
-</div>
-
-<!-- Indicator subform -->
-<div class="form-group">
-  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[3].nombre" ng-disabled="true"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[3].frecuencia_individual"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[3].frecuencia_grupo"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[3].tolerancia"/>
-  </div>
-</div>
-
-</fieldset>
+<table st-table="users" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Apellido Paterno</th>
+      <th>Apellido Materno</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users">
+      <td>{{user.id}}</td>
+      <td>{{user.nombre}}</td>
+      <td>{{user.apellido_paterno}}</td>
+      <td>{{user.apellido_materno}}</td>
+      <td><input type="checkbox"
+        ng-change="onStudentChecked( user )" ng-model="user.selected"></td>
+  </tr>
+  </tbody>
+</table>
 
 <legend></legend>
 
@@ -152,9 +56,8 @@ id="[[id_activity]]" ng-submit="update(activity)">
   </div>
 </div>
 
-<pre>form_payload = {{activity | json}}</pre>
+<pre>form_payload = {{group | json}}</pre>
 
 </form>
 
 [% endblock %]
-
