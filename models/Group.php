@@ -12,7 +12,7 @@ class Group extends ActiveRecord\Model{
     array('group_users', 'class_name' => 'GroupUser'),
     array('users', 'class_name' => 'User',  'through' => 'group_users'),
   );
-  
+
   static $after_create = array('set_users_and_activity');
 
   /* Sets the relation between users and an activity */
@@ -23,10 +23,7 @@ class Group extends ActiveRecord\Model{
         'user_id' => $user_id,
       );
 
-      if( $this->activity_id != -1 ){
-        $group_user_attr['activity_id'] = $this->activity_id;
-      }
-
+      $group_user_attr['activity_id'] = $this->activity_id;
       $groupUser = new GroupUser($group_user_attr);
       $groupUser->save();
     }

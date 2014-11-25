@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/groups', function () use ($app) {
+$app->get('/teacher/groups',$auth('teacher'), function () use ($app) {
 
     // Sample log message
   $app->log->info("Slim-Skeleton '/groups' route");
@@ -9,7 +9,7 @@ $app->get('/groups', function () use ($app) {
 
 });
 
-$app->get('/groups/new', function () use ($app) {
+$app->get('/teacher/groups/new',$auth('teacher'), function () use ($app) {
 
     // Sample log message
   $app->log->info("Slim-Skeleton '/groups/new' route");
@@ -18,14 +18,14 @@ $app->get('/groups/new', function () use ($app) {
 
 });
 
-$app->get('/groups/:id', function ($id) use ($app) {
+$app->get('/teacher/groups/:id',$auth('teacher'), function ($id) use ($app) {
 
   $data = array('id_group' => $id);
   $app->render('groups/show.html', $data);
 
 });
 
-$app->get('/groups/:id/edit', function ($id) use ($app) {
+$app->get('/teacher/groups/:id/edit',$auth('teacher'), function ($id) use ($app) {
 
   $data = array('id_group' => $id);
   $app->render('groups/edit.html', $data);

@@ -9,7 +9,7 @@
     });
 
     $scope.view = function(group){
-      $window.location.href = '/cve/groups/' + group.id;
+      $window.location.href = '/cve/teacher/groups/' + group.id;
     }
 
     $scope.delete = function($index, group){
@@ -31,12 +31,12 @@
     $scope.group = Groups.get({id: $attrs.id});
 
     $scope.edit = function(){
-      $window.location.href = "/cve/groups/" + $attrs.id + "/edit";
+      $window.location.href = "/cve/teacher/groups/" + $attrs.id + "/edit";
     }
 
     $scope.delete = function(){
       Groups.remove({id: $scope.group.id}, function(){
-        $window.location.href = "/cve/groups";
+        $window.location.href = "/cve/teacher/groups";
       });
     }
 
@@ -68,6 +68,10 @@
       }
     }
 
+    $scope.cancel = function(){
+      $window.location.href = '/cve/teacher/groups';
+    }
+
     this.add = function( group){
       if( $scope.check < $scope.limit ){
         alert("Elige por lo menos a 2 usuarios");
@@ -90,9 +94,9 @@
       if($scope.selectedActivity){
         group.activity_id = $scope.selectedActivity.id;
       }
-
+      
       Groups.create({}, group, function (created) {
-        $window.location.href = '/cve/groups/' + created.id;
+        $window.location.href = '/cve/teacher/groups/' + created.id;
       });
     }
 
@@ -137,6 +141,10 @@
       }
     }
 
+    $scope.cancel = function(){
+      $window.location.href = '/cve/teacher/groups';
+    }
+
     this.save = function( group ){
       group.fecha = new Date();
       group.num_integrantes = $scope.check;
@@ -154,13 +162,13 @@
       }
 
       Groups.update({id: group.id}, group, function(response){
-        $window.location.href = "/cve/groups/" + group.id;
+        $window.location.href = "/cve/teacher/groups/" + group.id;
       });
     }
 
     $scope.delete = function(){
       Groups.remove({id: $scope.group.id}, function(){
-        $window.location.href = '/cve/groups';
+        $window.location.href = '/cve/teacher/groups';
       });
     }
 

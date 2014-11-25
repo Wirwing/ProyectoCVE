@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-$app->get('/activities', function () use ($app) {
+$app->get('/teacher/activities',$auth('teacher'), function () use ($app) {
 
     // Sample log message
 	$app->log->info("Slim-Skeleton '/activities' route");
@@ -9,7 +9,7 @@ $app->get('/activities', function () use ($app) {
 
 });
 
-$app->get('/activities/new', function () use ($app) {
+$app->get('/teacher/activities/new',$auth('teacher'), function () use ($app) {
 
     // Sample log message
 	$app->log->info("Slim-Skeleton '/activities/new' route");
@@ -18,14 +18,14 @@ $app->get('/activities/new', function () use ($app) {
 
 });
 
-$app->get('/activities/:id', function ($id) use ($app) {
+$app->get('/teacher/activities/:id',$auth('teacher'), function ($id) use ($app) {
 
 	$data = array('id_activity' => $id);
 	$app->render('activities/show.html', $data);
 
 });
 
-$app->get('/activities/:id/edit', function ($id) use ($app) {
+$app->get('/teacher/activities/:id/edit',$auth('teacher'), function ($id) use ($app) {
 
 	$data = array('id_activity' => $id);
 	$app->render('activities/edit.html', $data);

@@ -3,13 +3,13 @@
 	var app = angular.module('modelsController', ['modelsFactory']);
 
 	app.controller('ModelsController',['$scope', 'Models', '$window', function($scope, Models, $window){
-		
+
 		Models.all({}, function (models) {
 			$scope.models = models;
 		});
 
 		$scope.view = function(model){
-			$window.location.href = '/cve/interaction-models/' + model.id;
+			$window.location.href = '/cve/teacher/interaction-models/' + model.id;
 		}
 
 		$scope.delete = function($index, model){
@@ -36,29 +36,33 @@
 		Models.all({}, function(availables){
 			$scope.defaultModel = availables[0];
 		});
-		
+
 		this.add = function(model){
 
 			Models.create({}, model, function (created) {
-				$window.location.href = '/cve/interaction-models/' + created.id;
+				$window.location.href = '/cve/teacher/interaction-models/' + created.id;
 			});
 
 		}
 
+		$scope.cancel = function(){
+			$window.location.href = "/cve/teacher/interaction-models";
+		}
+
 	}]);
 
-	app.controller('ModelController',['$scope', 'Models', '$attrs', '$window', 
+	app.controller('ModelController',['$scope', 'Models', '$attrs', '$window',
 		function($scope, Models, $attrs, $window){
 
 		$scope.model = Models.get({id: $attrs.id});
 
         $scope.edit = function(){
-        	$window.location.href = "/cve/interaction-models/" + $attrs.id + '/edit';
+        	$window.location.href = "/cve/teacher/interaction-models/" + $attrs.id + '/edit';
         }
 
         $scope.delete = function(){
         	Activities.remove({id: $scope.model.id}, function(){
-				$window.location.href = '/cve/interaction-models';
+				$window.location.href = '/cve/teacher/interaction-models';
 			});
         }
 
@@ -70,10 +74,13 @@
 
 			$scope.model = Models.get({id: $attrs.id});
 
-			$scope.update = function(){
+			$scope.cancel = function(){
+				$window.location.href = "/cve/teacher/interaction-models";
+			}
 
+			$scope.update = function(){
 				Models.update({id: $scope.model.id}, $scope.model, function () {
-					$window.location.href = '/cve/interaction-models/' + $scope.model.id;
+					$window.location.href = '/cve/teacher/interaction-models/' + $scope.model.id;
 				});
 
 			}

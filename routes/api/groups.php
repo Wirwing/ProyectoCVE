@@ -23,10 +23,14 @@ $app->post('/api/groups', function () use ($app) {
     $users_ids = $attributes["selected_users"];
     unset($attributes["selected_users"]);
 
+
+    $activity_id = $attributes['activity_id'];
+    unset($attributes['activity_id']);
+
+
     $group = new Group($attributes);
     $group->users_ids = $users_ids;
-    //Change to the real value later
-    $group->activity_id = 1;
+    $group->activity_id = $activity_id;
     $group->save();
 
     $response = $app->response();

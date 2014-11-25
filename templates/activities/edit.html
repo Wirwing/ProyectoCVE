@@ -5,7 +5,7 @@
 [% block content %]
 
 
-<form class="form-horizontal form-basic" ng-controller="EditActivityController as editCtrl" 
+<form class="form-horizontal form-basic" ng-controller="EditActivityController as editCtrl"
 id="[[id_activity]]" ng-submit="update(activity)">
 
 <!-- Section Name -->
@@ -146,7 +146,7 @@ id="[[id_activity]]" ng-submit="update(activity)">
 <div class="form-group">
   <div class="col-sm-offset-2 col-sm-10">
     <div class="pull-right">
-      <button type="button" class="btn btn-default">Cancelar</button>
+      <button ng-click="cancel()" type="button" class="btn btn-default">Cancelar</button>
       <button type="submit" class="btn btn-primary">Actualizar</button>
     </div>
   </div>
@@ -157,4 +157,3 @@ id="[[id_activity]]" ng-submit="update(activity)">
 </form>
 
 [% endblock %]
-

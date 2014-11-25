@@ -9,7 +9,7 @@
 		});
 
 		$scope.view = function(activity){
-			$window.location.href = '/cve/activities/' + activity.id;
+			$window.location.href = '/cve/teacher/activities/' + activity.id;
 		}
 
 		$scope.delete = function($index, activity){
@@ -45,6 +45,10 @@
 			return -1;
 		}
 
+		$scope.cancel = function(){
+			$window.location.href = "/cve/teacher/activities";
+		}
+
 		$scope.update = function(activity){
 
 			activity.id_modelo = $scope.selectedModel.id;
@@ -54,7 +58,7 @@
 			activity.model = undefined;
 
 			Activities.update({id: activity.id}, activity, function () {
-				$window.location.href = '/cve/activities/' + activity.id;
+				$window.location.href = '/cve/teacher/activities/' + activity.id;
 			});
 		}
 
@@ -86,12 +90,12 @@
 		}
 
 		$scope.edit = function(){
-			$window.location.href = "/cve/activities/" + $attrs.id + '/edit';
+			$window.location.href = "/cve/teacher/activities/" + $attrs.id + '/edit';
 		}
 
 		$scope.delete = function(){
 			Activities.remove({id: $scope.activity.id}, function(){
-				$window.location.href = '/cve/activities';
+				$window.location.href = '/cve/teacher/activities';
 			});
 		}
 
@@ -104,6 +108,10 @@
 			$scope.selectedModel = availables[0];
 		});
 
+		$scope.cancel = function(){
+			$window.location.href = "/cve/teacher/activities";
+		}
+
 		this.add = function(activity){
 
 			//TODO: Replace values with session ones.
@@ -112,7 +120,7 @@
 			activity.id_modelo = $scope.selectedModel.id;
 
 			Activities.create({}, activity, function (created) {
-				$window.location.href = '/cve/activities/' + created.id;
+				$window.location.href = '/cve/teacher/activities/' + created.id;
 			});
 
 		}

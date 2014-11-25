@@ -6,7 +6,7 @@
 	include "groups.php";
 	include "chat.php";
 	include "chat.php";
-
+	
 	#API Namespace
 	include "api/users.php";
 	include "api/activities.php";

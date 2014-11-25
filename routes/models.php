@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-$app->get('/interaction-models', function () use ($app) {
+$app->get('/teacher/interaction-models',$auth('teacher'), function () use ($app) {
 
     // Sample log message
 	$app->log->info("Slim-Skeleton '/interaction-models' route");
@@ -9,7 +9,7 @@ $app->get('/interaction-models', function () use ($app) {
 
 });
 
-$app->get('/interaction-models/new', function () use ($app) {
+$app->get('/teacher/interaction-models/new',$auth('teacher'), function () use ($app) {
 
     // Sample log message
 	$app->log->info("Slim-Skeleton '/interaction-models/new' route");
@@ -18,14 +18,14 @@ $app->get('/interaction-models/new', function () use ($app) {
 
 });
 
-$app->get('/interaction-models/:id', function ($id) use ($app) {
+$app->get('/teacher/interaction-models/:id',$auth('teacher'), function ($id) use ($app) {
 
 	$data = array('id_model' => $id);
 	$app->render('interaction-models/show.html', $data);
 
 });
 
-$app->get('/interaction-models/:id/edit', function ($id) use ($app) {
+$app->get('/teacher/interaction-models/:id/edit',$auth('teacher'), function ($id) use ($app) {
 
 	$data = array('id_model' => $id);
 	$app->render('interaction-models/edit.html', $data);

@@ -17,9 +17,8 @@ $app->get('/api/users', function () use ($app) {
 });
 
 $app->get('/api/users/available', function() use ($app) {
-
-
-	$availableUsers = User::find_by_sql('SELECT * FROM usuarios WHERE usuarios.id NOT IN (SELECT user_id FROM grupos_colaborativos_usuarios)');
+	// 2 = tipo usuario
+	$availableUsers = User::find_by_sql('SELECT * FROM usuarios WHERE usuarios.id NOT IN (SELECT user_id FROM grupos_colaborativos_usuarios) AND usuarios.tipo = 2');
 
 	$json = json_encode(array_map(function($res){
 		return $res->to_array();

@@ -14,6 +14,10 @@ ActiveRecord\Config::initialize(function($cfg)
 // Prepare app
 $app = new \Slim\Slim(array(
     'templates.path' => 'templates',
+    'cookies.encrypt' => true,
+    'cookies.lifetime' => time() + (1*24*60*60), // 1 day
+    'cookies.cipher' => MCRYPT_RIJNDAEL_256,
+    'cookies.cipher_mode' => MCRYPT_MODE_CBC
 ));
 
 //Set Mime Type Middleware
@@ -53,9 +57,73 @@ $app->get('/', function () use ($app) {
     // Sample log message
     $app->log->info("Slim-Skeleton '/' route");
     // Render index view
-    $app->render('index.html');
-
+    //$app->render('index.html');
+    $app->redirect("/cve/login");
 });
+
+$auth = function($role = 'member'){
+  return function() use ($role){
+
+    $app = \Slim\Slim::getInstance();
+    $cookieRole = $app->getCookie('role');
+
+    if(is_null($role)){
+      $app->redirect("/cve/login");
+      return;
+    }
+
+    if( ( $role == "teacher" && $cookieRole != 1 ) ||
+        ( $role == "student" && $cookieRole != 2 ) ){
+          $app->redirect("/cve/login");
+    }
+
+  };
+};
+
+$app->map("/login", function() use ($app) {
+  if($app->request()->isPost()){
+    //If valid login, set auth cookie and redirect
+    $post = $app->request()->post();
+    $username = $post['username'];
+    $password = $post['password'];
+
+    if( !is_null($username) && !is_null($password) ){
+
+      $user = User::find('first', array('conditions' => array('usuario = ? AND password = ?', $username, $password)));
+      if( is_null($user) ){
+        $app->redirect("/cve/blabla");
+        return;
+      }
+
+      $app->setCookie('username', $username);
+      $app->setCookie('user_id', $user->id);
+      $app->setCookie('role', $user->tipo);
+
+      $userType = $user->tipo;
+      if( $userType == 1 ){
+        /* maestro */
+        $app->redirect("/cve/teacher/activities");
+      }else{
+        /* estudiante */
+        $app->redirect("/cve/student/chat");
+      }
+    }else{
+      $app->redirect("/cve/login");
+    }
+  }
+
+  $app->render("login.html");
+})->via('GET', 'POST');
+
+$app->get('/logout', function () use ($app) {
+  //Remove the cookie and redirect to login page
+  $app->deleteCookie('username');
+  $app->deleteCookie('user_id');
+  $app->deleteCookie('role');
+
+  $app->redirect("/cve/login");
+});
+
 
 // Define routes
 require_once "routes/routes.php"; //include the file which contains all the routes/route inclusions
