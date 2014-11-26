@@ -98,4 +98,19 @@ var messages = [
 }
 ];
 
+
 })();
+
+window.onload = function ()
+{
+  var firepadRef = new Firebase('https://cve.firebaseIO.com');
+  
+  var codeMirror = CodeMirror(document.getElementById('firepad'), { 
+	  	lineWrapping: true,
+	  	theme: 'monokai',
+	    lineNumbers: true,
+		mode: 'javascript' 
+	});
+  var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+      {defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n var message = "Hello, world.";\n console.log(message);\n}' });
+};
