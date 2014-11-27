@@ -1,23 +1,24 @@
-[% extends 'layout.html' %]
+[% extends 'layout-student.html' %]
+
+[% block page_head %]
+[% endblock %]
 
 [% block content %]
 
-<div ng-controller="ActivityController" id="1">
+<div ng-controller="ChatController as chat">
 
   <div id="header" class="row">
     <div class="col-md-10">
       <div class="row">
-        <p class="text-center">Bienvenido Usuario Moodle: <strong>Username</strong> Matricula: <strong>00000000</strong></p>
+        <p class="text-center">Bienvenido Usuario Moodle: <strong>{{user.nombre}}</strong> Matricula: <strong>00000000</strong></p>
       </div>
       <div class="row">
-        <p class="text-center">Curso: <strong>Programacion I</strong> Actividad Colaborativa: <strong>{{activity.nombre}}</strong></p>
+        <p class="text-center">Curso: <strong>Programacion I</strong> Actividad Colaborativa: <strong>{{activity.id}}</strong></p>
       </div>
       <div class="row">
         <p class="text-center">Duración: <strong>{{activity.duracion_minima}}</strong></p>
       </div>
     </div>
-      <div class="col-md-2"><input type="button" class="btn btn-danger" value="Salir"></input>
-      </div>
   </div>
 
   <div id="panelIzq" class="col-md-6">
@@ -26,48 +27,88 @@
       <a href="#" class="btn btn-default">Guardar</a>
       <a href="#" class="btn btn-default">Eliminar</a>
     </div>
-    <div id="editor">
-      Algoritmo BFP
+    <br/>
+    <div id="firepad">
     </div>
   </div>
 
-  <div id="panelDer" class="col-md-6" ng-controller="ChatController as chat">
-    <div id="detallesActividad">
-      <p class="text-center">Activities: Desarrollar Algoritmo BFP</p>
-      <p class="text-center"><a href="#">Download - Metodolog&iacute;aBFP.pdf</a></p>
-
-    </div>
-    <div id="mensajes" >
-      <div ng-repeat="message in chat.messages">
-        {{message.user}}: {{message.body}}
-        <button type="button" class="btn btn-info">Acuerdo</button>
-          <button type="button" class="btn btn-info">Desacuerdo</button>
+  <div id="panelDer" class="col-md-6">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h5 class="panel-title"> <strong>Actividad:</strong> {{group.descripcion}}</h5>
+        <p>Archivos de la actividad</p>
+      </div>
+      <div class="panel-body">
+        <table st-table="files" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Archivo</th>
+              <th>Descarga</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="attachment in attachments">
+              <td>{{file.nombre}}</td>
+              <td>{{file.url}}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <form class="form-horizontal" role="form" ng-submit="chat.addMessage(chat.messages)">
-        <div class="form-group" ng-show="chat.canSubmit">
+
+    <div class="panel panel-info" style="height:450px">
+      <div class="panel-heading">
+        <h3 class="panel-title"> <strong>Chat</strong></h3>
+      </div>
+
+      <div id="chat_container" style="height:300px; overflow:auto" scroll-glue>
+        <ul class="chat" ng-repeat="message in messages">
+          <div class="chat-body clearfix">
+            <div class="header">
+              <strong class="primary-font">{{message.user.nombre}}</strong>
+              </br>
+              <small>Tipo de indicador: {{message.indicator.nombre}}</small>
+              <small class="pull-right text-muted" style="margin-right: 20px">
+                <span class="glyphicon glyphicon-time"></span>{{parseTime( message.fecha )}}
+              </small>
+            </div>
+            <p>
+              {{message.message}}
+            </p>
+            </div>
+          <div class="row_divider"></div>
+        </ul>
+
+      </div>
+      <!-- End chat container -->
+
+      <div class="row_divider" style="margin-bottom: 20px"></div>
+
+      <!-- message form init -->
+
+      <form class="form-horizontal" role="form" ng-submit="addMessage()" >
+        <div class="form-group" ng-show="canSubmit" style="margin-left: 40px">
           <div class="col-sm-5">
-            <input type="text" ng-model="chat.message.body" class="form-control" id="msg" placeholder="Mensaje" required>
+            <input type="text" ng-model="message" class="form-control" id="msg" placeholder="Mensaje" required>
           </div>
           <div class="col-sm-5">
             <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </div>
+        <p style="margin-left: 40px" ng-show="!canSubmit">Introduce un nuevo comentario</p>
 
-          </div>
+        <div ng-repeat="indicator in activity.model.indicators" style="background-color:red">
+          <input type="button" class="btn btn-default" style="display: inline-block; float:left; margin-left: 20px" ng-value="indicator.nombre" ng-click="showSubmit( indicator )"></input>
         </div>
-        <input type="button" class="btn btn-default" value="IDEA" ng-click="chat.showSubmit()"></input>
-      <input type="button" class="btn btn-default" value="DUDA" ng-click="chat.showSubmit()"></input>
-      <input type="button" class="btn btn-default" value="ARGUMENTO" ng-click="chat.showSubmit()"></input>
-      <input type="button" class="btn btn-default" value="SOLUCION" ng-click="chat.showSubmit()"></input>
-            
-          </div>
         </div>
-        <input type="button" class="btn btn-default" value="IDEA" ng-click="chat.showSubmit()"></input>
-      <input type="button" class="btn btn-default" value="DUDA" ng-click="chat.showSubmit()"></input>
-      <input type="button" class="btn btn-default" value="ARGUMENTO" ng-click="chat.showSubmit()"></input>
-      <input type="button" class="btn btn-default" value="SOLUCION" ng-click="chat.showSubmit()"></input>
-    </form>
+      </form>
+    </div>
+
+    </div>
+
   </div>
 
-</div>
 
-[% endblock %]
+
+
+  [% endblock %]

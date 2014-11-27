@@ -1,0 +1,4 @@
+Credenciales de Firebase
+
+user = cve.firepad@gmail.com
+password = cvepassword

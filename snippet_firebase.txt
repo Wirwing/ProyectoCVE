@@ -1,0 +1,10 @@
+  <script>
+    var firepadRef = new Firebase('<FIREBASE URL>');
+    var codeMirror = CodeMirror(document.getElementById('editor'), { lineWrapping: true });
+    var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+      { richTextShortcuts: true, richTextToolbar: true, defaultText: '//Escribe aquí tu trabajo...' });
+
+    </script>
+
+
+Probando con el usuario 4

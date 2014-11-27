@@ -1,101 +1,98 @@
 (function(){
-	/*
-	var app = angular.module('modelsController', ['modelsFactory']);
-	app.controller('ModelsController',['$scope', 'Models', '$window', function($scope, Models, $window){
 
-	Models.all({}, function (models) {
-	$scope.models = models;
-});
-$scope.view = function(model){
-$window.location.href = '/cve/interaction-models/' + model.id;
-}
-$scope.delete = function($index, model){
-Models.remove({id: model.id}, function(){
-$scope.models.splice($index, 1);
-});
-}
-}]);
-*/
-var app = angular.module('chatController',[]);
+	var app = angular.module('chatController',['ngCookies', 'chatsFactory', 'activitiesFactory', 'usersFactory', 'groupsFactory', 'luegg.directives']);
 
-app.controller('ChatController',function(){
-	this.messages = messages;
-	this.message = {};
-	this.user = "jaime"
-	this.addMessage = function(msgs){
-		this.message.user = this.user;
-		msgs.push(this.message);
-		this.message = {};
-		this.canSubmit = false;
-		$anchorScroll();
-	};
 
-	this.showSubmit = function(){
-		this.canSubmit = true;
-	};
-	this.canSubmit = false;
-});
+	app.controller('ChatController', ['$scope', 'Chats', 'Activities',
+	 	'Users', 'Groups', '$window', '$cookies', '$interval',
+	function($scope, Chats, Activities, Users, Groups, $window, $cookies, $interval){
 
-app.controller('ActivityController',['$scope', 'Activities', 'FileUploader', '$attrs', '$window',
-function($scope, Activities, FileUploader, $attrs, $window){
+		// We recover the user data from the session cookie
+		$scope.user_id = $cookies.user_id;
+		$scope.username = $cookies.username;
+		$scope.role = $cookies.role;
 
-	$scope.activity = Activities.get({id: $attrs.id});
+		$scope.user = Users.get({id: $scope.user_id});
 
-	var uploader = $scope.uploader = new FileUploader({
-		url: "/cve/api/activities/" + $attrs.id + '/files'
-	});
+		Groups.getUserGroup({id: $scope.user_id}, function(group){
+			$scope.group = group;
+			$scope.activity = group.activity;
 
-	uploader.onSuccessItem = function(fileItem, response, status, headers) {
-		$scope.activity.attachments.push(response);
-	};
 
-	$scope.downloadAttachment = function(attachment){
-		$window.location.href = "/cve/api/activities/" + $attrs.id + '/files/' + attachment.id;
-	}
+			/* Now we recover the previous messages */
+			Chats.getPreviousMessages({group_id: $scope.group.id, activity_id: $scope.activity.id},
+				function( messages ){
+						$scope.messages = messages;
+						if( $scope.messages != null && ( $scope.messages.length > 0 ) ){
+							$scope.last_message_id = messages[ messages.length - 1 ].id;
+						}
 
-	$scope.removeAttachment = function($index, attachment){
 
-		Activities.deleteAttachment({id_activity: $attrs.id, id_file: attachment.id }, function (message) {
-			$scope.activity.attachments.splice($index, 1);
+						/* now with the previous messages we call the refresh interval */
+						$interval(function(){
+							Chats.getMessages({group_id: $scope.group.id, activity_id: $scope.activity.id, last_chat_id: $scope.last_message_id },
+								function(messages ){
+									if( messages != null && ( messages.length > 0 ) ){
+										if( !$scope.last_message_id || ( $scope.last_message_id < messages[0].id ) ){
+											$scope.last_message_id = messages[ messages.length - 1 ].id;
+											$scope.messages = $scope.messages.concat( messages );
+										}
+									}
+								});
+							}, 500 /* every 500 milliseconds */, 0 /* repeat indefinitely */);
+
+				}
+			);
 		});
 
-	}
+		$scope.addMessage = function(){
+			var message_recipent = {};
 
-	$scope.edit = function(){
-		$window.location.href = "/cve/activities/" + $attrs.id + '/edit';
-	}
+			message_recipent.id_grupo = $scope.group.id;
+			message_recipent.id_usuario = $scope.user.id;
+			message_recipent.id_actividad = $scope.activity.id;
+			message_recipent.id_indicador = $scope.selectedIndicator.id;
 
-	$scope.delete = function(){
-		Activities.remove({id: $scope.activity.id}, function(){
-			$window.location.href = '/cve/activities';
+			//We sent the actual moment
+			message_recipent.fecha = new Date();
+			message_recipent.message = $scope.message;
+
+			// We send the message asynchrounsly
+			Chats.sendMessage({}, message_recipent);
+
+			//hides the chat form
+			$scope.canSubmit = false;
+
+			//$anchorScroll();
+		};
+
+		$scope.parseTime = function( messageStringTime ){
+			return  new Date( messageStringTime ).toLocaleTimeString();
+		};
+
+		/* inhabilitates the chat submission */
+		$scope.showSubmit = function( indicator ){
+			$scope.canSubmit = true;
+			$scope.selectedIndicator = indicator;
+		};
+
+		$scope.canSubmit = false;
+
+	}]);
+
+	window.onload = function (){
+		var firepadRef = new Firebase('https://cve.firebaseIO.com');
+
+		var codeMirror = CodeMirror(document.getElementById('firepad'), {
+			lineWrapping: true,
+			theme: 'monokai',
+			lineNumbers: true,
+			mode: 'javascript'
 		});
-	}
+		var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+			{defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n var message = "Hello, world.";\n console.log(message);\n}' });
+		};
 
-}]);
 
-var messages = [
-{
-	user: 'jaime',
-	body: 'hola',
-},{
-	user: 'mauricio',
-	body: 'hola'
-},{
-	user: 'irving',
-	body: 'hola'
-},{
-	user: 'jaime',
-	body: 'que hay que hacer'
-},{
-	user: 'mauricio',
-	body: 'crear un repo'
-},{
-	user: 'jaime',
-	body: 'ok'
-},{
-	user: 'irving',
-	body: 'ya los invite al repo'
-}
-];
 
-})();
+	})();

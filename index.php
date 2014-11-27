@@ -14,11 +14,21 @@ ActiveRecord\Config::initialize(function($cfg)
 // Prepare app
 $app = new \Slim\Slim(array(
     'templates.path' => 'templates',
-    'cookies.encrypt' => true,
+    'cookies.encrypt' => false,
     'cookies.lifetime' => time() + (1*24*60*60), // 1 day
-    'cookies.cipher' => MCRYPT_RIJNDAEL_256,
-    'cookies.cipher_mode' => MCRYPT_MODE_CBC
 ));
+
+/*
+// todo un encrypt cookies
+Enctypted cookies
+$app = new \Slim\Slim(array(
+'templates.path' => 'templates',
+'cookies.encrypt' => true,
+'cookies.lifetime' => time() + (1*24*60*60), // 1 day
+'cookies.cipher' => MCRYPT_RIJNDAEL_256,
+'cookies.cipher_mode' => MCRYPT_MODE_CBC
+));
+*/
 
 //Set Mime Type Middleware
 $app->add(new \Slim\Middleware\ContentTypes());
@@ -54,11 +64,26 @@ $twig_instance->setLexer($lexer);
 // Define routes
 $app->get('/', function () use ($app) {
 
-    // Sample log message
-    $app->log->info("Slim-Skeleton '/' route");
-    // Render index view
-    //$app->render('index.html');
-    $app->redirect("/cve/login");
+    //We check if the user has a valid cookie
+    $cookieRole = $app->getCookie('role');
+
+    if(is_null($cookieRole)){
+      $app->redirect("/cve/login");
+      return;
+    }
+
+    switch ( $cookieRole ) {
+      case 1:
+        $app->redirect("/cve/teacher/activities");
+        break;
+      case 2:
+        $app->redirect("/cve/student/chat");
+        break;
+      default:
+        $app->redirect("/cve/login");
+        break;
+    }
+
 });
 
 $auth = function($role = 'member'){
@@ -91,7 +116,7 @@ $app->map("/login", function() use ($app) {
 
       $user = User::find('first', array('conditions' => array('usuario = ? AND password = ?', $username, $password)));
       if( is_null($user) ){
-        $app->redirect("/cve/blabla");
+        $app->redirect("/cve/login");
         return;
       }
 

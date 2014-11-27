@@ -5,5 +5,17 @@ body {
 }
 
 .form-basic{
-	margin: 60px;
+  margin: 60px;
+}
+
+.firepad {
+  width: 100%;
+  height: 500px;
+}
+
+
+.row_divider{
+  height: 1px;
+  background-color: black;
+  width: 90%;
 }

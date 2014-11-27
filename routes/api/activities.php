@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $app->get('/api/activities', function () use ($app) {
 
