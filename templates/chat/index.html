@@ -101,21 +101,21 @@
         </div>
       </form>
 
-
-
       <div class="panel panel-info">
         <div class="panel-heading">
           <h5 class="panel-title"> <strong>Estadísticas</strong></h5>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style="height:200px">
           <nvd3-line-chart
-              	data="exampleData"
-                  id="showLegendExample"
-                  width="550"
-                  height="300"
-                  showXAxis="true"
-                  showYAxis="true"
-                  showLegend="true">
+            id="stats"
+            data="values"
+            width="800"
+            height="200"
+            showXAxis="true"
+            showYAxis="true"
+            showLegend="true"
+            interactive="true"
+            tooltips="true">
         </div>
       </div>
 

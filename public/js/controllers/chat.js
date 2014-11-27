@@ -14,15 +14,72 @@
 
 		$scope.user = Users.get({id: $scope.user_id});
 
+		$scope.interval_time = 0;
+		$scope.data_pass = 0;
+
+		$scope.values = [];
+
+		$scope.updateTable = function(){
+			if( !$scope.messages || $scope.messages.length == 0 ){
+				/* we don't have any data */
+				return;
+			}
+
+			var indicators = $scope.activity.model.indicators;
+
+			for( var i = 0; i < indicators.length; i ++  ){
+				var indicator = indicators[i];
+				indicator.total = $scope.getPercentageOfMessagesOfIndicator( indicator.id );
+			}
+
+			if( $scope.values.length == 0 ){
+				$scope.values = [];
+				for( var i = 0; i < indicators.length; i ++  ){
+					var indicator = indicators[i];
+					$scope.values.push(
+						{
+							"key" : indicator.nombre,
+							"bar" : true,
+							"values": [ [ $scope.data_pass, indicator.total ]]
+						}
+					);
+				}
+			}else{
+				for( var i = 0; i < indicators.length; i ++ ){
+					var indicator = indicators[i];
+					$scope.values[i].values.push( [ $scope.data_pass, indicator.total]);
+				}
+			}
+
+			//Update
+			nv.graphs[0].update();
+	  };
+
+		$scope.getPercentageOfMessagesOfIndicator = function( indicator_id ){
+			var total = 0;
+			var messages = $scope.messages;
+			for( var i = 0; i < messages.length; i ++ ){
+				var message = messages[i];
+				if( message.indicator.id == indicator_id ){
+					total ++;
+				}
+			}
+
+			var percentage = (total * 100) / messages.length;
+			return percentage.toFixed(2);
+		}
+
 		Groups.getUserGroup({id: $scope.user_id}, function(group){
 			$scope.group = group;
 			$scope.activity = group.activity;
-
 
 			/* Now we recover the previous messages */
 			Chats.getPreviousMessages({group_id: $scope.group.id, activity_id: $scope.activity.id},
 				function( messages ){
 					$scope.messages = messages;
+					$scope.updateTable();
+					$scope.data_pass ++;
+
 					if( $scope.messages != null && ( $scope.messages.length > 0 ) ){
 						$scope.last_message_id = messages[ messages.length - 1 ].id;
 					}
@@ -38,9 +95,15 @@
 										$scope.messages = $scope.messages.concat( messages );
 									}
 								}
+
+								$scope.interval_time += 500;
+								// Every 5 seconds we update the table
+								if( ($scope.interval_time % 5000) === 0 ){
+									$scope.updateTable();
+									$scope.data_pass ++;
+								}
 							});
 						}, 500 /* every 500 milliseconds */, 0 /* repeat indefinitely */);
-
 					}
 				);
 			});
@@ -59,15 +122,13 @@
 
 				// We send the message asynchrounsly
 				Chats.sendMessage({}, message_recipent);
-
+				$scope.message = "";
 				//hides the chat form
 				$scope.canSubmit = false;
-
-				//$anchorScroll();
 			};
 
 			$scope.parseTime = function( messageStringTime ){
-				return  new Date( messageStringTime ).toLocaleTimeString();
+				return new Date( messageStringTime ).toLocaleTimeString();
 			};
 
 			/* inhabilitates the chat submission */
@@ -77,32 +138,6 @@
 			};
 
 			$scope.canSubmit = false;
-
-
-			var values = [
-			{
-				"key" : "Duda",
-				"bar": true,
-				"values" : [ [ 1 , 81.89] , [ 2 , 85.51] , [3 , 78.49] , [ 4 , 82.72] , [ 5 , 80.39] , [ 6 , 39.77] , [ 7 , 28.27] , [ 8 , 57.96] , [ 9 , 107.85] , [ 10 , 86.98] ]
-			},
-			{
-				"key" : "Argumento",
-				"bar": true,
-				"values" : [ [ 1 , 71.89] , [ 2 , 75.51] , [3 , 68.49] , [ 4 , 62.72] , [ 5 , 70.39] , [ 6 , 59.77] , [ 7 , 57.27] , [ 8 , 67.96] , [ 9 , 67.85] , [ 10 , 76.98] ]
-			},
-			{
-				"key" : "Idea",
-				"bar": true,
-				"values" : [ [ 1 , 11.89] , [ 2 , 25.51] , [3 , 38.49] , [ 4 , 16.72] , [ 5 , 20.39] , [ 6 , 38.77] , [ 7 , 27.27] , [ 8 , 17.96] , [ 9 , 97.85] , [ 10 , 42.98] ]
-			},
-			{
-				"key" : "Pregunta",
-				"bar": true,
-				"values" : [ [ 1 , 21.89] , [ 2 , 35.51] , [3 , 88.49] , [ 4 , 36.72] , [ 5 , 40.39] , [ 6 , 8.77] , [ 7 , 7.27] , [ 8 , 87.96] , [ 9 , 7.85] , [ 10 , 2.98] ]
-			}
-			];
-
-			$scope.exampleData = values;
 
 		}]);
 
@@ -118,7 +153,4 @@
 			var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
 				{defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n var message = "Hello, world.";\n console.log(message);\n}' });
 			};
-
-
-
 		})();
