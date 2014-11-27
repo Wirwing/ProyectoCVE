@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class AttachedFile extends ActiveRecord\Model{
 
@@ -38,7 +38,7 @@ class AttachedFile extends ActiveRecord\Model{
 			else{
 				$result = array( 'message' => 'Error on transfer' );
 			}
-			
+
 
 		}else{
 
@@ -46,14 +46,14 @@ class AttachedFile extends ActiveRecord\Model{
 		}
 
 		return $result;
-		
+
 	}
 
 	public static function find_by_id_and_activity($id, $id_activity){
 
 		$attachments = AttachedFile::all(array('id_actividad' => $id_activity, 'id' => $id));
 
-		if(sizeof($attachments) == 0) 
+		if(sizeof($attachments) == 0)
 			throw new \ActiveRecord\RecordNotFound("Couldn't find attachment");
 
 		return $attachments[0];

@@ -8,15 +8,12 @@
 <div ng-controller="ChatController as chat">
 
   <div id="header" class="row">
-    <div class="col-md-10">
+    <div class="col-md-12">
       <div class="row">
-        <p class="text-center">Bienvenido Usuario Moodle: <strong>{{user.nombre}}</strong> Matricula: <strong>00000000</strong></p>
+        <p class="text-center">Usuario: <strong>{{user.nombre}}</strong> Matricula: <strong>12342324</strong></p>
       </div>
       <div class="row">
-        <p class="text-center">Curso: <strong>Programacion I</strong> Actividad Colaborativa: <strong>{{activity.id}}</strong></p>
-      </div>
-      <div class="row">
-        <p class="text-center">Duración: <strong>{{activity.duracion_minima}}</strong></p>
+        <p class="text-center">Curso: <strong>Programacion I</strong> Actividad Colaborativa: <strong>{{activity.nombre}}</strong></p>
       </div>
     </div>
   </div>
@@ -35,8 +32,7 @@
   <div id="panelDer" class="col-md-6">
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h5 class="panel-title"> <strong>Actividad:</strong> {{group.descripcion}}</h5>
-        <p>Archivos de la actividad</p>
+        <h5 class="panel-title"> <strong>Archivos de la actividad:</strong></h5>
       </div>
       <div class="panel-body">
         <table st-table="files" class="table table-striped">
@@ -48,20 +44,20 @@
           </thead>
           <tbody>
             <tr ng-repeat="attachment in attachments">
-              <td>{{file.nombre}}</td>
-              <td>{{file.url}}</td>
+              <td>{{attachment.nombre}}</td>
+              <td>{{attachment.url}}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <div class="panel panel-info" style="height:450px">
+    <div class="panel panel-info" style="height:350px">
       <div class="panel-heading">
         <h3 class="panel-title"> <strong>Chat</strong></h3>
       </div>
 
-      <div id="chat_container" style="height:300px; overflow:auto" scroll-glue>
+      <div id="chat_container" style="height:200px; overflow:auto" scroll-glue>
         <ul class="chat" ng-repeat="message in messages">
           <div class="chat-body clearfix">
             <div class="header">
@@ -102,6 +98,18 @@
         </div>
         </div>
       </form>
+
+
+
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h5 class="panel-title"> <strong>Estadísticas</strong></h5>
+        </div>
+        <div class="panel-body">
+
+        </div>
+      </div>
+
     </div>
 
     </div>
