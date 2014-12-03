@@ -1,5 +1,8 @@
 <?php
 
+/*
+* Rutas del recurso modelos de interaccion. Renderizan plantillas HTML con los datos obtenidos de la BD.
+*/
 $app->get('/teacher/interaction-models',$auth('teacher'), function () use ($app) {
 
     // Sample log message

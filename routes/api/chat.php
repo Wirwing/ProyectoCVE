@@ -1,5 +1,8 @@
 <?php
 
+/*
+* Rutas API del recurso chat
+*/
 $app->get('/api/chat/:id', function ($id) use ($app) {
 
 	$activity = Chat::find($id);

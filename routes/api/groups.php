@@ -1,5 +1,8 @@
 <?php
 
+/*
+* Rutas API del recurso grupos colaborativos
+*/
 $app->get('/api/groups', function () use ($app) {
 
   $groups = Group::all(array('readonly' => true, 'limit' => 50));

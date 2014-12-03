@@ -1,5 +1,8 @@
 <?php
 
+/*
+* Rutas API del recurso modelos de interaccion
+*/
 $app->get('/api/interaction-models', function () use ($app) {
 
 	$models = Model::all(array('readonly' => true, 'limit' => 50));

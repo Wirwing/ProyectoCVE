@@ -1,5 +1,8 @@
 <?php
 
+/*
+* Rutas del recurso actividades. Renderizan plantillas HTML con los datos obtenidos de la BD.
+*/
 $app->get('/teacher/activities',$auth('teacher'), function () use ($app) {
 
     // Sample log message

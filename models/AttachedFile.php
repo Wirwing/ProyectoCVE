@@ -5,12 +5,15 @@ class AttachedFile extends ActiveRecord\Model{
 	static $auto_increment = true;
 	static $table_name = 'archivos_adjuntos';
 
+	//Modelo padre
 	static $belongs_to = array(
     	array('activity', 'foreign_key' => 'id_actividad', 'class_name' => 'Activity')
 	);
 
+	//Antes de eliminar un adjunto, elimina también el archivo almacenado en disco
 	static $before_destroy = array('destroy_file');
 
+	//Factory para construir un adjunto en base a la actividad dependiente y el archivo envíado como parametros
     public static function attach_new($id_actividad) {
 
 		$activity = Activity::find($id_actividad);
