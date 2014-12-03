@@ -24,9 +24,12 @@
       <a href="#" class="btn btn-default">Nuevo</a>
       <a href="#" class="btn btn-default">Guardar</a>
       <a href="#" class="btn btn-default">Eliminar</a>
+      <button class="btn btn-success" ng-click="startTimer()" ng-show="!timerRunning">Iniciar</button>
+      <button class="btn btn-danger" ng-click="showTimer()" ng-show="timerRunning&&!canShowTimer">Tiempo Restante</button>
+      <timer countdown="timeLimit" interval="1000" autostart="true" ng-show="canShowTimer"> Tiempo Restante: {{days}} dias, {{hours}} horas, {{minutes}} minutos, {{seconds}} segundos</timer>
     </div>
     <br/>
-    <div id="firepad">
+    <div id="firepad">{{timeLimit}}
 
     </div>
   </div>
