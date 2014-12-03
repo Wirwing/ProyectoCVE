@@ -1,5 +1,9 @@
 <?php
 
+	/*
+	* Las rutas del lado del servidor estan divididas en dos espacios de nombre: uno que resuelve paginas HTML, y otra RESTful (con prefijo /api/)
+	*/
+
 	#HTML Namespace
 	include "activities.php";
 	include "models.php";

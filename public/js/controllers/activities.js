@@ -1,5 +1,6 @@
 (function(){
 
+
 	var app = angular.module('activitiesController', ['activitiesFactory', 'modelsFactory', 'angularFileUpload']);
 
 	app.controller('ActivitiesController',['$scope', 'Activities', '$window', function($scope, Activities, $window){
@@ -36,6 +37,7 @@
 
 		});
 
+		//Encuentra el indice de un elemento dentro de un arreglo
 		var findIndex = function(arr, obj) {
 			for(var i = 0; i < arr.length; i++){
 				if(angular.equals(arr[i], obj)){
@@ -114,7 +116,6 @@
 
 		this.add = function(activity){
 
-			//TODO: Replace values with session ones.
 			activity.id_tutor = 1;
 			activity.fecha = new Date();
 			activity.id_modelo = $scope.selectedModel.id;

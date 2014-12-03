@@ -1,5 +1,8 @@
 <?php
 
+/*
+* Rutas API del recurso usuarios
+*/
 $app->get('/api/users', function () use ($app) {
 
 	$users = User::all(array('readonly' => true, 'limit' => 50));

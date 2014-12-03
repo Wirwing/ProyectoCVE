@@ -1,5 +1,8 @@
 <?php
 
+/*
+* Rutas API del recurso actividades
+*/
 $app->get('/api/activities', function () use ($app) {
 
 	$activities = Activity::all(array('readonly' => true, 'limit' => 50));

@@ -15,6 +15,7 @@ class Model extends ActiveRecord\Model{
 
 	static $before_update = array('update_indicators');
 
+	//Al actualizar un modelo también se actualizan los indicadores hijos
 	public function update_indicators(){
 
 		if($this->new_indicators){
@@ -28,6 +29,7 @@ class Model extends ActiveRecord\Model{
 
 	}
 
+	//Wraper: para cada indicador enviado como parametro en el constructor, se persisten en la bd.
 	public function make_indicators() {
 		if($this->new_indicators){
 			foreach ($this->new_indicators as $indicator) {

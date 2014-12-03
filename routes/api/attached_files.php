@@ -1,5 +1,8 @@
 <?php 
 
+/*
+* Rutas API del recurso archivo adjunto
+*/
 $app->post('/api/activities/:id/files', function ($id_activity) use ($app) {
 
 	$app->log->info("File upload route");
