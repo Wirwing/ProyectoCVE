@@ -73,19 +73,7 @@
 			$scope.group = group;
 			$scope.activity = group.activity;
 
-			var currentDateTime = new Date();
-			var dateLimit = convertUTCDateToLocalDate(new Date($scope.activity.fecha_limite.toString()));
-			alert("fechaLimite: " + dateLimit + " hoy: " + currentDateTime);
-			$scope.timeLimit = Math.floor((dateLimit - currentDateTime)/1000);
-			if($scope.timeLimit < 0){
-				$scope.timeLimit = 1;
-			}
-			if($scope.activity.iniciada == 1){
-				$scope.timerRunning = true;
-			}else{
-				$scope.timerRunning = false;
-			}
-			alert($scope.timeLimit);
+			
 
 			/* Now we recover the previous messages */
 			Chats.getPreviousMessages({group_id: $scope.group.id, activity_id: $scope.activity.id},
@@ -98,6 +86,7 @@
 						$scope.last_message_id = messages[ messages.length - 1 ].id;
 					}
 
+					setTimeLimit();
 
 					/* now with the previous messages we call the refresh interval */
 					$interval(function(){
@@ -159,10 +148,9 @@
 				$scope.$broadcast('timer-start');
 				$scope.timerRunning = true;
 				$scope.activity.iniciada = 1;
-				var tempDate = new Date();
-				$scope.activity.fecha_limite = new Date(tempDate.getTime() + $scope.activity.duracion_minima*60000);
-				
-				alert($scope.activity.fecha_limite + " id: " +  $scope.activity.id);
+				var tempDate = new Date(new Date().getTime() + $scope.activity.duracion_minima*60000);
+				var localDate = convertUTCDateToLocalDateMin(tempDate);
+				$scope.activity.fecha_limite = localDate;
 				
 				Activities.update({id: $scope.activity.id}, $scope.activity, function () {
 					$window.location.href = '/cve/teacher/activities/' + activity.id;
@@ -175,11 +163,34 @@
 				$scope.canShowTimer = true;
 			};
 
+			function setTimeLimit(){
+				var currentDateTime = new Date();
+				var dateLimit = convertUTCDateToLocalDate(new Date($scope.activity.fecha_limite.toString()));
+				//alert("fechaLimite: " + dateLimit + " hoy: " + currentDateTime);
+				$scope.timeLimit = Math.floor((dateLimit - currentDateTime)/1000);
+				if($scope.timeLimit < 0){
+					$scope.timeLimit = 1;
+				}
+				if($scope.activity.iniciada == 1){
+					$scope.timerRunning = true;
+				}else{
+					$scope.timerRunning = false;
+				}
+			};
+
 			function convertUTCDateToLocalDate(date) {
 			    var newDate = new Date(date.getTime());
 			    var offset = (date.getTimezoneOffset()+60) / 60;
 			    var hours = date.getHours();
 			    newDate.setHours(hours + offset);
+			    return newDate;   
+			}
+
+			function convertUTCDateToLocalDateMin(date) {
+			    var newDate = new Date(date.getTime());
+			    var offset = (date.getTimezoneOffset()) / 60;
+			    var hours = date.getHours();
+			    newDate.setHours(hours - offset);
 			    return newDate;   
 			}
 		}]);
