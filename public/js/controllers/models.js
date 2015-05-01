@@ -56,10 +56,13 @@
 
 	}]);
 
-	app.controller('ModelController',['$scope', 'Models', '$attrs', '$window',
-		function($scope, Models, $attrs, $window){
+	app.controller('ModelController',['$scope', 'Models', 'HabClasses', '$attrs', '$window',
+		function($scope, Models, HabClasses, $attrs, $window){
 
-		$scope.model = Models.get({id: $attrs.id});
+		Models.get({id: $attrs.id}, function(model){
+			$scope.model = model;
+			console.log(model.classes);
+		});
 
         $scope.edit = function(){
         	$window.location.href = "/cve/teacher/interaction-models/" + $attrs.id + '/edit';
@@ -73,6 +76,16 @@
         	Activities.remove({id: $scope.model.id}, function(){
 				$window.location.href = '/cve/teacher/interaction-models';
 			});
+        }
+
+        $scope.viewClass = function(habClass){
+            $window.location.href = '/cve/teacher/hab_classes/' + habClass.id;
+        }
+
+        $scope.deleteClass = function($index, habClass){
+            HabClasses.remove({id: habClass.id}, function(){
+                $scope.model.classes.splice($index, 1);
+            });
         }
 
 	}]);

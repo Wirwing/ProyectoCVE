@@ -34,53 +34,47 @@
       </tr>
       </tbody>
     </table> -->
+    <a href="../hab_classes/new" type="button" class="btn btn-info pull-right">
+      Nueva clase
+    </a>
 
-  <div ng-controller="HabClassesController as habClassCtrl">
-
-  <a href="hab_classes/new" type="button" class="btn btn-info pull-right" ng-disabled="true">
-    Nueva clase
-  </a>
-
-  <table st-table="habClasses" class="table table-striped">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Habilidad</th>
-        <th>Sub-habilidad</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="habClass in habClasses">
-        <td>{{habClass.id}}</td>
-        <td>{{habClass.nombre}}</td>
-        <td>{{habClass.subnombre}}</td>
-        <td><button type="button" class="btn btn-info btn-xs" ng-click="view(habClass)">
-          <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+    <table st-table="habClasses" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Habilidad</th>
+          <th>Sub-habilidad</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="habClass in model.classes">
+          <td>{{habClass.id}}</td>
+          <td>{{habClass.nombre}}</td>
+          <td>{{habClass.subnombre}}</td>
+          <td><button type="button" class="btn btn-info btn-xs" ng-click="viewClass(habClass)">
+            <span class="glyphicon glyphicon-zoom-in"></span> Detalles
           </button>
-          <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, habClass)">
-          <span class="glyphicon glyphicon-trash"></span> Eliminar
+          <button type="button" class="btn btn-danger btn-xs" ng-click="deleteClass($index, habClass)">
+            <span class="glyphicon glyphicon-trash"></span> Eliminar
           </button>
         </td>
       </tr>
     </tbody>
   </table>
 
-</div>
+</fieldset>
 
-
-  </fieldset>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="pull-right">
-        <button type="button" class="btn btn-default" ng-click="back()">Regresar</button>
-       <!-- <button type="button" class="btn btn-primary" ng-click="edit()">Editar</button> -->
-      </div>
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="pull-right">
+      <button type="button" class="btn btn-default" ng-click="back()">Regresar</button>
+      <!-- <button type="button" class="btn btn-primary" ng-click="edit()">Editar</button> -->
     </div>
   </div>
+</div>
 
-  <!-- <pre>form_payload = {{model | json}}</pre> csc -->
+<!-- <pre>form_payload = {{model | json}}</pre> csc -->
 
 </form>
 
