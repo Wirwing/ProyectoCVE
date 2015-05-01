@@ -1,4 +1,5 @@
 <?php
+
 require 'vendor/autoload.php';
 
 ActiveRecord\Config::initialize(function($cfg)
@@ -63,16 +64,14 @@ $twig_instance->setLexer($lexer);
 
 // Define routes
 $app->get('/', function () use ($app) {
-
     //We check if the user has a valid cookie
     $cookieRole = $app->getCookie('role');
-
     if(is_null($cookieRole)){
       $app->redirect("/cve/login");
       return;
     }
 
-    switch ( $cookieRole ) {
+    switch ( @$cookieRole ) {
       case 1:
         $app->redirect("/cve/teacher/activities");
         break;
@@ -86,7 +85,7 @@ $app->get('/', function () use ($app) {
 
 });
 
-$auth = function($role = 'member'){
+ $auth = function($role = 'member'){
   return function() use ($role){
 
     $app = \Slim\Slim::getInstance();
@@ -104,6 +103,7 @@ $auth = function($role = 'member'){
 
   };
 };
+
 
 $app->map("/login", function() use ($app) {
   if($app->request()->isPost()){

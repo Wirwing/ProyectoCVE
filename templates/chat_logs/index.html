@@ -1,0 +1,49 @@
+
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Analisis[% endblock %]
+
+[% block content %]
+
+ <div ng-controller="chat_logsController as controller">
+
+  <h2 class="pull-left"> Analizador de indicadores colaborativos </h2>
+  <br><br>
+  <h4 class="pull-left"> Tabla de registro de habilidades colaborativas individuales </h4>
+  <a href="analysis/new" type="button" class="btn btn-info pull-right">
+    Analisis
+  </a>
+
+  <table st-table="controller" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id_Grupo</th>
+        <th>Id_Usuario</th>       
+        <th>Id_Actividad</th>       
+        <th>Id_Indicador</th>       
+        <th>Fecha</th>       
+        <th>Chat_Log</th>       
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="chatlog in controller">
+        <td>{{chatlog.id_grupo}}</td>
+        <td>{{chatlog.id_usuario}</td>        
+        <td>{{chatlog.id_actividad}}</td>        
+        <td>indicador</td>        
+        <td>fecha</td>        
+        <td>msg</td>        
+        <td><button type="button" class="btn btn-info btn-xs" ng-click="view(AClass)">
+          <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+        </button>
+        <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, AClass)">
+          <span class="glyphicon glyphicon-trash"></span> Eliminar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+[% endblock %]

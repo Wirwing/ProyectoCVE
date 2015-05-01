@@ -71,8 +71,8 @@ $app->get('/api/groups/user/:user_id', function($user_id) use($app) {
       $json_elements = json_decode( $json, true );
       $activity = $activities[0];
 
-      $activity_json = $activity->to_json(array(
-        'include' => array( 'attachments', 'model' => array('include' => 'indicators'))
+      $activity_json = $activity->to_json(
+          array('include' => array( 'attachments', 'model' => array('include' => array('classes' => array('include' => 'indicators'))))
       ));
       $activity_json_decode = json_decode( $activity_json, true );
 

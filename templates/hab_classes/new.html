@@ -1,0 +1,150 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Actividades[% endblock %]
+
+[% block content %]
+
+<form class="form-horizontal form-basic" ng-controller="AddHabClassController as addHabClassCtrl"
+ng-submit="addHabClassCtrl.add(habClass)">
+
+<!-- Section Name -->
+<legend>Clase de habilidad colaborativa</legend>
+
+<fieldset>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Habilidad</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" ng-model="habClass.nombre" required />
+    </div>    
+    <label class="col-sm-2 control-label" for="textinput">Sub-habilidad</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" ng-model="habClass.subnombre" required />
+    </div>
+
+  </div>
+
+</fieldset>
+
+<!-- Section Name -->
+<legend>Sub-Clase de habilidades</legend>
+
+<!-- Indicator subform -->
+<div class="form-group">
+  <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+  <div class="col-sm-2">
+    <input type="text" class="form-control" ng-model="habClass.indicators[0].nombre" ng-disabled="false"/>
+  </div>
+  <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+  <div class="col-sm-6">
+    <input type="text" class="form-control" ng-model="habClass.indicators[0].apertura" required />
+  </div>
+</div>
+
+  
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="habClass.indicators[1].nombre" ng-disabled="false"/>
+    </div>
+    <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="habClass.indicators[1].apertura"  />
+    </div>    
+  </div>
+
+  
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="habClass.indicators[2].nombre" ng-disabled="false"/>
+    </div>
+    <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="habClass.indicators[2].apertura"  />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="habClass.indicators[3].nombre" ng-disabled="false"/>
+    </div>
+    <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="habClass.indicators[3].apertura"  />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="habClass.indicators[4].nombre" ng-disabled="false"/>
+    </div>
+    <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="habClass.indicators[4].apertura"  />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="habClass.indicators[5].nombre" ng-disabled="false"/>
+    </div>
+    <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="habClass.indicators[5].apertura"  />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="habClass.indicators[6].nombre" ng-disabled="false"/>
+    </div>
+    <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="habClass.indicators[6].apertura"  />
+    </div>    
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="habClass.indicators[7].nombre" ng-disabled="false"/>
+    </div>
+    <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="habClass.indicators[7].apertura"  />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label" for="textinput">Atributo</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="habClass.indicators[8].nombre" ng-disabled="false"/>
+    </div>
+    <label class="col-sm-3 control-label" for="textinput">Oración de Apertura</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" ng-model="habClass.indicators[8].apertura"  />
+    </div>
+  </div>
+
+
+</fieldset>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="pull-right">
+      <button ng-click="cancel()" type="button" class="btn btn-default">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Crear</button>
+    </div>
+  </div>
+</div>
+
+<!-- <pre>form_payload = {{model | json}}</pre> -->
+
+</form>
+
+[% endblock %]

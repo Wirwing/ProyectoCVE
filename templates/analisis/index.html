@@ -1,0 +1,41 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Analisis[% endblock %]
+
+[% block content %]
+
+<div ng-controller="AnalisisUsoController as analisisCtrl">
+
+  <h2 class="pull-left">Analisis de usabilidad de indicadores colaborativos</h2>
+
+  <table st-table="analisis_uso" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Grupo</th>
+        <th>Alumno</th>
+        <th>Clase</th>
+        <th>Usabilidad</th>
+        <th>Frecuencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ana_clase in analisis_uso">
+        <td>{{ana_clase.id_grupo}}</td>
+        <td>{{ana_clase.id_usuario}}</td>
+        <td>{{ana_clase.id_clase}}</td>
+        <td>{{ana_clase.id_clase}}</td>
+        <td>{{ana_clase.ifrecuencia}}</td>
+        <td><button type="button" class="btn btn-info btn-xs" ng-click="view(activity)">
+          <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+          </button>
+          <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, activity)">
+          <span class="glyphicon glyphicon-trash"></span> Eliminar
+        </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+[% endblock %]

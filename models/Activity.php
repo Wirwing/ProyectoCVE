@@ -16,9 +16,9 @@ class Activity extends ActiveRecord\Model{
 	);
 
 	//Delega el atributo indicators a model, de esta forma podemos hacer activity.indicators en vez de activity.model.indicators
-	static $delegate = array(
-      array('indicators' => 'model')
-    );
+	//static $delegate = array(
+    //  array('indicators' => 'model')
+    //);
 
 	//Callback que destroye adjuntos antes de eliminar una actividad
 	static $before_destroy = array('destroy_attachments');

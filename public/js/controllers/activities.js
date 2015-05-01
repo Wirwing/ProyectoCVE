@@ -34,7 +34,6 @@
 				var index = findIndex($scope.models, activity.model);
 				$scope.selectedModel = $scope.models[index];
 			});
-
 		});
 
 		//Encuentra el indice de un elemento dentro de un arreglo

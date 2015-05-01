@@ -7,7 +7,8 @@ class ChatLog extends ActiveRecord\Model{
 
   static $belongs_to = array(
     array('user', 'foreign_key' => 'id_usuario', 'class_name' => 'User'),
-    array('indicator', 'foreign_key' => 'id_indicador', 'class_name' => 'Indicator')
+    array('indicator', 'foreign_key' => 'id_indicador', 'class_name' => 'Indicator'),
+    array('abClass', 'foreign_key' => 'id_clase', 'class_name' => 'HabClass')
   );
 
 }

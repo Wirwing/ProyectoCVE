@@ -6,11 +6,14 @@
 
  <div ng-controller="ModelsController as modelsCtrl">
 
-  <h2 class="pull-left">Modelos</h2>
+  <h2 class="pull-left">Taxonomia de habilidades colaborativas</h2>
 
+
+  <!-- Por ahora solo tenemos un modelo
   <a href="interaction-models/new" type="button" class="btn btn-info pull-right">
     Nuevo modelo
   </a>
+  -->
 
   <table st-table="models" class="table table-striped">
     <thead>
@@ -27,9 +30,11 @@
         <td><button type="button" class="btn btn-info btn-xs" ng-click="view(model)">
           <span class="glyphicon glyphicon-zoom-in"></span> Detalles
         </button>
+        <!--
+        Por ahora no se puede eliminar el modelo, con el fin de simplificar las operaciones
         <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, model)">
           <span class="glyphicon glyphicon-trash"></span> Eliminar
-        </button>
+        </button> -->
       </td>
     </tr>
   </tbody>
