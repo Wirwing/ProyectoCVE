@@ -150,6 +150,29 @@
 				$scope.canSubmit = false;
 			};
 
+			$scope.addElementMessage = function(idClass){
+				
+				var message_recipent = {};
+
+				message_recipent.id_grupo = $scope.group.id;
+				//ad.csc message_recipent.id_sesion = $scope.sesion.id;
+				message_recipent.id_usuario = $scope.user.id;
+				message_recipent.id_actividad = $scope.activity.id;
+				message_recipent.id_indicador = $scope.selectedIndicator.id;
+				message_recipent.id_clase = idClass;
+
+				//We sent the actual moment
+				message_recipent.fecha = new Date();
+				message_recipent.message = $scope.message;
+
+				// We send the message asynchrounsly
+				Chats.sendMessage({}, message_recipent);
+				$scope.message = "";
+				//hides the chat form
+				$scope.canSubmit = false;
+				
+			};
+
 			$scope.parseTime = function( messageStringTime ){
 				return new Date( messageStringTime ).toLocaleTimeString();
 			};
