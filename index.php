@@ -7,7 +7,7 @@ ActiveRecord\Config::initialize(function($cfg)
    $cfg->set_model_directory('models');
    $cfg->set_connections(
      array(
-       'development' => 'mysql://root:root@localhost/db_cve_fmat_uady'
+       'development' => 'mysql://root:@localhost/db_cve_fmat_uady'
      )
    );
 });
