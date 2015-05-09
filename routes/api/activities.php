@@ -46,7 +46,8 @@ $app->get('/api/activities/:id', function ($id) use ($app) {
 
 	# you can nest includes .. here model also has an indicators association
 	$json = $activity->to_json(array(
-	  'include' => array( 'attachments', 'model' => array('include' => 'indicators'))
+	  'include' => array( 'attachments',
+	  'model' => array('include' => 'classes'))
 	));
 
 	$response->write($json);

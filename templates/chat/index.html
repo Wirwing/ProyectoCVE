@@ -11,16 +11,21 @@
   <div id="header" class="row">
     <div class="col-md-12">
       <div class="row">
-        <p class="text-center">Usuario: <strong>{{user.nombre}}</strong> Matricula: <strong>12342324</strong></p>
+        <p class="text-center">Bienvenido usuario Moodle UADY: <strong>{{user.nombre}}</strong> (<strong>{{user.email}}</strong>)</p>
       </div>
+      <!--ad.csc -->
+      <div ng-controller="GroupsController as groupsCtrl">
       <div class="row">
-        <p class="text-center">Curso: <strong>Programacion I</strong> Actividad Colaborativa: <strong>{{activity.nombre}}</strong></p>
+        <p class="text-center">Curso Moodle: <strong>{{user.curso_moodle}} </strong>
+        Grupo Colaborativo:<strong>{{group.nombre}}</strong> 
+        </p>
       </div>
     </div>
   </div>
 
   <div id="panelIzq" class="col-md-6">
     <div id="menuOp" class="row">
+      <a href="#" class="btn btn-default">Cambiar Editor</a>
       <a href="#" class="btn btn-default">Nuevo</a>
       <a href="#" class="btn btn-default">Guardar</a>
       <a href="#" class="btn btn-default">Eliminar</a>
@@ -29,80 +34,105 @@
       <timer countdown="timeLimit" interval="1000" autostart="true" ng-show="canShowTimer"> Tiempo Restante: {{days}} dias, {{hours}} horas, {{minutes}} minutos, {{seconds}} segundos</timer>
     </div>
     <br/>
-    <div id="firepad">
-
+    <div id="firepad"> <!-- cm.by.csc {{timeLimit}} -->
     </div>
   </div>
 
   <div id="panelDer" class="col-md-6">
-    <div class="panel panel-info">
-      <div class="panel-heading">
-        <h5 class="panel-title"> <strong>Archivos de la actividad:</strong></h5>
-      </div>
-      <div class="panel-body">
-        <table st-table="files" class="table table-striped">
-          <thead>
+     <div class="panel panel-info">
+        <div class="panel-heading">
+          <h6 class="panel-title"><strong>Actividad Colaborativa:{{activity.nombre}}</strong></h6>
+        </div>
+        <div class="panel-body">
+          <div class="col-lg-12 col-md-12">
+          {{activity.descripcion}}  
+          <table st-table="files" class="table table-striped">
+          <thead>            
             <tr>
               <th>Archivo</th>
               <th>Descarga</th>
-            </tr>
+            </tr>          
           </thead>
-          <tbody>
-            <tr ng-repeat="attachment in attachments">
-              <td>{{attachment.nombre}}</td>
-              <td>{{attachment.url}}</td>
+          <tbody>            
+            <tr ng-repeat="attachment in activity.attachments">
+              <td><small>{{attachment.nombre}}</small></td>
+              <td><a ng-href="{{attachment.url}}"><small>Descarga</small></a></td>
             </tr>
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
 
-    <div class="panel panel-info" style="height:350px">
-      <div class="panel-heading">
-        <h3 class="panel-title"> <strong>Chat</strong></h3>
-      </div>
+    <!-- termina descripcion de actividad -->
 
+    <!-- encabezado del chat -->
+
+    <div class="panel panel-info" style="height:400px">
+      <div class="panel-heading">        
+          <h3 class="panel-title"> <strong>Chat </strong>(Pulsa para indicar cambio de discusion)
+          <!-- Se agrego Elementos de conocimiento para analisis de secuencias colaborativas -->  
+          <button type="button" classesss="btn btn-info btn-xs pull-right" ng-click="addElementMessage(1001)"><span class="glyphicon glyphicon-"> Elem1 </span></button>
+          <button type="button" classesss="btn btn-info btn-xs pull-right" ng-click="addElementMessage(1002)"><span class="glyphicon glyphicon-"> Elem2 </span></button> 
+          <button type="button" classesss="btn btn-info btn-xs pull-right" ng-click="addElementMessage(1003)"><span class="glyphicon glyphicon-"> Elem3 </span></button>
+          </h3>
+      </div>
+   
+      <!--termina encabezado del chat -->      
+
+      <!--cuerpo del chat -->      
+      
       <div id="chat_container" style="height:200px; overflow:auto" scroll-glue>
         <ul class="chat" ng-repeat="message in messages">
           <div class="chat-body clearfix">
             <div class="header">
               <strong class="primary-font">{{message.user.nombre}}</strong>
-              </br>
-              <small>Tipo de indicador: {{message.indicator.nombre}}</small>
+              <small>[ Accion: {{message.indicator.nombre}} ]</small>              
               <small class="pull-right text-muted" style="margin-right: 20px">
                 <span class="glyphicon glyphicon-time"></span>{{parseTime( message.fecha )}}
               </small>
             </div>
-            <p>
+            <p> 
               {{message.message}}
             </p>
             </div>
-          <div class="row_divider"></div>
+          <!--cm.by.csc <div class="row_divider"></div> -->
         </ul>
-
       </div>
-      <!-- End chat container -->
+      <!-- termina cuerpo del chat -->
 
       <div class="row_divider" style="margin-bottom: 20px"></div>
 
       <!-- message form init -->
 
       <form class="form-horizontal" role="form" ng-submit="addMessage()" >
-        <div class="form-group" ng-show="canSubmit" style="margin-left: 40px">
-          <div class="col-sm-5">
+        <div class="form-group" ng-show="canSubmit" style="margin-left: 10px"> 
+          <div class="col-sm-7">
             <input type="text" ng-model="message" class="form-control" id="msg" placeholder="Mensaje" required>
           </div>
           <div class="col-sm-5">
             <button type="submit" class="btn btn-primary">Enviar</button>
           </div>
         </div>
-        <p style="margin-left: 40px" ng-show="!canSubmit">Introduce un nuevo comentario</p>
+        
+        <p style="margin-left: 10px" ng-show="!canSubmit"><strong>Selecciona la Oracion de Apertura:</strong></p>
 
-        <div ng-repeat="indicator in activity.model.indicators" style="background-color:red">
-          <input type="button" class="btn btn-default" style="display: inline-block; float:left; margin-left: 20px" ng-value="indicator.nombre" ng-click="showSubmit( indicator )"></input>
-        </div>
+        <div ng-repeat="abClass in activity.model.classes">
+          <!--ad.by.csc -->
+          <div style="float: left; display: block; margin-left: 10px">
+            <label>{{abClass.subnombre}}</label>
+            <!-- cm.by.csc <label>{{abClass.nombre}}</label> -->
+            <select id="indicator-selection" ng-model="selectedIndicator" ng-options="indicator.nombre for indicator in abClass.indicators" ng-change="showSubmit( selectedIndicator, abClass )"></select><br>
+          </div>
         </div>
       </form>
+      
+      <!-- termina message form init -->
+
+    </div> <!-- cierra panel derecho -->
+      
+      
+      <!-- mirroring window -->      
 
       <div class="panel panel-info">
         <div class="panel-heading">
@@ -122,13 +152,8 @@
         </div>
       </div>
 
-    </div>
+      <!-- end mirroring window -->      
 
-    </div>
-
-  </div>
-
-
-
+    
 
   [% endblock %]

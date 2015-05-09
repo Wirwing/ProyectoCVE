@@ -21,6 +21,24 @@ $app->post('/api/chat/messages', function() use ($app){
 
 	$attributes = $app->request()->getBody();
 
+	//Actualizando matriz de datos analisis
+	$id_session = $attributes['id_sesion'];
+	$id_usuario = $attributes['id_usuario'];
+	$id_clase = $attributes['id_clase'];
+	$id_indicador = $attributes['id_indicador'];
+
+	$dato_analisis = AnalisisUso::find('first', 
+		array('conditions' => array('id_sesion = ? AND id_usuario = ? AND id_clase = ? AND id_indicador = ?',
+		 $id_session, $id_usuario, $id_clase, $id_indicador))
+		);
+
+	$response = $app->response();
+
+	$dato_analisis->buso = 1;
+	$dato_analisis->ifrecuencia++;
+	$dato_analisis->save();
+
+	//Guardando Log
 	$chat_log = new ChatLog($attributes);
 	$chat_log->save();
 
@@ -31,6 +49,7 @@ $app->post('/api/chat/messages', function() use ($app){
 	$json = $chat_log->to_json();
 
 	$response->write($json);
+	
 });
 
 $app->get('/api/chat/messages/:group_id/:activity_id/', function($group_id, $activity_id)

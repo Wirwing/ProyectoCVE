@@ -6,115 +6,61 @@
 
 <form class="form-horizontal form-basic" ng-controller="ModelController as modelCtrl" id="[[id_model]]">
 
-  <fieldset ng-disabled="true">
+  <fieldset ng-disabled="false">
 
     <!-- Section Name -->
-    <legend>Modelo de Interacción</legend>
+    <legend>Taxonomia de habilidades</legend>
 
     <div class="form-group">
-      <label class="col-sm-1 control-label" for="textinput">Nombre</label>
+      <label class="col-sm-1 control-label" for="textinput">Taxonomia</label>
       <div class="col-sm-11">
         <input type="text" class="form-control" ng-model="model.nombre" required />
       </div>
     </div>
 
-    <!-- Section Name -->
-    <legend>Indicadores</legend>
+    <legend>Clases</legend>
 
-    <!-- Indicator subform -->
-    <div class="form-group">
+    <a href="../hab_classes/new" type="button" class="btn btn-info pull-right">
+      Nueva clase
+    </a>
 
-      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].nombre" ng-disabled="true"/>
-      </div>
+    <table st-table="habClasses" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Habilidad</th>
+          <th>Sub-habilidad</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="habClass in model.classes">
+          <td>{{habClass.id}}</td>
+          <td>{{habClass.nombre}}</td>
+          <td>{{habClass.subnombre}}</td>
+          <td><button type="button" class="btn btn-info btn-xs" ng-click="viewClass(habClass)">
+            <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+          </button>
+          <button type="button" class="btn btn-danger btn-xs" ng-click="deleteClass($index, habClass)">
+            <span class="glyphicon glyphicon-trash"></span> Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_individual" required />
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].frecuencia_grupo" required />
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[0].tolerancia" required />
-      </div>
-    </div>
+</fieldset>
 
-    <!-- Indicator subform -->
-    <div class="form-group">
-      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[1].nombre" ng-disabled="true"/>
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[1].frecuencia_individual" required />
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[1].frecuencia_grupo" required />
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[1].tolerancia" required />
-      </div>
-    </div>
-
-    <!-- Indicator subform -->
-    <div class="form-group">
-      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[2].nombre" ng-disabled="true"/>
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[2].frecuencia_individual" required />
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[2].frecuencia_grupo" required />
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[2].tolerancia" required />
-      </div>
-    </div>
-
-    <!-- Indicator subform -->
-    <div class="form-group">
-      <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[3].nombre" ng-disabled="true"/>
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[3].frecuencia_individual" required />
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[3].frecuencia_grupo" required />
-      </div>
-      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-      <div class="col-sm-2">
-        <input type="text" class="form-control" ng-model="model.indicators[3].tolerancia" required />
-      </div>
-    </div>
-
-  </fieldset>
-
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <div class="pull-right">
-        <button type="button" class="btn btn-default">Regresar</button>
-        <button type="button" class="btn btn-primary" ng-click="edit()">Editar</button>
-      </div>
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="pull-right">
+      <button type="button" class="btn btn-default" ng-click="back()">Regresar</button>
+      <!-- <button type="button" class="btn btn-primary" ng-click="edit()">Editar</button> -->
     </div>
   </div>
+</div>
 
-  <pre>form_payload = {{model | json}}</pre>
+<!-- <pre>form_payload = {{model | json}}</pre> csc -->
 
 </form>
 

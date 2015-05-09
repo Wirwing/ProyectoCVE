@@ -1,4 +1,5 @@
 <?php
+
 require 'vendor/autoload.php';
 
 ActiveRecord\Config::initialize(function($cfg)
@@ -6,7 +7,7 @@ ActiveRecord\Config::initialize(function($cfg)
    $cfg->set_model_directory('models');
    $cfg->set_connections(
      array(
-       'development' => 'mysql://root:root@localhost/db_cve_fmat_uady'
+       'development' => 'mysql://root:@localhost/db_cve_fmat_uady'
      )
    );
 });
@@ -63,16 +64,14 @@ $twig_instance->setLexer($lexer);
 
 // Define routes
 $app->get('/', function () use ($app) {
-
     //We check if the user has a valid cookie
     $cookieRole = $app->getCookie('role');
-
     if(is_null($cookieRole)){
       $app->redirect("/cve/login");
       return;
     }
 
-    switch ( $cookieRole ) {
+    switch ( @$cookieRole ) {
       case 1:
         $app->redirect("/cve/teacher/activities");
         break;
@@ -86,7 +85,7 @@ $app->get('/', function () use ($app) {
 
 });
 
-$auth = function($role = 'member'){
+ $auth = function($role = 'member'){
   return function() use ($role){
 
     $app = \Slim\Slim::getInstance();
@@ -104,6 +103,7 @@ $auth = function($role = 'member'){
 
   };
 };
+
 
 $app->map("/login", function() use ($app) {
   if($app->request()->isPost()){
@@ -124,12 +124,52 @@ $app->map("/login", function() use ($app) {
       $app->setCookie('user_id', $user->id);
       $app->setCookie('role', $user->tipo);
 
+      //Set session id
+      $length = 10;
+      $original_string = array_merge(range(0,9), range('a','z'), range('A', 'Z'));
+      $original_string = implode("", $original_string);
+      $session_id = substr(str_shuffle($original_string), 0, $length);
+
+      $app->setCookie('session_id', $session_id);
+
+      //Verificando tipo de alumno
       $userType = $user->tipo;
       if( $userType == 1 ){
         /* maestro */
         $app->redirect("/cve/teacher/activities");
       }else{
         /* estudiante */
+
+        //Creando matriz de analisis de uso
+        $group_user = GroupUser::find('first', array('conditions' => array('user_id = ?', $user->id)));
+        $activity = $group_user->activity;
+        $model = $activity->model;
+        $classes = $model->classes;
+
+        foreach ($classes as $class) {
+
+          $indicators = $class->indicators;
+
+          foreach ($indicators as $indicator) {
+
+            $attributes = array(
+              'id_grupo' => $group_user->group_id,
+              'id_sesion' => $session_id, 
+              'id_usuario' => $user->id, 
+              'id_modelo' => $model->id, 
+              'id_clase' => $class->id,
+              'id_indicador' => $indicator->id, 
+              'bUso' => 0,
+              'ifrecuencia' => 0
+            );
+
+            $dato = new AnalisisUso($attributes);
+            $dato->save();
+
+          }
+
+        }
+
         $app->redirect("/cve/student/chat");
       }
     }else{
@@ -145,6 +185,7 @@ $app->get('/logout', function () use ($app) {
   $app->deleteCookie('username');
   $app->deleteCookie('user_id');
   $app->deleteCookie('role');
+  $app->deleteCookie('session_id');
 
   $app->redirect("/cve/login");
 });

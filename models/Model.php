@@ -5,39 +5,32 @@ class Model extends ActiveRecord\Model{
 	static $auto_increment = true;
 	static $table_name = 'modelos';
 
-	var $new_indicators;
+    // TODO implement the class adding methods
+    var $classes_;
 
-	static $has_many = array(
-		array('indicators', 'class_name' => 'Indicator', 'foreign_key' => 'id_modelo')
-		);
+    static $has_many = array(
+        array('classes', 'class_name' => 'HabClass')
+    );
 
-	static $after_create = array('make_indicators');
+    static $after_create = array('set_classes');
 
-	static $before_update = array('update_indicators');
+    static $before_update = array('update_classes');
 
-	//Al actualizar un modelo también se actualizan los indicadores hijos
-	public function update_indicators(){
+    public function set_classes(){
+        if( $this->classes_ ){
+            foreach( $this->classes_ as $model_class_attrs ){
+                $model_class = new HabClass($model_class_attrs);
+                $model_class->save();
+            }
+        }
+    }
 
-		if($this->new_indicators){
-			foreach ($this->new_indicators as $indicator_attributes) {
-
-				$indicator = Indicator::find($indicator_attributes["id"]);
-				$indicator->update_attributes($indicator_attributes);
-				
-			}
-		}
-
-	}
-
-	//Wraper: para cada indicador enviado como parametro en el constructor, se persisten en la bd.
-	public function make_indicators() {
-		if($this->new_indicators){
-			foreach ($this->new_indicators as $indicator) {
-				$this->create_indicator($indicator);
-			}
-		}
-	}
+    public function update_classes(){
+        foreach( $this->classes_ as $model_class_attrs ){
+            $model_class = HabClass::find( $model_class_attrs["id"] );
+            $model_class->update_attributes($model_class_attrs);
+        }
+    }
 
 }
-
 ?>

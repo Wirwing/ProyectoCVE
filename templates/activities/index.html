@@ -6,7 +6,7 @@
 
 <div ng-controller="ActivitiesController as activitiesCtrl">
 
-  <h2 class="pull-left">Actividades</h2>
+  <h2 class="pull-left">Gestor de Actividades Colaborativas</h2>
 
   <a href="activities/new" type="button" class="btn btn-info pull-right">
     Nueva Actividad
@@ -16,34 +16,40 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Nombre</th>
-        <th>Id Tutor</th>
         <th>Fecha</th>
+        <th>Nombre</th>
+        <!--  <th>Descripcion</th>
+        <th>Id Tutor</th> 
         <th>Tipo</th>
+        csc -->                
         <th>Estrategia Instruccional</th>
-        <th>Duración Mínima</th>
-        <th>Opciones</th>
+        <th>Duración</th>
+        <th>#KE (Elem.Conoc)</th>
+        <th>Operaciones</th>
+        <!-- <th>Opciones</th> csc -->
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="activity in activities">
         <td>{{activity.id}}</td>
+        <td>date({{activity.fecha}},</td>
         <td>{{activity.nombre}}</td>
+        <!--  <td>{{activity.descripcion}}</td>
         <td>{{activity.id_tutor}}</td>
-        <td>{{activity.fecha}}</td>
-        <td>{{activity.tipo}}</td>
+        <td>{{activity.tipo}} </td> -->
         <td>{{activity.estrategia_instruccional}}</td>
         <td>{{activity.duracion_minima}}</td>
+        <td>{{activity.NumKElements}}</td>
         <td><button type="button" class="btn btn-info btn-xs" ng-click="view(activity)">
           <span class="glyphicon glyphicon-zoom-in"></span> Detalles
-        </button>
-        <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, activity)">
+          </button>
+          <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, activity)">
           <span class="glyphicon glyphicon-trash"></span> Eliminar
         </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
 </div>
 

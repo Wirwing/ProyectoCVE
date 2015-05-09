@@ -1,6 +1,8 @@
 <?php	
 	require_once("misc.php");
 	require_once("ims-blti/blti_util.php");
+	require_once("misc.php");
+	/*require_once("funciones/ABC_MoodleAccess");*/
 	include("conn.php");
 	
  	$lmsdata = array(
@@ -65,9 +67,9 @@
  
 //ABRE UNA SESION EN LA TABLA DE REGISTRO MOODEL_RCD
  
- $d=date("Y-m-d h:i:sa");
- echo "Fecha:" . $d;
-  $sql="INSERT INTO moodle_rcd(IdUser, UserName, Rol, IdCourse, CourseName, EmailSesion, FechaIni, CloseSesion)
+$d=date("Y-m-d h:i:sa");
+echo "Fecha:" . $d;
+ $sql="INSERT INTO moodle_rcd(IdUser, UserName, Rol, IdCourse, CourseName, EmailSesion, FechaIni, CloseSesion)
  VALUES ('$UserId','$Nombre','$Rol','$CourseID','$Nombre_Curso','$emailMoodle','$d','1')";
  if (!mysqli_query($con,$sql)) {
  	die('Error: ' . mysqli_error($con));

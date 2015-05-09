@@ -7,18 +7,21 @@
 <div ng-controller="ActivityController" id="[[id_activity]]" nv-file-drop="" uploader="uploader">
 
 	<!-- Activity Details -->
+	
 	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				<h3 class="panel-title"> <strong>Actividad:</strong> {{activity.nombre}}</h3>
+				<h3 class="panel-title"> <strong>Detalles actividad:</strong> {{activity.nombre}}</h3>
 			</div>
 			<div class="panel-body">
 				<div class="row">
-
 					<div class=" col-md-12 col-lg-12 ">
 						<table class="table table-user-information">
 							<tbody>
+								<tr>
+									<td>IdCreador (Tutor):</td>
+									<td>{{activity.id_tutor}}</td>
+								</tr>
 								<tr>
 									<td>Fecha:</td>
 									<td>{{activity.fecha}}</td>
@@ -28,11 +31,11 @@
 									<td>{{activity.tipo}}</td>
 								</tr>
 								<tr>
-									<td>Estrategia instruccional</td>
+									<td>Estrategia instruccional:</td>
 									<td>{{activity.estrategia_instruccional}}</td>
 								</tr>
 								<tr>
-									<td>Duración mínima</td>
+									<td>Duración:</td>
 									<td>{{activity.duracion_minima}}</td>
 								</tr>
 							</tbody>
@@ -40,13 +43,66 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="panel-footer">
-				<button ng-click="edit()" href="#" data-original-title="Editar actividad" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></button>
+				<button ng-click="edit()" href="#" data-original-title="Editar actividad" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i> Editar </button>
 				<button ng-click="delete()" type="button" class="btn btn-danger btn-sm pull-right">
-					<span class="glyphicon glyphicon-trash"></span>
+					<span class="glyphicon glyphicon-trash"> Eliminar </span>
 				</button>
 			</div>
 
+		</div>
+	<!--</div>
+
+	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">-->
+		<div class="panel panel-info">
+			<div class="panel-heading">
+				<h3 class="panel-title"> <strong>Elementos de conocimiento:</strong> {{activity.numkelements}} </h3>
+			</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class=" col-md-12 col-lg-12 ">
+						<table class="table table-user-information">
+							<tbody>
+								<tr>
+									<td>Elemento1:</td>
+									<td>{{activity.k_element1}}</td>
+								</tr>
+								<tr>
+									<td>Elemento2:</td>
+									<td>{{activity.k_element2}}</td>
+								</tr>
+								<tr>
+									<td>Elemento3:</td>
+									<td>{{activity.k_element3}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Panel derecho (attachments)-->
+	<div class="col-xs-12 col-md-8 col-md-8 col-lg-8">
+	
+		<div class="panel panel-default">
+			<div class="panel-heading"><strong>Modelo de Interacción Asociado: {{activity.model.nombre}}</strong></div>
+			<!-- cm.csc	
+			<table st-table="group.users" class="table table-striped">
+				<thead>
+				<tr>
+					<th>Clase de Habilidad</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr ng-repeat="abClass in activity.model.classes">
+					<td>{{abClass.nombre}}</td>
+				</tr>
+				</tbody>
+			</table>
+			-->
 		</div>
 	</div>
 

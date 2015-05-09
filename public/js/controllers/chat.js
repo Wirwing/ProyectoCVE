@@ -4,13 +4,16 @@
 
 
 	app.controller('ChatController', ['$scope', 'Chats', 'Activities',
-	'Users', 'Groups', '$window', '$cookies', '$interval',
-	function($scope, Chats, Activities, Users, Groups, $window, $cookies, $interval){
+		'Users', 'Groups', '$window', '$cookies', '$interval',
+		function($scope, Chats, Activities, Users, Groups, $window, $cookies, $interval){
 
 		// We recover the user data from the session cookie
 		$scope.user_id = $cookies.user_id;
 		$scope.username = $cookies.username;
 		$scope.role = $cookies.role;
+		$scope.session_id = $cookies.session_id;
+
+		console.log("Sesion " + $scope.session_id);
 
 		$scope.user = Users.get({id: $scope.user_id});
 
@@ -20,12 +23,18 @@
 		$scope.values = [];
 
 		$scope.updateTable = function(){
+
 			if( !$scope.messages || $scope.messages.length == 0 ){
 				/* we don't have any data */
 				return;
 			}
 
-			var indicators = $scope.activity.model.indicators;
+			var indicators = new Array();
+			var classes = $scope.activity.model.classes;
+
+			for( var x = 0; x < classes.length; x ++ ){
+				indicators = indicators.concat( classes[x].indicators );
+			}
 
 			for( var i = 0; i < indicators.length; i ++  ){
 				var indicator = indicators[i];
@@ -37,11 +46,11 @@
 				for( var i = 0; i < indicators.length; i ++  ){
 					var indicator = indicators[i];
 					$scope.values.push(
-						{
-							"key" : indicator.nombre,
-							"bar" : true,
-							"values": [ [ $scope.data_pass, indicator.total ]]
-						}
+					{
+						"key" : indicator.nombre,
+						"bar" : true,
+						"values": [ [ $scope.data_pass, indicator.total ]]
+					}
 					);
 				}
 			}else{
@@ -53,7 +62,7 @@
 
 			//Update
 			nv.graphs[0].update();
-	  };
+		};
 
 		$scope.getPercentageOfMessagesOfIndicator = function( indicator_id ){
 			var total = 0;
@@ -70,15 +79,28 @@
 		}
 
 		Groups.getUserGroup({id: $scope.user_id}, function(group){
+			
 			$scope.group = group;
 			$scope.activity = group.activity;
 
-			
+			var currentDateTime = new Date();
+			var dateLimit = convertUTCDateToLocalDate(new Date($scope.activity.fecha_limite.toString()));
+
+			$scope.timeLimit = Math.floor((dateLimit - currentDateTime)/1000);
+			if($scope.timeLimit < 0){
+				$scope.timeLimit = 1;
+			}
+			if($scope.activity.iniciada == 1){
+				$scope.timerRunning = true;
+			}else{
+				$scope.timerRunning = false;
+			}
 
 			/* Now we recover the previous messages */
 			Chats.getPreviousMessages({group_id: $scope.group.id, activity_id: $scope.activity.id},
 				function( messages ){
 					$scope.messages = messages;
+					
 					$scope.updateTable();
 					$scope.data_pass ++;
 
@@ -86,7 +108,6 @@
 						$scope.last_message_id = messages[ messages.length - 1 ].id;
 					}
 
-					setTimeLimit();
 
 					/* now with the previous messages we call the refresh interval */
 					$interval(function(){
@@ -106,28 +127,61 @@
 									$scope.data_pass ++;
 								}
 							});
-						}, 500 /* every 500 milliseconds */, 0 /* repeat indefinitely */);
-					}
+					}, 500 /* every 500 milliseconds */, 0 /* repeat indefinitely */);
+				}
 				);
-			});
+});
 
 			$scope.addMessage = function(){
+
 				var message_recipent = {};
 
 				message_recipent.id_grupo = $scope.group.id;
+
+				//ad.csc message_recipent.id_sesion = $scope.sesion.id;
 				message_recipent.id_usuario = $scope.user.id;
 				message_recipent.id_actividad = $scope.activity.id;
 				message_recipent.id_indicador = $scope.selectedIndicator.id;
+				message_recipent.id_clase = $scope.selectedClass.id;
 
 				//We sent the actual moment
 				message_recipent.fecha = new Date();
 				message_recipent.message = $scope.message;
+
+				message_recipent.id_sesion = $scope.session_id;
+
+				// We send the message asynchrounsly
+				Chats.sendMessage({}, message_recipent);
+				$scope.message = "";
+				
+				//hides the chat form
+				$scope.canSubmit = false;
+
+			};
+
+			$scope.addElementMessage = function(idClass){
+				
+				var message_recipent = {};
+
+				message_recipent.id_grupo = $scope.group.id;
+				//ad.csc message_recipent.id_sesion = $scope.sesion.id;
+				message_recipent.id_usuario = $scope.user.id;
+				message_recipent.id_actividad = $scope.activity.id;
+				message_recipent.id_indicador = 0;
+				message_recipent.id_clase = idClass;
+
+				//We sent the actual moment
+				message_recipent.fecha = new Date();
+				message_recipent.message = $scope.message;
+
+				message_recipent.id_sesion = $scope.session_id;
 
 				// We send the message asynchrounsly
 				Chats.sendMessage({}, message_recipent);
 				$scope.message = "";
 				//hides the chat form
 				$scope.canSubmit = false;
+				
 			};
 
 			$scope.parseTime = function( messageStringTime ){
@@ -135,9 +189,11 @@
 			};
 
 			/* inhabilitates the chat submission */
-			$scope.showSubmit = function( indicator ){
+			$scope.showSubmit = function( indicator, abClass ){
 				$scope.canSubmit = true;
+				$scope.message = indicator.apertura;
 				$scope.selectedIndicator = indicator;
+				$scope.selectedClass = abClass;
 			};
 
 			$scope.canSubmit = false;
@@ -148,9 +204,10 @@
 				$scope.$broadcast('timer-start');
 				$scope.timerRunning = true;
 				$scope.activity.iniciada = 1;
-				var tempDate = new Date(new Date().getTime() + $scope.activity.duracion_minima*60000);
-				var localDate = convertUTCDateToLocalDateMin(tempDate);
-				$scope.activity.fecha_limite = localDate;
+				var tempDate = new Date();
+				$scope.activity.fecha_limite = new Date(tempDate.getTime() + $scope.activity.duracion_minima*60000);
+				
+				alert($scope.activity.fecha_limite + " id: " +  $scope.activity.id);
 				
 				Activities.update({id: $scope.activity.id}, $scope.activity, function () {
 					$window.location.href = '/cve/teacher/activities/' + activity.id;
@@ -163,48 +220,25 @@
 				$scope.canShowTimer = true;
 			};
 
-			function setTimeLimit(){
-				var currentDateTime = new Date();
-				var dateLimit = convertUTCDateToLocalDate(new Date($scope.activity.fecha_limite.toString()));
-				//alert("fechaLimite: " + dateLimit + " hoy: " + currentDateTime);
-				$scope.timeLimit = Math.floor((dateLimit - currentDateTime)/1000);
-				if($scope.timeLimit < 0){
-					$scope.timeLimit = 1;
-				}
-				if($scope.activity.iniciada == 1){
-					$scope.timerRunning = true;
-				}else{
-					$scope.timerRunning = false;
-				}
-			};
-
 			function convertUTCDateToLocalDate(date) {
-			    var newDate = new Date(date.getTime());
-			    var offset = (date.getTimezoneOffset()+60) / 60;
-			    var hours = date.getHours();
-			    newDate.setHours(hours + offset);
-			    return newDate;   
-			}
-
-			function convertUTCDateToLocalDateMin(date) {
-			    var newDate = new Date(date.getTime());
-			    var offset = (date.getTimezoneOffset()) / 60;
-			    var hours = date.getHours();
-			    newDate.setHours(hours - offset);
-			    return newDate;   
+				var newDate = new Date(date.getTime());
+				var offset = (date.getTimezoneOffset()+60) / 60;
+				var hours = date.getHours();
+				newDate.setHours(hours + offset);
+				return newDate;   
 			}
 		}]);
 
-		window.onload = function (){
-			var firepadRef = new Firebase('https://cve.firebaseIO.com');
+window.onload = function (){
+	var firepadRef = new Firebase('https://cve.firebaseIO.com');
 
-			var codeMirror = CodeMirror(document.getElementById('firepad'), {
-				lineWrapping: true,
-				theme: 'monokai',
-				lineNumbers: true,
-				mode: 'javascript'
-			});
-			var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-				{defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n var message = "Hello, world.";\n console.log(message);\n}' });
-			};
-		})();
+	var codeMirror = CodeMirror(document.getElementById('firepad'), {
+		lineWrapping: true,
+		theme: 'monokai',
+		lineNumbers: true,
+		mode: 'javascript'
+	});
+	var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+		{defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n var message = "Hello, world.";\n console.log(message);\n}' });
+};
+})();

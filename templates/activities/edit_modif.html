@@ -1,0 +1,116 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Actividades[% endblock %]
+
+[% block content %]
+
+
+<form class="form-horizontal form-basic" ng-controller="EditActivityController as editCtrl"
+id="[[id_activity]]" ng-submit="update(activity)">
+
+<!-- Section Name -->
+<legend>Gestor de Actividad Colaborativa</legend>
+
+<fieldset>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Nombre</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" ng-model="activity.nombre" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Descripción</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" ng-model="activity.descripcion" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Tipo</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" ng-model="activity.tipo" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Estrategia</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" ng-model="activity.estrategia_instruccional" required />
+    </div>
+  </div>
+
+<!--</fieldset>
+
+<fieldset>-->
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">#Elementos de Conocimiento</label>
+    <div class="col-sm-2">
+      <input type="text" class="form-control" ng-model="activity.NumKElements" required />
+    </div>
+  </div>
+
+  <!--csc Elementos de conocimiento / Pieza para analisis sequiencial -->
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Elemento1</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" ng-model="activity.K_Element1" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Elemento2</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" ng-model="activity.K_Element2" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="textinput">Elemento3</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" ng-model="activity..K_Element3" required />
+    </div>
+  </div>
+
+  <!-- Section Name 
+  <legend>Modelos de Interaccion</legend>-->
+
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="model-selection">Taxonomia de habilidades</label>
+    <div class="col-sm-10">
+      <select id="model-selection" ng-init="<default>" ng-model="selectedModel" ng-options="model.nombre for model in models"></select><br>
+    </div>  
+  </div>
+
+  <div class="col-lg-12 col-sm-4">
+    <table st-table="models" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="abClass in selectedModel.classes">
+          <td>{{abClass.nombre}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</fieldset>
+
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="pull-right">
+      <button ng-click="cancel()" type="button" class="btn btn-default">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Actualizar</button>
+    </div>
+  </div>
+</div>
+
+<!-- <pre>form_payload = {{activity | json}}</pre> csc -->
+
+</form>
+
+[% endblock %]

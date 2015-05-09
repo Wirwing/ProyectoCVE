@@ -11,7 +11,7 @@
 
 		<div class="panel panel-info">
 			<div class="panel-heading">
-				<h3 class="panel-title"> <strong>Grupo:</strong> {{group.nombre}}</h3>
+				<h3 class="panel-title"> <strong>Grupo colaborativo:</strong> {{group.nombre}}</h3>
 			</div>
 			<div class="panel-body">
 				<div class="row">
@@ -20,7 +20,7 @@
 						<table class="table table-user-information">
 							<tbody>
 								<tr>
-									<td>Id Tutor (proximament nombre)</td>
+									<td>Id Tutor</td>
 									<td>{{group.id_tutor}}</td>
 								</tr>
 								<tr>
@@ -33,7 +33,8 @@
 								</tr>
 								<tr>
 									<td>Actividad asignada</td>
-									<td>{{activity.nombre || 'No tiene actividad asignada'}}</td>
+									<!-- <td>{{activity.nombre || 'No tiene actividad asignada'}}</td> csc-->
+									<td>{{activity.nombre}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -46,11 +47,10 @@
 					<span class="glyphicon glyphicon-trash"></span>
 				</button>
 			</div>
-
 		</div>
 	</div>
 
-	<h3 class="pull-left">Integrantes</h3>
+	<h3 class="pull-left">   Integrantes del grupo colaborativo</h3>
 
 	<div class="col-xs-12 col-md-8 col-md-8 col-lg-8">
 
@@ -58,18 +58,26 @@
 			<table st-table="group.users" class="table table-striped">
 				<thead>
 					<tr>
-						<th>Id</th>
-						<th>Nombre</th>
-						<th>Apellido Paterno</th>
-						<th>Apellido Materno</th>
+						<!-- th>Id</th> -->
+						<th>Usuario</th>
+						<th>Nombre integrante</th>
+						<th>Email</th>
+						<th>Curso Moodle</th>						
+						<!-- <th>Apellido Paterno</th> csc-->						
+						<!-- <th>Apellido Materno</th> csc -->						
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="user in group.users">
-						<td>{{user.id}}</td>
+						<!-- <td>{{user.id}}</td> -->
+						<td>{{user.usuario}}</td>
+						<td>{{user.nombre}} {{user.apellido_paterno}} {{user.apellido_materno}}</td>
+						<td>{{user.email}}</td>
+						<td>{{user.curso_moodle}}</td>
+						<!-- 
 						<td>{{user.nombre}}</td>
 						<td>{{user.apellido_paterno}}</td>
-						<td>{{user.apellido_materno}}</td>
+						<td>{{user.apellido_materno}}</td> csc-->
 					</tr>
 				</tbody>
 			</table>

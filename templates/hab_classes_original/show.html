@@ -1,0 +1,185 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Actividades[% endblock %]
+
+[% block content %]
+
+<form class="form-horizontal form-basic" ng-controller="HabClassController as habClassCtrl" id="[[id_habClass]]">
+
+  <fieldset ng-disabled="true">
+
+    <!-- Section Name -->
+    <legend>Clase de habilidad colaborativa</legend>
+
+    <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Nombre</label>
+      <div class="col-sm-11">
+        <input type="text" class="form-control" ng-model="habClass.nombre" required />
+      </div>
+    </div>
+
+    <!-- Section Name -->
+    <!-- <legend>Indicadores</legend> csc -->
+    <legend>Sub-Clase de habilidades</legend>
+
+    <!-- Indicator subform -->
+    <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Habilidad</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[0].nombre" ng-disabled="false"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Oración de Apertura</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[0].apertura" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[0].frecuencia_individual" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[0].frecuencia_grupo" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[0].tolerancia" required />
+      </div>
+    </div>
+
+    <!-- Indicator subform -->
+    <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Habilidad</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[1].nombre" ng-disabled="false"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Oración de Apertura</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[1].apertura" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[1].frecuencia_individual" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[1].frecuencia_grupo" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[1].tolerancia" required />
+      </div>
+    </div>
+
+    <!-- Indicator subform -->
+    <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Habilidad</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[2].nombre" ng-disabled="false"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Oración de Apertura</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[2].apertura" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[2].frecuencia_individual" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[2].frecuencia_grupo" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[2].tolerancia" required />
+      </div>
+    </div>
+
+    <!-- Indicator subform -->
+    <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Habilidad</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[3].nombre" ng-disabled="false"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Oración de Apertura</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[3].apertura" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[3].frecuencia_individual" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[3].frecuencia_grupo" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[3].tolerancia" required />
+      </div>
+    </div>
+
+    <!-- Indicator subform -->
+    <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Habilidad</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[4].nombre" ng-disabled="false"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Oración de Apertura</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[4].apertura" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[4].frecuencia_individual" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[4].frecuencia_grupo" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[4].tolerancia" required />
+      </div>
+    </div>
+
+
+    <!-- Indicator subform -->
+    <div class="form-group">
+      <label class="col-sm-1 control-label" for="textinput">Habilidad</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[5].nombre" ng-disabled="false"/>
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Oración de Apertura</label>
+      <div class="col-sm-2">
+        <input type="text" class="form-control" ng-model="habClass.indicators[5].apertura" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[5].frecuencia_individual" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[5].frecuencia_grupo" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+      <div class="col-sm-1">
+        <input type="text" class="form-control" ng-model="habClass.indicators[5].tolerancia" required />
+      </div>
+    </div>
+
+  </fieldset>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="pull-right">
+        <button type="button" class="btn btn-default">Regresar</button>
+        <button type="button" class="btn btn-primary" ng-click="edit()">Editar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- <pre>form_payload = {{model | json}}</pre> csc -->
+
+</form>
+
+[% endblock %]

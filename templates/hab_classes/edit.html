@@ -1,0 +1,140 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Actividades[% endblock %]
+
+[% block content %]
+
+<form class="form-horizontal form-basic" ng-controller="EditHabClassController" id="[[id_habClass]]"
+ng-submit="update()">
+
+
+<!-- Section Name -->
+<legend>Clases de la Taxonomia</legend>
+
+<div class="form-group">
+<!--
+  <label class="col-sm-1 control-label" for="textinput">Nombre</label>
+  <div class="col-sm-11">
+    <input type="text" class="form-control" ng-model="habClass.nombre" required />
+  </div> -->
+
+  <label class="col-sm-2 control-label" for="textinput">Habilidad</label>
+  <div class="col-sm-10">
+    <input type="text" class="form-control" ng-model="habClass.nombre" required />
+  </div>
+  <label class="col-sm-2 control-label" for="textinput">Sub-Habilidad</label>
+  <div class="col-sm-10">
+    <input type="text" class="form-control" ng-model="habClass.subnombre" required />
+  </div>
+
+</div>
+
+<!-- Section Name -->
+<legend>Configuracion de las oraciones de apertura</legend>
+
+    <table st-table="" class="table table-striped">
+    <thead>
+      <tr>        
+        <th>Num</th>
+        <th>Atributo</th>
+        <th>Oración de Apertura</th>
+      </tr>
+    </thead>
+    </table>
+
+  <!-- Indicator subform -->
+  <div class="form-group">
+
+      <label class="col-sm-1 control-label" for="textinput" align="left">1</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[0].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[0].apertura" required />
+      </div>
+      <label class="col-sm-1 control-label" for="textinput" align="left">2</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[1].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[1].apertura"  />
+      </div>        
+      <label class="col-sm-1 control-label" for="textinput" align="left">3</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[2].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[2].apertura"  />
+      </div>         
+      <label class="col-sm-1 control-label" for="textinput" align="left">4</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[3].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[3].apertura"  />
+      </div>          
+      <label class="col-sm-1 control-label" for="textinput" align="left">5</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[4].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[4].apertura"  />
+      </div>          
+      <label class="col-sm-1 control-label" for="textinput" align="left">6</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[5].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[5].apertura"  />
+      </div>          
+      <label class="col-sm-1 control-label" for="textinput" align="left">7</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[6].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[6].apertura"  />
+      </div>          
+      <label class="col-sm-1 control-label" for="textinput" align="left">8</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[7].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[7].apertura"  />
+      </div>          
+      <label class="col-sm-1 control-label" for="textinput" align="left">9</label>
+      <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="habClass.indicators[8].nombre" ng-disabled="false"/>
+      </div>      
+      <div class="col-sm-8">
+        <input type="text" class="form-control" ng-model="habClass.indicators[8].apertura"/> <!-- required -->
+      </div>          
+
+  </div> <!-- cierra la forma Indicator subform -->
+
+    <!--<label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
+    <div class="col-sm-1">
+      <input type="text" class="form-control" ng-model="habClass.indicators[0].frecuencia_individual" required />
+    </div>
+    <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
+    <div class="col-sm-1">
+      <input type="text" class="form-control" ng-model="habClass.indicators[0].frecuencia_grupo" required />
+    </div>
+    <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
+    <div class="col-sm-1">
+      <input type="text" class="form-control" ng-model="habClass.indicators[0].tolerancia" required />      
+    </div>
+    -->
+<div class="form-group">
+  <div class="col-sm-offset-2 col-sm-10">
+    <div class="pull-right">
+      <button ng-click="cancel()" type="button" class="btn btn-default">Cancelar</button>
+      <button type="submit" class="btn btn-primary">Actualizar</button>
+    </div>
+  </div>
+</div>
+
+<!-- <pre>form_payload = {{model | json}}</pre> csc -->
+
+</form>
+
+[% endblock %]

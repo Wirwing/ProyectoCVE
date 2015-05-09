@@ -34,7 +34,6 @@
 				var index = findIndex($scope.models, activity.model);
 				$scope.selectedModel = $scope.models[index];
 			});
-
 		});
 
 		//Encuentra el indice de un elemento dentro de un arreglo
@@ -69,7 +68,10 @@
 	app.controller('ActivityController',['$scope', 'Activities', 'FileUploader', '$attrs', '$window',
 	function($scope, Activities, FileUploader, $attrs, $window){
 
-		$scope.activity = Activities.get({id: $attrs.id});
+		Activities.get({id: $attrs.id}, function(activity){
+			$scope.activity = activity;
+			console.log(activity);
+		});
 
 		var uploader = $scope.uploader = new FileUploader({
 			url: "/cve/api/activities/" + $attrs.id + '/files'

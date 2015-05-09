@@ -4,144 +4,110 @@
 
 [% block content %]
 
-
 <form class="form-horizontal form-basic" ng-controller="EditActivityController as editCtrl"
 id="[[id_activity]]" ng-submit="update(activity)">
 
-<!-- Section Name -->
-<legend>Actividad</legend>
+<!-- Section Name / <fieldset><legend>Gestor de Actividad Colaborativa</legend>-->
+ <div class="panel panel-info">
+      <div class="panel-heading">
+      <h3 class="panel-title"> <strong>Generales</strong></h3>
+      </div>
+      <div class="panel-body">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="textinput">Nombre</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="activity.nombre" required />
+            </div>
+          </div>
 
-<fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="textinput">Descripción</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="activity.descripcion" required />
+            </div>
+          </div>
 
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="textinput">Nombre</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="activity.nombre" required />
-    </div>
-  </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="textinput">Estrategia</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" ng-model="activity.estrategia_instruccional" required />
+            </div>
+          </div>
 
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="textinput">Descripción</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="activity.descripcion" required />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="textinput">Estrategia instruccional</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" ng-model="activity.estrategia_instruccional" required />
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="textinput">Tipo</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" ng-model="activity.tipo" required />
-    </div>
-
-    <label class="col-sm-2 control-label" for="textinput">Duración mínima</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" ng-model="activity.duracion_minima" required />
-    </div>
-  </div>
-
-</fieldset>
-
-<!-- Section Name -->
-<legend>Modelo - Indicadores</legend>
-
-<div class="form-group">
-  <label class="col-sm-2 control-label" for="model-selection">Modelos</label>
-  <select id="model-selection" ng-model="selectedModel" ng-options="model.nombre for model in models"></select><br>
-</div>
-
-<fieldset ng-disabled="true">
-
- <!-- Indicator subform -->
- <div class="form-group">
-  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[0].nombre" ng-disabled="true"/>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="textinput">Tipo</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" ng-model="activity.tipo" required />
+            </div>
+            <label class="col-sm-2 control-label" for="textinput">Duración (minutos)</label>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" ng-model="activity.duracion_minima" required />
+            </div>
+          </div>
+        </div>
   </div>
 
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[0].frecuencia_individual"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[0].frecuencia_grupo"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[0].tolerancia"/>
-  </div>
-</div>
 
-<!-- Indicator subform -->
-<div class="form-group">
-  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[1].nombre" ng-disabled="true"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[1].frecuencia_individual"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[1].frecuencia_grupo"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[1].tolerancia"/>
-  </div>
-</div>
+  <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"> <strong>Elementos de conocimiento (Para analisis de secuencias HHM)</strong></h3>
+      </div>
+      <div class="form-group">            
+        <label class="col-sm-3 control-label" for="textinput">Numero de elementos</label>
+        <div class="col-sm-2">
+          <input type="text" class="form-control" ng-model="activity.NumKElements" required />
+        </div>
+        <label class="col-sm-3 control-label" for="textinput">Etiqueta Elemento1</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" ng-model="activity.K_Element1" required />
+        </div>
+      </div>      
 
-<!-- Indicator subform -->
-<div class="form-group">
-  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[2].nombre" ng-disabled="true"/>
+      <div class="form-group">            
+        <label class="col-sm-3 control-label" for="textinput">Etiqueta Elemento2</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" ng-model="activity.K_Element2"  />
+        </div>
+        <label class="col-sm-2 control-label" for="textinput">Etiqueta Elemento3</label>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" ng-model="activity.K_Element3"  />
+        </div>
+      </div>      
   </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[2].frecuencia_individual"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[2].frecuencia_grupo"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[2].tolerancia"/>
-  </div>
-</div>
 
-<!-- Indicator subform -->
-<div class="form-group">
-  <label class="col-sm-1 control-label" for="textinput">Indicador</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[3].nombre" ng-disabled="true"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Individual</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[3].frecuencia_individual"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Frecuencia Grupal</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[3].frecuencia_grupo"/>
-  </div>
-  <label class="col-sm-1 control-label" for="textinput">Tolerancia</label>
-  <div class="col-sm-2">
-    <input type="text" class="form-control" ng-model="selectedModel.indicators[3].tolerancia"/>
-  </div>
-</div>
 
-</fieldset>
+  <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"> <strong>Taxonomia de habilidades (Asociacion al modelo)</strong></h3>
+      </div>
+      
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="model-selection">Taxonomia de habilidades</label>
+        <select id="model-selection" ng-init="<default>" ng-model="selectedModel" ng-options="model.nombre for model in models"></select>
+      
+        <button type="button" class="btn btn-info btn-xs" ng-click="view(model)">
+          <span class="glyphicon glyphicon-zoom-in"></span> Ver
+        </button>
+      </div>  
 
-<legend></legend>
+  </div>
+
+
+  <!-- csc Contiene los detalles de la taxonomia en formato table   
+  <div class="col-lg-12 col-sm-1">
+    <table st-table="models" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="abClass in selectedModel.classes">
+          <td>{{abClass.nombre}} - {{abClass.subnombre}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>  </fieldset>  -->
 
 <div class="form-group">
   <div class="col-sm-offset-2 col-sm-10">
@@ -152,7 +118,7 @@ id="[[id_activity]]" ng-submit="update(activity)">
   </div>
 </div>
 
-<pre>form_payload = {{activity | json}}</pre>
+<!-- <pre>form_payload = {{activity | json}}</pre> csc -->
 
 </form>
 

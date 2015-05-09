@@ -32,18 +32,29 @@ id="[[id_group]]" ng-submit="groupCtrl.save(group)">
 <table st-table="users" class="table table-striped">
   <thead>
     <tr>
-      <th>Id</th>
+<!-- cm.csc      <th>Id</th>
       <th>Nombre</th>
       <th>Apellido Paterno</th>
-      <th>Apellido Materno</th>
+      <th>Apellido Materno</th>      -->
+          <th>Id</th>
+          <th>Usuario</th>
+          <th>Nombre integrante</th>
+          <th>Email</th>
+          <th>Curso Moodle</th>           
+
     </tr>
   </thead>
   <tbody>
     <tr ng-repeat="user in users">
-      <td>{{user.id}}</td>
-      <td>{{user.nombre}}</td>
+<!-- cm.csc       <td>{{user.id}}</td>
+      <td>{{user.nombre}+" "+{user.apellido_paterno}}</td>
       <td>{{user.apellido_paterno}}</td>
-      <td>{{user.apellido_materno}}</td>
+      <td>{{user.apellido_materno}}</td> -->
+        <td>{{user.id}}</td>
+        <td>{{user.usuario}}</td>
+        <td>{{user.nombre}} {{user.apellido_paterno}} {{user.apellido_materno}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.curso_moodle}}</td>
       <td><input type="checkbox"
         ng-change="onStudentChecked( user )" ng-model="user.selected"></td>
   </tr>
@@ -61,7 +72,7 @@ id="[[id_group]]" ng-submit="groupCtrl.save(group)">
   </div>
 </div>
 
-<pre>form_payload = {{group | json}}</pre>
+<!-- <pre>form_payload = {{group | json}}</pre> -->
 
 </form>
 

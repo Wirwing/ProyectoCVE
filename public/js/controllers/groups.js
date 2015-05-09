@@ -74,7 +74,7 @@
 
     this.add = function( group){
       if( $scope.check < $scope.limit ){
-        alert("Elige por lo menos a 2 usuarios");
+        alert("Elige por lo menos a 2 estudiantes");
         return;
       }
 
