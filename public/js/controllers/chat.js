@@ -79,9 +79,9 @@
 		}
 
 		Groups.getUserGroup({id: $scope.user_id}, function(group){
+			
 			$scope.group = group;
 			$scope.activity = group.activity;
-
 
 			var currentDateTime = new Date();
 			var dateLimit = convertUTCDateToLocalDate(new Date($scope.activity.fecha_limite.toString()));
