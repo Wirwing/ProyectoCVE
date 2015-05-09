@@ -4,13 +4,16 @@
 
 
 	app.controller('ChatController', ['$scope', 'Chats', 'Activities',
-	'Users', 'Groups', '$window', '$cookies', '$interval',
-	function($scope, Chats, Activities, Users, Groups, $window, $cookies, $interval){
+		'Users', 'Groups', '$window', '$cookies', '$interval',
+		function($scope, Chats, Activities, Users, Groups, $window, $cookies, $interval){
 
 		// We recover the user data from the session cookie
 		$scope.user_id = $cookies.user_id;
 		$scope.username = $cookies.username;
 		$scope.role = $cookies.role;
+		$scope.session_id = $cookies.session_id;
+
+		console.log("Sesion " + $scope.session_id);
 
 		$scope.user = Users.get({id: $scope.user_id});
 
@@ -20,11 +23,11 @@
 		$scope.values = [];
 
 		$scope.updateTable = function(){
+
 			if( !$scope.messages || $scope.messages.length == 0 ){
 				/* we don't have any data */
 				return;
 			}
-
 
 			var indicators = new Array();
 			var classes = $scope.activity.model.classes;
@@ -43,11 +46,11 @@
 				for( var i = 0; i < indicators.length; i ++  ){
 					var indicator = indicators[i];
 					$scope.values.push(
-						{
-							"key" : indicator.nombre,
-							"bar" : true,
-							"values": [ [ $scope.data_pass, indicator.total ]]
-						}
+					{
+						"key" : indicator.nombre,
+						"bar" : true,
+						"values": [ [ $scope.data_pass, indicator.total ]]
+					}
 					);
 				}
 			}else{
@@ -59,7 +62,7 @@
 
 			//Update
 			nv.graphs[0].update();
-	  };
+		};
 
 		$scope.getPercentageOfMessagesOfIndicator = function( indicator_id ){
 			var total = 0;
@@ -124,15 +127,17 @@
 									$scope.data_pass ++;
 								}
 							});
-						}, 500 /* every 500 milliseconds */, 0 /* repeat indefinitely */);
-					}
+					}, 500 /* every 500 milliseconds */, 0 /* repeat indefinitely */);
+				}
 				);
-			});
+});
 
 			$scope.addMessage = function(){
+
 				var message_recipent = {};
 
 				message_recipent.id_grupo = $scope.group.id;
+
 				//ad.csc message_recipent.id_sesion = $scope.sesion.id;
 				message_recipent.id_usuario = $scope.user.id;
 				message_recipent.id_actividad = $scope.activity.id;
@@ -143,11 +148,15 @@
 				message_recipent.fecha = new Date();
 				message_recipent.message = $scope.message;
 
+				message_recipent.id_sesion = $scope.session_id;
+
 				// We send the message asynchrounsly
 				Chats.sendMessage({}, message_recipent);
 				$scope.message = "";
+				
 				//hides the chat form
 				$scope.canSubmit = false;
+
 			};
 
 			$scope.addElementMessage = function(idClass){
@@ -158,12 +167,14 @@
 				//ad.csc message_recipent.id_sesion = $scope.sesion.id;
 				message_recipent.id_usuario = $scope.user.id;
 				message_recipent.id_actividad = $scope.activity.id;
-				message_recipent.id_indicador = $scope.selectedIndicator.id;
+				message_recipent.id_indicador = 0;
 				message_recipent.id_clase = idClass;
 
 				//We sent the actual moment
 				message_recipent.fecha = new Date();
 				message_recipent.message = $scope.message;
+
+				message_recipent.id_sesion = $scope.session_id;
 
 				// We send the message asynchrounsly
 				Chats.sendMessage({}, message_recipent);
@@ -210,24 +221,24 @@
 			};
 
 			function convertUTCDateToLocalDate(date) {
-			    var newDate = new Date(date.getTime());
-			    var offset = (date.getTimezoneOffset()+60) / 60;
-			    var hours = date.getHours();
-			    newDate.setHours(hours + offset);
-			    return newDate;   
+				var newDate = new Date(date.getTime());
+				var offset = (date.getTimezoneOffset()+60) / 60;
+				var hours = date.getHours();
+				newDate.setHours(hours + offset);
+				return newDate;   
 			}
 		}]);
 
-		window.onload = function (){
-			var firepadRef = new Firebase('https://cve.firebaseIO.com');
+window.onload = function (){
+	var firepadRef = new Firebase('https://cve.firebaseIO.com');
 
-			var codeMirror = CodeMirror(document.getElementById('firepad'), {
-				lineWrapping: true,
-				theme: 'monokai',
-				lineNumbers: true,
-				mode: 'javascript'
-			});
-			var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
-				{defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n var message = "Hello, world.";\n console.log(message);\n}' });
-			};
-		})();
+	var codeMirror = CodeMirror(document.getElementById('firepad'), {
+		lineWrapping: true,
+		theme: 'monokai',
+		lineNumbers: true,
+		mode: 'javascript'
+	});
+	var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+		{defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n var message = "Hello, world.";\n console.log(message);\n}' });
+};
+})();

@@ -124,6 +124,14 @@ $app->map("/login", function() use ($app) {
       $app->setCookie('user_id', $user->id);
       $app->setCookie('role', $user->tipo);
 
+      $length = 10;
+
+      $original_string = array_merge(range(0,9), range('a','z'), range('A', 'Z'));
+      $original_string = implode("", $original_string);
+      $session_id = substr(str_shuffle($original_string), 0, $length);
+
+      $app->setCookie('session_id', $session_id);
+
       $userType = $user->tipo;
       if( $userType == 1 ){
         /* maestro */
@@ -145,6 +153,7 @@ $app->get('/logout', function () use ($app) {
   $app->deleteCookie('username');
   $app->deleteCookie('user_id');
   $app->deleteCookie('role');
+  $app->deleteCookie('session_id');
 
   $app->redirect("/cve/login");
 });
