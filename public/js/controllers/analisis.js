@@ -1,27 +1,14 @@
 (function(){
 
-/*
-	var app = angular.module('modelsController', ['modelsFactory', 'habClassesFactory']);
+	var app = angular.module('analisisController', ['analisisFactory']);
 
-	app.controller('ModelsController',['$scope', 'Models', '$window', function($scope, Models, $window){
+	app.controller('AnalisisUsoController',['$scope', '$window', 'AnalisisFactory', function($scope, $window, AnalisisFactory){
 
-		Models.all({}, function (models) {
-			$scope.models = models;
+		AnalisisFactory.all({}, function (analisis) {
+			$scope.analisis = analisis;
 		});
 
-		$scope.view = function(model){
-			$window.location.href = '/cve/teacher/interaction-models/' + model.id;
-		}
-
-		$scope.delete = function($index, model){
-
-			Models.remove({id: model.id}, function(){
-				$scope.models.splice($index, 1);
-			});
-
-		}
 
 	}]);
 
-*/
 })();

@@ -13,7 +13,6 @@
     include "hab_classes.php";    
     include "analisis_uso.php";    /* ad.by.csc */
 
-
 	#API Namespace
 	include "api/users.php";
 	include "api/activities.php";

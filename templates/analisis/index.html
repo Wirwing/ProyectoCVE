@@ -14,23 +14,22 @@
         <th>Grupo</th>
         <th>Alumno</th>
         <th>Clase</th>
-        <th>Usabilidad</th>
-        <th>Frecuencia</th>
+        <th>Indicador</th>
+        <th>Uso - Frecuencia</th>
+        <th>Opciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="ana_clase in analisis_uso">
+      <tr ng-repeat="ana_clase in analisis">
         <td>{{ana_clase.id_grupo}}</td>
         <td>{{ana_clase.id_usuario}}</td>
         <td>{{ana_clase.id_clase}}</td>
-        <td>{{ana_clase.id_clase}}</td>
+        <td>{{ana_clase.id_indicador}}</td>
         <td>{{ana_clase.ifrecuencia}}</td>
-        <td><button type="button" class="btn btn-info btn-xs" ng-click="view(activity)">
-          <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+        <td>
+        <button type="button" class="btn btn-info btn-xs" ng-click="view(activity)">
+          <span class="glyphicon glyphicon-zoom-in"></span> Análisis porcentual
           </button>
-          <button type="button" class="btn btn-danger btn-xs" ng-click="delete($index, activity)">
-          <span class="glyphicon glyphicon-trash"></span> Eliminar
-        </button>
         </td>
       </tr>
     </tbody>
