@@ -183,4 +183,30 @@ $app->post('/api/analisis/current', function () use ($app) {
 
 });
 
+$app->delete('/api/analisis/grupos/:id', function ($id) use ($app) {
+
+	$analisArreglo = AnalisisUso::find('all',  array(
+			'conditions' => array('id_grupo = ?', $id), 
+			'order' => 'id_usuario ASC, id_clase ASC'
+			)
+		);
+
+	$analisisIds = array_map(function($analisis){
+		$analisisAsArray = $analisis->to_array();
+		return $analisisAsArray['id'];
+	}, $analisArreglo);
+
+	AnalisisUso::table()->delete(array('id' => $analisisIds));
+
+	$response = $app->response();
+	$response->header('Content-Type', 'application/json');
+	$response->status(200);
+
+	//var response = array("status" => "Okay");
+	$json = json_encode($analisisIds);
+
+	$response->write($json);
+
+});
+
 ?>

@@ -23,13 +23,23 @@
       <tr ng-repeat="group in groups">
         <td>{{group.id}}</td>
         <td>{{group.nombre}}</td>
-        <td>{{group.usabilidadModelo}}</td>
+        <td>
+            <p ng-if="group.usabilidadModelo != 0">
+              {{group.usabilidadModelo}}
+            </p>
+            <p ng-if="group.usabilidadModelo == 0" class="text-danger">
+              <span class="glyphicon glyphicon-alert"></span> {{group.usabilidadModelo}} - Sin Actividad 
+            </p>
+        </td>
         <td>{{group.dominio}}</td>
         <td>{{group.fecha}}</td>
         <!-- <td>{{activity.num_integrantes}}</td>  -->
         <td>
           <button type="button" class="btn btn-info btn-xs" ng-click="view(group)">
             <span class="glyphicon glyphicon-zoom-in"></span> Detalles
+          </button>
+          <button type="button" class="btn btn-danger btn-xs" ng-click="delete(group)">
+            <span class="glyphicon glyphicon-trash"></span> Eliminar
           </button>
         </td>
     </tr>

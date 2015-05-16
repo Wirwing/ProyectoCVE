@@ -51,6 +51,14 @@
 	      $window.location.href = '/cve/teacher/analisis-uso/groups/' + group.id;
 	    }
 
+
+	    $scope.delete = function(group){
+	      AnalisisFactory.deleteByGroup( {group_id: group.id} , function(response){
+	      	$window.location.href = '/cve/teacher/analisis-uso';
+	      });
+	    }
+
+
   	}]);
 
 	app.controller('AnalisisUsoController',['$scope', '$window', 'AnalisisFactory', '$attrs', 'HabClasses', function($scope, $window, AnalisisFactory, $attrs, HabClasses){

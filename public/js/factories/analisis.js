@@ -9,6 +9,7 @@
         return $resource(url, {}, {
             getForGroup: { url: url + "/grupos/:id", method: 'GET', isArray: true },
             activeIndicatorsForGroup: { url: url + "/grupos/:id/activos", method: 'GET', isArray: true },
+            deleteByGroup: { url: url + "/grupos/:group_id", method: 'DELETE', isArray: true },
         });
     }]);
 
