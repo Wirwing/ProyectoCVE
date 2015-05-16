@@ -18,6 +18,23 @@ $app->get('/api/hab_class', function () use ($app) {
 
 });
 
+
+$app->get('/api/models/:id/hab_class', function ($id) use ($app) {
+
+    $classes = HabClass::all(array('conditions' => array('model_id = ?', $id)));
+
+    $json = json_encode(array_map(function($class){
+        return $class->to_array();
+    }, $classes));
+
+    $response = $app->response();
+    $response->header('Content-Type', 'application/json');
+    $response->status(200);
+
+    $response->write($json);
+
+});
+
 $app->post('/api/hab_class', function () use ($app) {
 
     $attributes = $app->request()->getBody();

@@ -19,6 +19,20 @@ $app->get('/api/groups', function () use ($app) {
 
 });
 
+$app->get('/api/groups/:id/single-activity', function ($id) use ($app) {
+
+  $group = GroupUser::first(array('conditions' => array('group_id = ?', $id)));
+
+  $activity = $group->activity;
+
+  $response = $app->response();
+  $response->header('Content-Type', 'application/json');
+  $response->status(200);
+
+  $response ->write($activity->to_json());
+
+});
+
 $app->post('/api/groups', function () use ($app) {
 
     $attributes = $app->request()->getBody();
