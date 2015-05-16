@@ -3,18 +3,58 @@
 /*
 * Rutas API del recurso actividades
 */
-$app->get('/api/analisis', function () use ($app) {
+$app->get('/api/analisis/grupos/:id_group', function ($id_group) use ($app) {
 
-	$analisArreglo = AnalisisUso::all(array('readonly' => true, 'limit' => 50));
+	$analisArreglo = AnalisisUso::all(array('conditions' => array('id_grupo = ?', $id_group)));
 
 	$response = $app->response();
 	$response->header('Content-Type', 'application/json');
 	$response->status(200);
 
-	$json = json_encode(array_map(function($res){
-		return $res->to_array();
+	$json = json_encode(array_map(function($analisis){
+		
+		$clase = HabClass::find('first', array('conditions' => array('id = ?', $analisis->id_clase)));
+
+		$indicadoresUsados = AnalisisUso::all(
+			array('conditions' => array('id_usuario = ? AND id_clase = ? AND bUso = 1',
+					$analisis->id_usuario, $analisis->id_clase))
+			);
+
+		$totalIndicadoresDeClase = sizeof($clase->indicators);
+		$contadorIndicadoresUSados = sizeof($indicadoresUsados);
+
+		if($totalIndicadoresDeClase != 0){
+			$porcentajeUsabilidad = $contadorIndicadoresUSados / $totalIndicadoresDeClase;
+		}else{
+			$porcentajeUsabilidad = 0;
+		}
+
+		if($porcentajeUsabilidad < .7){
+			$dominio = "NS";
+		}else if($porcentajeUsabilidad >= .7 && $porcentajeUsabilidad < .8){
+			$dominio = "S";
+		}else if($porcentajeUsabilidad >= .8 && $porcentajeUsabilidad < .9){
+			$dominio = "SA";
+		}else{
+			$dominio = "SS";
+		}
+
+		$analisisAsArray = $analisis->to_array();
+		$analisisAsArray['porcentaje_usabilidad'] = $porcentajeUsabilidad;
+		$analisisAsArray['dominio'] = $dominio;
+
+		return $analisisAsArray;
+
 	}, $analisArreglo));
 
+/*
+	$model = array(
+				'atributo' => 1,
+				'sesion' => 'Random'
+			);
+
+	$json = json_encode($model);
+*/
 	$response->write($json);
 
 });

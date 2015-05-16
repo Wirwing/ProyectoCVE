@@ -1,0 +1,43 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Analisis[% endblock %]
+
+[% block content %]
+
+<div ng-controller="AnalisisUsoController as analisisCtrl" id="[[id_group]]">
+
+  <h2 class="pull-left">Analisis de usabilidad de indicadores colaborativos - Grupo [[id_group]]</h2>
+
+  <table st-table="analisis_uso" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Alumno</th>
+        <th>Clase</th>
+        <th>Indicador</th>
+        <th>Uso - Frecuencia</th>
+        <th>% Usabilidad</th>
+        <th>Dominio</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ana_clase in analisis">
+        <td>{{ana_clase.id_usuario}}</td>
+        <td>{{ana_clase.id_clase}} </td>
+        <td>{{ana_clase.id_indicador}}</td>
+        <td>[{{ana_clase.buso}}, {{ana_clase.ifrecuencia}}]</td>
+        <td><div ng-if="ana_clase.ifrecuencia > 0">{{ana_clase.porcentaje_usabilidad}}</div></td>
+        <td><div ng-if="ana_clase.ifrecuencia > 0">{{ana_clase.dominio}}</div></td>
+        <td>{{ana_clase.porcentaje_dominio}}</td>
+        <td>
+        <button type="button" class="btn btn-info btn-xs" ng-click="view(activity)">
+          <span class="glyphicon glyphicon-zoom-in"></span> Análisis porcentual
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+[% endblock %]

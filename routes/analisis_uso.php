@@ -12,4 +12,11 @@ $app->get('/teacher/analisis-uso', $auth('teacher'), function () use ($app) {
 
 });
 
+$app->get('/teacher/analisis-uso/groups/:id', $auth('teacher'), function ($id) use ($app) {
+
+	$data = array('id_group' => $id);
+	$app->render('analisis/group_detail.html', $data);
+
+});
+
 ?>
