@@ -19,6 +19,7 @@ $app->get('/api/analisis/grupos/:id_group', function ($id_group) use ($app) {
 		
 		$clase = HabClass::find('first', array('conditions' => array('id = ?', $analisis->id_clase)));
 		$indicador = indicator::find('first', array('conditions' => array('id = ?', $analisis->id_indicador)));
+		$usuario = User::find('first', array('conditions' => array('id = ?', $analisis->id_usuario)));
 
 		$indicadoresUsados = AnalisisUso::all(
 			array('conditions' => array('id_usuario = ? AND id_clase = ? AND bUso = 1',
@@ -50,6 +51,7 @@ $app->get('/api/analisis/grupos/:id_group', function ($id_group) use ($app) {
 
 		$analisisAsArray['clase_subnombre'] = $clase->subnombre;
 		$analisisAsArray['indicador_nombre'] = $indicador->nombre;
+		$analisisAsArray['alumno_nombre'] = $usuario->nombre.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno;
 
 		return $analisisAsArray;
 

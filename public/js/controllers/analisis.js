@@ -59,6 +59,10 @@
 	      	$window.location.href = '/cve/teacher/analisis-uso/groups/' + group.id + '/clases';
 	    }
 
+	    $scope.viewAlumnos = function(group){
+	      	$window.location.href = '/cve/teacher/analisis-uso/groups/' + group.id + '/alumnos';
+	    }
+
 	    $scope.delete = function(group){
 	    	AnalisisFactory.deleteByGroup( {group_id: group.id} , function(response){
 	      		$window.location.href = '/cve/teacher/analisis-uso';
@@ -141,5 +145,30 @@
 		});
 
   	}]);
+
+
+	app.controller('AnalisisPorAlumnoController',['$scope', '$window', 'AnalisisFactory', '$attrs', 'Users', function($scope, $window, AnalisisFactory, $attrs, Users){
+		var idGrupo = $attrs.id;
+		
+		AnalisisFactory.getForGroup({id: idGrupo}, function (analisis) {
+
+			var agrupadoPorAlumnos = _.chain(analisis).groupBy('id_usuario').values().value();
+
+			var alumnos = _.map(agrupadoPorAlumnos, function(alumno){
+
+				var frecuenciaDeAlumno = _.sum(alumno, 'ifrecuencia');
+
+				return{
+					nombre: alumno[0].alumno_nombre,
+					frecuencia: frecuenciaDeAlumno
+				};
+
+			});
+
+			$scope.alumnos = alumnos;
+
+		});
+
+	}]);
 
 })();

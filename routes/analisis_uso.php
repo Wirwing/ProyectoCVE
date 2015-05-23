@@ -19,11 +19,17 @@ $app->get('/teacher/analisis-uso/groups/:id', $auth('teacher'), function ($id) u
 
 });
 
-
 $app->get('/teacher/analisis-uso/groups/:id/clases', $auth('teacher'), function ($id) use ($app) {
 
 	$data = array('id_group' => $id);
 	$app->render('analisis/group_classes_detail.html', $data);
+
+});
+
+$app->get('/teacher/analisis-uso/groups/:id/alumnos', $auth('teacher'), function ($id) use ($app) {
+
+	$data = array('id_group' => $id);
+	$app->render('analisis/alumnos_detail.html', $data);
 
 });
 
