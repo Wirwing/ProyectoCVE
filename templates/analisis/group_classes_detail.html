@@ -1,0 +1,32 @@
+[% extends 'layout.html' %]
+
+[% block page_title %] Entorno Virtual Colaborativo - Analisis[% endblock %]
+
+[% block content %]
+
+<div ng-controller="AnalisisPorClasesController" id="[[id_group]]">
+
+  <h2 class="pull-left">Analisis de usabilidad de clases - Grupo [[id_group]]</h2>
+
+  <table st-table="analisis_uso" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Clase</th>
+        <th>Subclase</th>
+        <th>% Usabilidad</th>
+        <th>Dominio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="ana_grupo in analisisPorGrupo">
+        <td>{{ana_grupo.id_clase}}</td>
+        <td>{{ana_grupo.clase_subnombre}}</td>
+        <td>{{ana_grupo.porcentajeUsabilidadDelGrupo}}</td>
+        <td>{{ana_grupo.dominio}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+[% endblock %]

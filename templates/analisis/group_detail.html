@@ -23,7 +23,7 @@
     <tbody>
       <tr ng-repeat="ana_clase in analisis">
         <td>{{ana_clase.id_usuario}}</td>
-        <td>{{ana_clase.id_clase}} - {{ana_clase.clase_nombre}}</td>
+        <td>{{ana_clase.id_clase}} - {{ana_clase.clase_subnombre}}</td>
         <td>{{ana_clase.id_indicador}} - {{ana_clase.indicador_nombre}}</td>
         <td>[{{ana_clase.buso}}, {{ana_clase.ifrecuencia}}]</td>
         <td><div ng-if="ana_clase.ifrecuencia > 0">{{ana_clase.porcentaje_usabilidad}}</div></td>

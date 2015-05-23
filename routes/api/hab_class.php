@@ -18,13 +18,13 @@ $app->get('/api/hab_class', function () use ($app) {
 
 });
 
-
+//Todos clases del modelo i
 $app->get('/api/models/:id/hab_class', function ($id) use ($app) {
 
     $classes = HabClass::all(array('conditions' => array('model_id = ?', $id)));
 
     $json = json_encode(array_map(function($class){
-        return $class->to_array();
+        return $class->to_array(array('include' => array('indicators')));
     }, $classes));
 
     $response = $app->response();
