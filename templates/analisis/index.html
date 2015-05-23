@@ -15,6 +15,7 @@
         <th>Nombre</th>
         <th>% Usabilidad Modelo</th>
         <th>Dominio</th>
+        <th>Frecuencia</th>
         <th>Fecha</th>
         <!-- <th>Num. Integrantes</th> csc -->
       </tr>
@@ -32,8 +33,8 @@
             </p>
         </td>
         <td>{{group.dominio}}</td>
+        <td>{{group.frecuenciaDeGrupo}}</td>
         <td>{{group.fecha}}</td>
-        <!-- <td>{{activity.num_integrantes}}</td>  -->
         <td>
           <button type="button" class="btn btn-info btn-xs" ng-click="viewClasses(group)">
             <span class="glyphicon glyphicon-zoom-in"></span> Detalles de clase

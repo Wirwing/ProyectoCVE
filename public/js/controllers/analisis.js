@@ -11,6 +11,8 @@
 
 				AnalisisFactory.activeIndicatorsForGroup({id: group.id}, function (analisis) {
 
+					group.frecuenciaDeGrupo = _.sum(analisis, 'ifrecuencia');
+
 					var numeroClasesEnGrupo = _.uniq(_.pluck(_.flatten(analisis), "id_clase")).length;
 
 					Activities.getFirstForGroup({group_id: group.id}, function(activity){
@@ -33,6 +35,8 @@
 
 							group.dominio = dominio;
 							group.usabilidadModelo = porcentajeUsabilidad;
+							
+							
 
 						}, function(error){
 							console.log(error);
