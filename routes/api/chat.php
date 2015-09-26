@@ -136,23 +136,34 @@ $app->post('/api/chat/messages', function() use ($app){
 $app->get('/api/chat/messages/:group_id/:activity_id/', function($group_id, $activity_id)
 use($app){
 
-	$chat_logs = ChatLog::all(array('conditions' => array('id_grupo = ? AND id_actividad = ?',
+	//Todos los logs con indicador existente
+	$chat_logs = ChatLog::all(array('conditions' => array('id_grupo = ? AND id_actividad = ? AND id_indicador != 0',
 	$group_id, $activity_id)));
 
 	$response = $app->response();
 
-	if( !is_null( $chat_logs ) ){
-		$json = json_encode(array_map(function($res){
+	if( $chat_logs == null ){
+		$json = json_encode( array('result' => 'There are no messages'));
+		$status_code = 400;
+		$response->header('Content-Type', 'application/json');
+		$response->status($status_code);
+		$response->write($json);
+		return;
+	}
+
+	$json = json_encode(array_map(function($res){
+			
 			return $res->to_array(array(
 				'include' => array('user', 'indicator')
 			));
+
+			// return $res->to_array(array(
+			// 	'include' => array('user', 'indicator')
+			// ));
+
 		}, $chat_logs));
 
-		$status_code = 200;
-	}else{
-		$json = json_encode( array('result' => 'There are no messages'));
-		$status_code = 400;
-	}
+	$status_code = 200;
 
 	$response->header('Content-Type', 'application/json');
 	$response->status($status_code);
@@ -160,6 +171,47 @@ use($app){
 
 });
 
+
+$app->get('/api/chat/group/:group_id/activity/:activity_id/messages', function($group_id, $activity_id)
+use($app){
+
+	//Todos los logs con indicador existente
+	$chat_logs = ChatLog::all(array('conditions' => array('id_grupo = ? AND id_actividad = ? AND id_indicador != 0',
+	$group_id, $activity_id)));
+
+	$response = $app->response();
+
+	$json = json_encode( array('result' => 'Ok'));
+
+	if( $chat_logs == null ){
+		$json = json_encode( array('result' => 'There are no messages'));
+		$status_code = 400;
+		$response->header('Content-Type', 'application/json');
+		$response->status($status_code);
+		$response->write($json);
+		return;
+	}
+
+
+	$json = json_encode(array_map(function($res){
+			
+			return $res->to_array(array(
+				'include' => array('user')
+			));
+
+			// return $res->to_array(array(
+			// 	'include' => array('user', 'indicator')
+			// ));
+
+		}, $chat_logs));
+
+	$status_code = 200;
+
+	$response->header('Content-Type', 'application/json');
+	$response->status($status_code);
+	$response->write($json);
+
+});
 
 $app->get('/api/chat/messages/:group_id/:activity_id/:last_chat_id', function($group_id, $activity_id, $last_chat_id)
 	use($app){

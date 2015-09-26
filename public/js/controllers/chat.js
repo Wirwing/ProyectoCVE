@@ -99,6 +99,7 @@
 			/* Now we recover the previous messages */
 			Chats.getPreviousMessages({group_id: $scope.group.id, activity_id: $scope.activity.id},
 				function( messages ){
+
 					$scope.messages = messages;
 					
 					$scope.updateTable();
@@ -107,7 +108,6 @@
 					if( $scope.messages != null && ( $scope.messages.length > 0 ) ){
 						$scope.last_message_id = messages[ messages.length - 1 ].id;
 					}
-
 
 					/* now with the previous messages we call the refresh interval */
 					$interval(function(){

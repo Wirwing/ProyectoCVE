@@ -29,13 +29,18 @@
       <a href="#" class="btn btn-default">Nuevo</a>
       <a href="#" class="btn btn-default">Guardar</a>
       <a href="#" class="btn btn-default">Eliminar</a>
+
+      <a href="https://creately.com/app/?tempID=gc7qvpsj1" target="_blank" class="btn btn-info">Abrir Aplicación</a>
+
       <button class="btn btn-success" ng-click="startTimer()" ng-show="!timerRunning">Iniciar</button>
       <button class="btn btn-danger" ng-click="showTimer()" ng-show="timerRunning&&!canShowTimer">Tiempo Restante</button>
       <timer countdown="timeLimit" interval="1000" autostart="true" ng-show="canShowTimer"> Tiempo Restante: {{days}} dias, {{hours}} horas, {{minutes}} minutos, {{seconds}} segundos</timer>
     </div>
     <br/>
-    <div id="firepad"> <!-- cm.by.csc {{timeLimit}} -->
-    </div>
+
+    <!-- <iframe src="https://creately.com/app/?tempID=gc7qvpsj1&login_type=demo#" height="400" width="500"></iframe> -->
+    <div id="firepad">cm.by.csc {{timeLimit}}</div>
+
   </div>
 
   <div id="panelDer" class="col-md-6">
