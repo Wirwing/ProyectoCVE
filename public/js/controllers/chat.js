@@ -21,6 +21,30 @@
 		$scope.data_pass = 0;
 
 		$scope.values = [];
+		$scope.showStats = false;
+
+		//Configuracion grafica nvd3
+		 $scope.chartOptions = {
+            chart: {
+                type: 'multiBarHorizontalChart',
+                height: 200,
+                width: 500,
+                x: function(d){return d.label;},
+                y: function(d){return d.value;},
+                showControls: true,
+                showValues: true,
+                transitionDuration: 500,
+                xAxis: {
+                    showMaxMin: false
+                },
+                yAxis: {
+                    axisLabel: 'Participación',
+                    tickFormat: function(d){
+                        return d3.format(',.2f')(d);
+                    }
+                }
+            }
+        };
 
 		$scope.updateTable = function(){
 
@@ -98,43 +122,9 @@
 				$scope.timerRunning = false;
 			}
 
-			//Show Graphs
-			Chats.all({group_id: $scope.group.id, activity_id: $scope.activity.id}, function(messages){
-				
-				//console.log(messages);
-				//var students = _.groupBy(messages, 'id_usuario');
-
-				//Generando values de grafica
-				// {
-    //             "key": "Participación",
-    //             "color": "#1f65b4",
-    //             "values": [
-	   //                  {
-	   //                      "label" : "Alumno 1" ,
-	   //                      "value" : 23.307646510375
-	   //                  } ,
-	   //                  {
-	   //                      "label" : "Alumno 2" ,
-	   //                      "value" : 15.756779544553
-	   //                  } ,
-	   //                  {
-	   //                      "label" : "Alumno 3" ,
-	   //                      "value" : 10.451534877007
-	   //                  }
-    //             	]
-    //         	}
-
-				var students = _.chain(messages).groupBy('id_usuario').map(function(value, key) {
-					var user = value[0].user;
-				    return {
-				        label: user.nombre,
-				        value: value.length
-				    }
-				})
-				.value();
-
-				console.log(students);
-			});
+			//Populate graph and update it every minute
+			refreshGraph()
+			$interval(refreshGraph, 1000 * 60 , 0);
 
 		});
 
@@ -227,13 +217,66 @@
 			$scope.canShowTimer = true;
 		};
 
+		$scope.collapseStats = function(){
+			$scope.showStats = !$scope.showStats;
+		}
+
 		function convertUTCDateToLocalDate(date) {
 			var newDate = new Date(date.getTime());
 			var offset = (date.getTimezoneOffset()+60) / 60;
 			var hours = date.getHours();
 			newDate.setHours(hours + offset);
-			return newDate;   
+			return newDate;
 		}
+
+		var refreshGraph = function(){
+
+			//Show Graphs
+			Chats.all({group_id: $scope.group.id, activity_id: $scope.activity.id}, function(messages){
+
+					console.log("Refrescando grafica");
+
+					//Generando values de grafica
+					// {
+	    				//             "key": "Participación",
+				    //             "color": "#1f65b4",
+				    //             "values": [
+					   //                  {
+					   //                      "label" : "Alumno 1" ,
+					   //                      "value" : 23.307646510375
+					   //                  } ,
+					   //                  {
+					   //                      "label" : "Alumno 2" ,
+					   //                      "value" : 15.756779544553
+					   //                  } ,
+					   //                  {
+					   //                      "label" : "Alumno 3" ,
+					   //                      "value" : 10.451534877007
+					   //                  }
+				    //             	]
+				    //         	}
+
+					var chartValues = _.chain(messages).groupBy('id_usuario').map(function(value, key) {
+						var user = value[0].user;
+					    return {
+					        label: user.nombre,
+					        value: value.length
+					    }
+					})
+					.value();
+
+					console.log(chartValues);
+
+					$scope.chartData = [{
+	                	key: "Participación",
+	                	color: "#1f65b4",
+	                	values: chartValues
+	        		}];
+
+				});
+
+				}
+
 }]);
 
 window.onload = function (){

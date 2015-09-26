@@ -18,3 +18,11 @@
   color: #222;
   border-color: #222;
 }
+
+.nvd3 .nv-legend{
+  visibility: hidden !important;
+}
+
+.btn-collapse{
+  margin-top: -8px;
+}

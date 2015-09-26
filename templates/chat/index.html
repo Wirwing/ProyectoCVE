@@ -141,10 +141,17 @@
 
       <div class="panel panel-info">
         <div class="panel-heading">
-          <h5 class="panel-title"> <strong>Estadísticas</strong></h5>
+          <div class="panel-title"> 
+            <h5><strong>Estadísticas</strong></strong>
+            <button ng-click="collapseStats()" class="pull-right btn btn-default btn-collapse">Mostrar/Ocultar</button>
+          </div>
+
         </div>
-        <div class="panel-body" style="height:200px">
-          <nvd3-line-chart
+        <div ng-if="showStats == true" class="panel-body" style="height:300px">
+
+          <nvd3 options="chartOptions" data="chartData"></nvd3>
+
+<!--           <nvd3-line-chart
             id="stats"
             data="values"
             width="800"
@@ -153,7 +160,8 @@
             showYAxis="true"
             showLegend="true"
             interactive="true"
-            tooltips="true">
+            tooltips="true"> -->
+
         </div>
       </div>
 

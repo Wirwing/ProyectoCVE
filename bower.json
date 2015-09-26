@@ -28,9 +28,12 @@
     "nvd3": "~1.1.15-beta",
     "angularjs-nvd3-directives": "~0.0.7",
     "angular-timer": "~1.1.9",
-    "lodash": "~3.8.0"
+    "lodash": "~3.8.0",
+    "angular-nvd3": "~1.0.2"
   },
   "resolutions": {
-    "angular": "1.3.1"
+    "angular": "1.3.1",
+    "d3": "^3.3.13",
+    "nvd3": "^1.7.1"
   }
 }

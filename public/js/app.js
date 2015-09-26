@@ -5,7 +5,7 @@
 			'activitiesController', 'modelsController', 'analisisController',
 			'groupsController', 'usersController', 'habClassesController',
 			'analisisFactory',
-			'chatController', 'nvd3ChartDirectives'  //controllers
+			'chatController', 'nvd3'  //controllers
 
 		]);
 
