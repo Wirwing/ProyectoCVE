@@ -64,6 +64,7 @@
 			nv.graphs[0].update();
 		};
 
+		/*
 		$scope.getPercentageOfMessagesOfIndicator = function( indicator_id ){
 			var total = 0;
 			var messages = $scope.messages;
@@ -77,6 +78,7 @@
 			var percentage = (total * 100) / messages.length;
 			return percentage.toFixed(2);
 		}
+		*/
 
 		Groups.getUserGroup({id: $scope.user_id}, function(group){
 			
@@ -96,47 +98,51 @@
 				$scope.timerRunning = false;
 			}
 
-			/* Now we recover the previous messages */
-			Chats.getPreviousMessages({group_id: $scope.group.id, activity_id: $scope.activity.id},
-				function( messages ){
+			//Show Graphs
+			Chats.all({group_id: $scope.group.id, activity_id: $scope.activity.id}, function(messages){
+				
+				//console.log(messages);
+				//var students = _.groupBy(messages, 'id_usuario');
 
-					$scope.messages = messages;
-					
-					$scope.updateTable();
-					$scope.data_pass ++;
+				//Generando values de grafica
+				// {
+    //             "key": "Participación",
+    //             "color": "#1f65b4",
+    //             "values": [
+	   //                  {
+	   //                      "label" : "Alumno 1" ,
+	   //                      "value" : 23.307646510375
+	   //                  } ,
+	   //                  {
+	   //                      "label" : "Alumno 2" ,
+	   //                      "value" : 15.756779544553
+	   //                  } ,
+	   //                  {
+	   //                      "label" : "Alumno 3" ,
+	   //                      "value" : 10.451534877007
+	   //                  }
+    //             	]
+    //         	}
 
-					if( $scope.messages != null && ( $scope.messages.length > 0 ) ){
-						$scope.last_message_id = messages[ messages.length - 1 ].id;
-					}
+				var students = _.chain(messages).groupBy('id_usuario').map(function(value, key) {
+					var user = value[0].user;
+				    return {
+				        label: user.nombre,
+				        value: value.length
+				    }
+				})
+				.value();
 
-					/* now with the previous messages we call the refresh interval */
-					$interval(function(){
-						Chats.getMessages({group_id: $scope.group.id, activity_id: $scope.activity.id, last_chat_id: $scope.last_message_id },
-							function(messages ){
-								if( messages != null && ( messages.length > 0 ) ){
-									if( !$scope.last_message_id || ( $scope.last_message_id < messages[0].id ) ){
-										$scope.last_message_id = messages[ messages.length - 1 ].id;
-										$scope.messages = $scope.messages.concat( messages );
-									}
-								}
+				console.log(students);
+			});
 
-								$scope.interval_time += 500;
-								// Every 5 seconds we update the table
-								if( ($scope.interval_time % 5000) === 0 ){
-									$scope.updateTable();
-									$scope.data_pass ++;
-								}
-							});
-					}, 500 /* every 500 milliseconds */, 0 /* repeat indefinitely */);
-				}
-				);
-});
+		});
 
-			$scope.addMessage = function(){
+		$scope.addMessage = function(){
 
-				var message_recipent = {};
+			var message_recipent = {};
 
-				message_recipent.id_grupo = $scope.group.id;
+			message_recipent.id_grupo = $scope.group.id;
 
 				//ad.csc message_recipent.id_sesion = $scope.sesion.id;
 				message_recipent.id_usuario = $scope.user.id;
@@ -157,9 +163,9 @@
 				//hides the chat form
 				$scope.canSubmit = false;
 
-			};
+		};
 
-			$scope.addElementMessage = function(idClass){
+		$scope.addElementMessage = function(idClass){
 				
 				var message_recipent = {};
 
@@ -184,52 +190,51 @@
 				//hides the chat form
 				$scope.canSubmit = false;
 				
-			};
+		};
 
-			$scope.parseTime = function( messageStringTime ){
+		$scope.parseTime = function( messageStringTime ){
 				return new Date( messageStringTime ).toLocaleTimeString();
-			};
+		};
 
-			/* inhabilitates the chat submission */
-			$scope.showSubmit = function( indicator, abClass ){
+		/* inhabilitates the chat submission */
+		$scope.showSubmit = function( indicator, abClass ){
 				$scope.canSubmit = true;
 				$scope.message = indicator.apertura;
 				$scope.selectedIndicator = indicator;
 				$scope.selectedClass = abClass;
-			};
+		};
 
-			$scope.canSubmit = false;
+		$scope.canSubmit = false;
+		$scope.canShowTimer = false;
 
-			$scope.canShowTimer = false;
+		$scope.startTimer = function (){
+			$scope.$broadcast('timer-start');
+			$scope.timerRunning = true;
+			$scope.activity.iniciada = 1;
+			var tempDate = new Date();
+			$scope.activity.fecha_limite = new Date(tempDate.getTime() + $scope.activity.duracion_minima*60000);
+			
+			alert($scope.activity.fecha_limite + " id: " +  $scope.activity.id);
+			
+			Activities.update({id: $scope.activity.id}, $scope.activity, function () {
+				$window.location.href = '/cve/teacher/activities/' + activity.id;
+			});
+			$scope.canShowTimer = true;
+		};
 
-			$scope.startTimer = function (){
-				$scope.$broadcast('timer-start');
-				$scope.timerRunning = true;
-				$scope.activity.iniciada = 1;
-				var tempDate = new Date();
-				$scope.activity.fecha_limite = new Date(tempDate.getTime() + $scope.activity.duracion_minima*60000);
-				
-				alert($scope.activity.fecha_limite + " id: " +  $scope.activity.id);
-				
-				Activities.update({id: $scope.activity.id}, $scope.activity, function () {
-					$window.location.href = '/cve/teacher/activities/' + activity.id;
-				});
-				$scope.canShowTimer = true;
-			};
+		$scope.showTimer = function (){
+			$scope.$broadcast('timer-start');
+			$scope.canShowTimer = true;
+		};
 
-			$scope.showTimer = function (){
-				$scope.$broadcast('timer-start');
-				$scope.canShowTimer = true;
-			};
-
-			function convertUTCDateToLocalDate(date) {
-				var newDate = new Date(date.getTime());
-				var offset = (date.getTimezoneOffset()+60) / 60;
-				var hours = date.getHours();
-				newDate.setHours(hours + offset);
-				return newDate;   
-			}
-		}]);
+		function convertUTCDateToLocalDate(date) {
+			var newDate = new Date(date.getTime());
+			var offset = (date.getTimezoneOffset()+60) / 60;
+			var hours = date.getHours();
+			newDate.setHours(hours + offset);
+			return newDate;   
+		}
+}]);
 
 window.onload = function (){
 	var firepadRef = new Firebase('https://cve.firebaseIO.com');
