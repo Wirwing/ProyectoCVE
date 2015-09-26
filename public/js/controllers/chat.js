@@ -167,6 +167,8 @@
 				//ad.csc message_recipent.id_sesion = $scope.sesion.id;
 				message_recipent.id_usuario = $scope.user.id;
 				message_recipent.id_actividad = $scope.activity.id;
+
+				//Indicador 0
 				message_recipent.id_indicador = 0;
 				message_recipent.id_clase = idClass;
 
@@ -177,7 +179,7 @@
 				message_recipent.id_sesion = $scope.session_id;
 
 				// We send the message asynchrounsly
-				Chats.sendMessage({}, message_recipent);
+				Chats.sendElement({}, message_recipent);
 				$scope.message = "";
 				//hides the chat form
 				$scope.canSubmit = false;
