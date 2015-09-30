@@ -6,5 +6,3 @@
 .DS_STORE
 composer.lock
 
-#Bower components
-public/lib/*
