@@ -139,7 +139,9 @@
 	                },
 	                yAxis: {
 	                    axisLabel: '% Usabilidad',
-	                    //axisLabelDistance: 100
+	                    tickFormat: function(d){
+	                        return d3.format(',.2f')(d);
+	                    }
 	                }
 	            }
 	        };
