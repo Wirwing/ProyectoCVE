@@ -135,6 +135,7 @@
 					});
 					
 					$scope.analisisPorGrupo = agrupados;
+					generateChart(agrupados)
 
 				}, function(error){
 					console.log(error);
@@ -143,6 +144,66 @@
 			});
 
 		});
+
+		var generateChart = function(analisisPorGrupo){
+			
+			var chartValues = _.map(analisisPorGrupo, function(analisisDeGrupo){
+				return {
+					"label": analisisDeGrupo.clase_subnombre,
+					"value": analisisDeGrupo.porcentajeUsabilidadDelGrupo
+				}
+			});
+
+			console.log(chartValues);
+			$scope.chartData = [{
+	                	key: "Participación",
+	                	color: "#1f65b4",
+	                	values: chartValues
+    		}];
+
+    		$scope.chartOptions = {
+	            chart: {
+	                type: 'discreteBarChart',
+	                height: 400,
+	                x: function(d){return d.label;},
+	                y: function(d){return d.value;},
+	                showControls: true,
+	                showValues: true,
+	                transitionDuration: 500,
+	                xAxis: {
+	                    showMaxMin: false,
+	                    axisLabel: 'Subclases'
+	                },
+	                yAxis: {
+	                    axisLabel: '% Usabilidad',
+	                    tickFormat: function(d){
+	                        return d3.format(',.2f')(d);
+	                    }
+	                }
+	            }
+	        };
+
+			//Generando values de grafica
+// {
+//             "key": "Participación",
+//             "color": "#1f65b4",
+//             "values": [
+//                  {
+//                      "label" : "Alumno 1" ,
+//                      "value" : 23.307646510375
+//                  } ,
+//                  {
+//                      "label" : "Alumno 2" ,
+//                      "value" : 15.756779544553
+//                  } ,
+//                  {
+//                      "label" : "Alumno 3" ,
+//                      "value" : 10.451534877007
+//                  }
+//             	]
+//         	}
+
+		};
 
   	}]);
 
