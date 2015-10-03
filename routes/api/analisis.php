@@ -6,7 +6,7 @@
 $app->get('/api/analisis/grupos/:id_group', function ($id_group) use ($app) {
 
 	$analisArreglo = AnalisisUso::find('all',  array(
-			'conditions' => array('id_grupo = ?', $id_group), 
+			'conditions' => array('id_grupo = ? AND id_clase NOT IN (1001, 1002, 1003)', $id_group), 
 			'order' => 'id_usuario ASC, id_clase ASC'
 			)
 		);
@@ -71,14 +71,14 @@ $app->get('/api/analisis/grupos/:id_group', function ($id_group) use ($app) {
 
 $app->get('/api/analisis/grupos/:id_group/activos', function ($id_group) use ($app) {
 
+	//Consultando todos los analisis de uso, excepto aquellos donde la clase no exista (son los elementos estaticos del chat).
 	$analisArreglo = AnalisisUso::find('all',  array(
-			'conditions' => array('id_grupo = ? AND bUso = 1', $id_group), 
+			'conditions' => array('id_grupo = ? AND bUso = 1 AND id_clase NOT IN (1001, 1002, 1003)', $id_group), 
 			'order' => 'id_clase asc'
 			)
 		);
 
-
-	$json = json_encode(array_map(function($analisis){
+	$json = json_encode(array_map(function($analisis) use ($app){
 		
 		$clase = HabClass::find('first', array('conditions' => array('id = ?', $analisis->id_clase)));
 		$indicador = indicator::find('first', array('conditions' => array('id = ?', $analisis->id_indicador)));
@@ -87,6 +87,9 @@ $app->get('/api/analisis/grupos/:id_group/activos', function ($id_group) use ($a
 			array('conditions' => array('id_usuario = ? AND id_clase = ? AND bUso = 1',
 					$analisis->id_usuario, $analisis->id_clase))
 			);
+
+		$app->log->info("Analisis grupos activos - clase");
+		$app->log->info($analisis->id_clase);
 
 		$totalIndicadoresDeClase = sizeof($clase->indicators);
 		$contadorIndicadoresUSados = sizeof($indicadoresUsados);
