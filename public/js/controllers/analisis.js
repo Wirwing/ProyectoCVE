@@ -227,8 +227,49 @@
 			});
 
 			$scope.alumnos = alumnos;
+			generateChart(alumnos);
 
 		});
+
+		var generateChart = function(alumnos){
+			console.log(alumnos);
+
+			var chartValues = _.map(alumnos, function(alumno){
+				return {
+					"label": alumno.nombre,
+					"value": alumno.frecuencia
+				}
+			});
+
+			console.log(chartValues);
+			$scope.chartData = [{
+	                	key: "Participación",
+	                	color: "#1f65b4",
+	                	values: chartValues
+    		}];
+
+    		$scope.chartOptions = {
+	            chart: {
+	                type: 'discreteBarChart',
+	                x: function(d){return d.label;},
+	                y: function(d){return d.value;},
+	                showControls: true,
+	                showValues: true,
+	                transitionDuration: 500,
+	                xAxis: {
+	                    showMaxMin: false,
+	                    axisLabel: 'Alumno'
+	                },
+	                yAxis: {
+	                    axisLabel: 'Frecuencia',
+	                    tickFormat: function(d){
+	                        return d3.format(',.2f')(d);
+	                    }
+	                }
+	            }
+	        };
+
+		};
 
 	}]);
 
