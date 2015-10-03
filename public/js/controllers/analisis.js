@@ -74,10 +74,76 @@
 
 	app.controller('AnalisisUsoController',['$scope', '$window', 'AnalisisFactory', '$attrs', 'HabClasses', function($scope, $window, AnalisisFactory, $attrs, HabClasses){
 		var idGrupo = $attrs.id;
-		
+
 		AnalisisFactory.getForGroup({id: idGrupo}, function (analisis) {
-			$scope.analisis = analisis;
+			
+			$scope.alumnosAgrupados = _.groupBy(analisis, 'id_usuario');
+			generateChart($scope.alumnosAgrupados);
+
 		});
+
+		function randomIntFromInterval(min,max)
+		{
+		    return Math.floor(Math.random()*(max-min+1)+min);
+		}
+
+		var generateChart = function(analisis){
+
+			var chartData = _.map(analisis, function(analisisDeAlumno){
+
+				var values = _.map(analisisDeAlumno, function(analisis){
+
+					if(isNaN(analisis.porcentaje_usabilidad))
+						console.log("nan");
+
+					return {
+						"label": analisis.indicador_nombre,
+						"value": analisis.porcentaje_usabilidad
+					}
+				});
+
+				var discreteValue = {};
+
+				//discreteValue.color = randomIntFromInterval(0, 4);
+				discreteValue.key = analisisDeAlumno[0].alumno_nombre;
+				discreteValue.values = values;
+
+				return discreteValue;
+				
+			});
+
+			console.log(chartData);
+			$scope.chartData = chartData;
+
+    		$scope.chartOptions = {
+	            chart: {
+	                type: 'multiBarChart',
+	                height: 600,
+	                margin: {
+	                	bottom: 160
+	                },
+	                x: function(d){return d.label;},
+	                y: function(d){return d.value;},
+	                showControls: true,
+	                showValues: true,
+	                reduceXTicks: false,
+	                transitionDuration: 500,
+                	clipEdge: false,
+    				staggerLabels: false,
+				    transitionDuration: 500,
+				    stacked: true,
+	                xAxis: {
+	                    showMaxMin: false,
+	                    axisLabel: 'Indicador',
+	                    rotateLabels: -60
+	                },
+	                yAxis: {
+	                    axisLabel: '% Usabilidad',
+	                    //axisLabelDistance: 100
+	                }
+	            }
+	        };
+		}
 
 	}]);
 

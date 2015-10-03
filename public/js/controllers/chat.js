@@ -2,7 +2,6 @@
 
 	var app = angular.module('chatController',['ngCookies', 'chatsFactory', 'activitiesFactory', 'usersFactory', 'groupsFactory', 'luegg.directives','timer']);
 
-
 	app.controller('ChatController', ['$scope', 'Chats', 'Activities',
 		'Users', 'Groups', '$window', '$cookies', '$interval',
 		function($scope, Chats, Activities, Users, Groups, $window, $cookies, $interval){
@@ -47,7 +46,7 @@
                     }
                 }
             }
-        };	
+        };
 
 		$scope.addMessage = function(){
 
@@ -105,10 +104,10 @@
 
 		/* inhabilitates the chat submission */
 		$scope.showSubmit = function( indicator, abClass ){
-				$scope.canSubmit = true;
-				$scope.message = indicator.apertura;
-				$scope.selectedIndicator = indicator;
-				$scope.selectedClass = abClass;
+			$scope.canSubmit = true;
+			$scope.message = indicator.apertura;
+			$scope.selectedIndicator = indicator;
+			$scope.selectedClass = abClass;
 		};
 
 		$scope.startTimer = function (){

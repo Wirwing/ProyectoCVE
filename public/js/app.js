@@ -5,8 +5,8 @@
 			'activitiesController', 'modelsController', 'analisisController',
 			'groupsController', 'usersController', 'habClassesController',
 			'analisisFactory',
-			'chatController', 'nvd3'  //controllers
-
+			'chatController', 'nvd3',
+			'ui.bootstrap'
 		]);
 
 	$(document).ready(function(){angular.bootstrap(document.body , ['cve']);});
