@@ -178,6 +178,11 @@
 
 			Chats.all({group_id: $scope.group.id, activity_id: $scope.activity.id}, function(messages){
 				$scope.messages = messages;
+
+				//$scope.$apply(function (scope) {
+      		    $("#chat_container").scrollTop(1000000);
+           		//});
+
 			});
 
 		};
